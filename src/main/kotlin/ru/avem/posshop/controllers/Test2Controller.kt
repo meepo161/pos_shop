@@ -382,11 +382,6 @@ class Test2Controller : TController() {
                                         formatRealNumber(measuringI3).toString()
                                 }
                             }
-
-                            listOfValuesVoltage.add(String.format("%.1f", measuringU1))
-                            listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
-                            listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
-                            listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
                         }
                         tickDrawJobInProcess = false
                     }
@@ -422,6 +417,11 @@ class Test2Controller : TController() {
                 tickJob = {
                     if (!controller.isExperimentRunning) it.stop()
                     runLater {
+                        listOfValuesVoltage.add(String.format("%.1f", measuringU1))
+                        listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
+                        listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
+                        listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
+
                         mainView.labelTimeRemaining.text =
                             "                   Осталось всего: " + toHHmmss((allTime - it.getCurrentTicks()) * 1000L)
                     }

@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.scene.text.Text
 import ru.avem.posshop.app.Pos.Companion.isAppRunning
 import ru.avem.posshop.communication.model.CommunicationModel
+import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrModel
 import ru.avem.posshop.entities.*
 import ru.avem.posshop.utils.LogTag
 import ru.avem.posshop.utils.State
@@ -14,6 +15,7 @@ import ru.avem.posshop.view.MainView
 import tornadofx.*
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
+import kotlin.experimental.and
 import kotlin.reflect.full.createInstance
 import kotlin.time.ExperimentalTime
 
@@ -230,24 +232,53 @@ class MainViewController : Controller() {
         )
     )
 
+
     init {
         thread(isDaemon = true) {
             runLater {
                 view.buttonStop.isDisable = true
             }
             while (isAppRunning) {
+                var register = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2)
+                    .getRegisterById(OwenPrModel.INSTANT_STATES_REGISTER_1)
+                CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).readRegister(register)
+                var doorZone1 = register.value.toShort() and 2 > 0
+
                 if (CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding) {
                     runLater {
                         view.comIndicate.fill = State.OK.c
                     }
+                    if (doorZone1) {
+                        runLater {
+                            view.labelTestStatusEnd1.text = "Дверь открыта"
+                        }
+                    } else {
+                        runLater {
+                            view.labelTestStatusEnd1.text = ""
+                        }
+                    }
+                    if (!isExperimentRunning && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding && !doorZone1) {
+                        runLater {
+                            view.buttonStart.isDisable = false
+                        }
+                    } else if (!isExperimentRunning && (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding || doorZone1)) {
+                        runLater {
+                            view.buttonStart.isDisable = true
+                        }
+
+                    }
                 } else {
                     runLater {
+                        cause = "Нет связи"
                         view.comIndicate.fill = State.BAD.c
+                        view.labelTestStatusEnd1.text = "Нет связи со стендом. Проверьте подключение."
+                        view.buttonStart.isDisable = true
+                        view.buttonStop.isDisable = true
                     }
                 }
-                sleep(1000)
             }
         }
+        sleep(1000)
     }
 
     fun isDevicesRespondingTest1(): Boolean {
@@ -268,11 +299,13 @@ class MainViewController : Controller() {
 
     fun isDevicesRespondingTest2(): Boolean {
         return CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding
-                && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding
+                && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding
+                && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding else true)
+                && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV239).isResponding else true)
+                && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV240).isResponding else true)
                 && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71).isResponding else true)
                 && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72).isResponding else true)
                 && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73).isResponding else true)
-                && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding
     }
 
     @OptIn(ExperimentalTime::class)
@@ -303,7 +336,6 @@ class MainViewController : Controller() {
                 LogTag.DEBUG -> tag.c
             }
         }
-
         Platform.runLater {
             view.vBoxLog.add(msg)
         }

@@ -10,6 +10,7 @@ import javafx.scene.shape.Circle
 import javafx.stage.Modality
 import ru.avem.posshop.controllers.MainViewController
 import ru.avem.posshop.entities.*
+import ru.avem.posshop.utils.callKeyBoard
 import ru.avem.posshop.view.Styles.Companion.extraHard
 import ru.avem.posshop.view.Styles.Companion.megaHard
 import ru.avem.posshop.view.Styles.Companion.superExtraHard
@@ -193,23 +194,21 @@ class MainView : View("Комплексный стенд для испытани
                         selectionModel.selectFirst()
                     }.addClass(extraHard)
                 }
-
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
                     label("Выберите объект испытания :").addClass(superExtraHard)
                     comboBoxTestItem = combobox<TestItem>(values = testItems, property = placeTestItem) {
                     }.addClass(extraHard)
                 }
-
-
-
-
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
                     vbox(spacing = 16.0) {
                         alignmentProperty().set(Pos.CENTER)
                         checkbox { }.isVisible = false
                         initTableTest1 = tableview(controller.tableValuesTest1) {
+                            onEditStart {
+                                callKeyBoard()
+                            }
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
@@ -224,6 +223,9 @@ class MainView : View("Комплексный стенд для испытани
                             testsProp.isNotEqualTo(tests[0])
                         }
                         initTableTest2 = tableview(controller.tableValuesTest2) {
+                            onEditStart {
+                                callKeyBoard()
+                            }
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
@@ -238,13 +240,6 @@ class MainView : View("Комплексный стенд для испытани
                             testsProp.isNotEqualTo(tests[1])
                         }
                     }
-
-
-
-
-
-
-
                     vbox(spacing = 16.0) {
                         hboxConstraints {
                             hGrow = Priority.ALWAYS
@@ -286,11 +281,6 @@ class MainView : View("Комплексный стенд для испытани
                             !place1Prop
                         }
                     }
-
-
-
-
-
                     vbox(spacing = 16.0) {
                         hboxConstraints {
                             hGrow = Priority.ALWAYS
@@ -378,7 +368,6 @@ class MainView : View("Комплексный стенд для испытани
                         }
                     }
                 }
-
                 vbox {
                     hbox {
                         prefHeight = 150.0

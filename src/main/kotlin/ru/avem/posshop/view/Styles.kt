@@ -92,7 +92,7 @@ class Styles : Stylesheet() {
         }
 
         superExtraHard {
-            fontSize = 60.px
+            fontSize = 48.px
             fontWeight = FontWeight.EXTRA_BOLD
         }
 

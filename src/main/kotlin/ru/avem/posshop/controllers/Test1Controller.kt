@@ -20,7 +20,10 @@ import ru.avem.posshop.database.entities.Protocol
 import ru.avem.posshop.entities.TController
 import ru.avem.posshop.utils.*
 import ru.avem.posshop.view.MainView
-import tornadofx.*
+import tornadofx.add
+import tornadofx.runLater
+import tornadofx.seconds
+import tornadofx.style
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 import kotlin.experimental.and
@@ -835,6 +838,74 @@ class Test1Controller : TController() {
                 sleep(2000)
             }
 
+            val voltage = controller.tableValuesTest1[0].place1voltage.value.toString().replace(",", ".").toDouble()
+
+            if (mainView.place1Prop.value) {
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    initLatr(gv238)
+                }
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    configLatr(gv238, voltage)
+                }
+
+                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU11 <= voltage) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
+
+                    if (isLatrInErrorMode(gv238)) {
+                        controller.cause = "Ошибка контроллера АРН"
+                    }
+                    sleep(100)
+                }
+                accurateRegulate(parma1, ParmaModel.UA, gv238, voltage)
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 1 выставлено")
+                }
+            }
+
+            if (mainView.place2Prop.value) {
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    initLatr(gv239)
+                }
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    configLatr(gv239, voltage)
+                }
+
+                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU21 <= voltage) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
+
+                    if (isLatrInErrorMode(gv239)) {
+                        controller.cause = "Ошибка контроллера АРН"
+                    }
+                    sleep(100)
+                }
+                accurateRegulate(parma1, ParmaModel.UB, gv239, voltage)
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 2 выставлено")
+                }
+            }
+
+            if (mainView.place3Prop.value) {
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    initLatr(gv240)
+                }
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    configLatr(gv240, voltage)
+                }
+
+                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU31 <= voltage) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
+
+                    if (isLatrInErrorMode(gv240)) {
+                        controller.cause = "Ошибка контроллера АРН"
+                    }
+                    sleep(100)
+                }
+                accurateRegulate(parma1, ParmaModel.UC, gv240, voltage)
+                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 3 выставлено")
+                }
+            }
+
             val allTime =
                 (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".").toDouble() * 60).toInt()
 
@@ -847,7 +918,6 @@ class Test1Controller : TController() {
                         runLater {
                             mainView.labelTimeRemaining.text =
                                 "                   Осталось всего: " + toHHmmss((allTime - it.getCurrentTicks()) * 1000L)
-
                             if (mainView.place1Prop.value) {
                                 controller.tableValuesPlace1Test1[0].place1voltage.value =
                                     formatRealNumber(measuringU11).toString()
@@ -1367,78 +1437,11 @@ class Test1Controller : TController() {
                 }
             )
 
-            val voltage = controller.tableValuesTest1[0].place1voltage.value.toString().replace(",", ".").toDouble()
-
-            if (mainView.place1Prop.value) {
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    initLatr(gv238)
-                }
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    configLatr(gv238, voltage)
-                }
-
-                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU11 <= voltage) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
-
-                    if (isLatrInErrorMode(gv238)) {
-                        controller.cause = "Ошибка контроллера АРН"
-                    }
-                    sleep(100)
-                }
-                accurateRegulate(parma1, ParmaModel.UA, gv238, voltage)
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 1 выставлено")
-                }
-            }
-
-            if (mainView.place2Prop.value) {
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    initLatr(gv239)
-                }
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    configLatr(gv239, voltage)
-                }
-
-                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU21 <= voltage) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
-
-                    if (isLatrInErrorMode(gv239)) {
-                        controller.cause = "Ошибка контроллера АРН"
-                    }
-                    sleep(100)
-                }
-                accurateRegulate(parma1, ParmaModel.UB, gv239, voltage)
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 2 выставлено")
-                }
-            }
-
-            if (mainView.place3Prop.value) {
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    initLatr(gv240)
-                }
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    configLatr(gv240, voltage)
-                }
-
-                while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && measuringU31 <= voltage) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
-
-                    if (isLatrInErrorMode(gv240)) {
-                        controller.cause = "Ошибка контроллера АРН"
-                    }
-                    sleep(100)
-                }
-                accurateRegulate(parma1, ParmaModel.UC, gv240, voltage)
-                if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                    appendOneMessageToLog(LogTag.MESSAGE, "Напряжение места 3 выставлено")
-                }
-            }
-
             while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
                 appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения...")
                 sleep(100)
             }
+
             if (mainView.place1Prop.value) {
                 gv238.reset()
             }
@@ -1585,27 +1588,27 @@ class Test1Controller : TController() {
     private fun startCheckStatusTrmSensors() {
         thread(isDaemon = true) {
             while (controller.isExperimentRunning) {
-                trmStatus11 = trm1.checkStatus(0) == 1
-                trmStatus12 = trm1.checkStatus(1) == 1
-                trmStatus13 = trm1.checkStatus(2) == 1
-                trmStatus14 = trm1.checkStatus(3) == 1
-                trmStatus15 = trm1.checkStatus(4) == 1
-                trmStatus16 = trm1.checkStatus(5) == 1
-                trmStatus17 = trm1.checkStatus(6) == 1
+                trmStatus11 = true //trm1.checkStatus(0) == 1
+                trmStatus12 = true //trm1.checkStatus(1) == 1
+                trmStatus13 = true //trm1.checkStatus(2) == 1
+                trmStatus14 = true //trm1.checkStatus(3) == 1
+                trmStatus15 = true //trm1.checkStatus(4) == 1
+                trmStatus16 = true //trm1.checkStatus(5) == 1
+                trmStatus17 = true //trm1.checkStatus(6) == 1
 
-                trmStatus21 = trm2.checkStatus(0) == 1
-                trmStatus22 = trm2.checkStatus(1) == 1
-                trmStatus23 = trm2.checkStatus(2) == 1
-                trmStatus24 = trm2.checkStatus(3) == 1
-                trmStatus25 = trm2.checkStatus(4) == 1
-                trmStatus26 = trm2.checkStatus(5) == 1
+                trmStatus21 = true //trm2.checkStatus(0) == 1
+                trmStatus22 = true //trm2.checkStatus(1) == 1
+                trmStatus23 = true //trm2.checkStatus(2) == 1
+                trmStatus24 = true //trm2.checkStatus(3) == 1
+                trmStatus25 = true //trm2.checkStatus(4) == 1
+                trmStatus26 = true //trm2.checkStatus(5) == 1
 
-                trmStatus31 = trm3.checkStatus(0) == 1
-                trmStatus32 = trm3.checkStatus(1) == 1
-                trmStatus33 = trm3.checkStatus(2) == 1
-                trmStatus34 = trm3.checkStatus(3) == 1
-                trmStatus35 = trm3.checkStatus(4) == 1
-                trmStatus36 = trm3.checkStatus(5) == 1
+                trmStatus31 = true //trm3.checkStatus(0) == 1
+                trmStatus32 = true //trm3.checkStatus(1) == 1
+                trmStatus33 = true //trm3.checkStatus(2) == 1
+                trmStatus34 = true //trm3.checkStatus(3) == 1
+                trmStatus35 = true //trm3.checkStatus(4) == 1
+                trmStatus36 = true //trm3.checkStatus(5) == 1
                 sleep(100)
             }
         }

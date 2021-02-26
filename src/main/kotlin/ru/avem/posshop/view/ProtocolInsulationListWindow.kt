@@ -89,23 +89,22 @@ class ProtocolInsulationListWindow : View("Протоколы графиков")
                         }
                     }
                 }
-                button("Открыть таблицу") {
-                    action {
-                        if (tableViewProtocols.selectedItem != null) {
-                            Singleton.currentProtocolInsulation = transaction {
-                                ProtocolInsulation.find {
-                                    ProtocolsTableInsulation.id eq tableViewProtocols.selectedItem!!.id
-                                }.toList().asObservable()
-                            }.first()
-
-
-                            find<GraphHistoryWindow>().openModal(
-                                modality = Modality.WINDOW_MODAL, escapeClosesWindow = true,
-                                resizable = true, owner = this@ProtocolInsulationListWindow.currentWindow
-                            )
-                        }
-                    }
-                }
+//                button("Открыть таблицу") {
+//                    action {
+//                        if (tableViewProtocols.selectedItem != null) {
+//                            Singleton.currentProtocolInsulation = transaction {
+//                                ProtocolInsulation.find {
+//                                    ProtocolsTableInsulation.id eq tableViewProtocols.selectedItem!!.id
+//                                }.toList().asObservable()
+//                            }.first()
+//
+//                            find<GraphHistoryWindow>().openModal(
+//                                modality = Modality.WINDOW_MODAL, escapeClosesWindow = true,
+//                                resizable = true, owner = this@ProtocolInsulationListWindow.currentWindow
+//                            )
+//                        }
+//                    }
+//                }
                 button("Сохранить как") {
                     action {
                         if (tableViewProtocols.selectedItem != null) {

@@ -517,9 +517,6 @@ fun fillParameters18(
     }
 }
 
-
-
-
 fun fillParameters4(
     wb: XSSFWorkbook,
     dots11: String,
