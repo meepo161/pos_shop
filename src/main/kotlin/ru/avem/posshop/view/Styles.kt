@@ -29,6 +29,10 @@ class Styles : Stylesheet() {
     }
 
     init {
+        comboBox {
+            fontSize = 36.px
+        }
+
         alert {
             baseColor = c("#222")
             fontSize = 18.px
@@ -140,11 +144,11 @@ class Styles : Stylesheet() {
         tableColumn {
             alignment = Pos.CENTER
             fontWeight = FontWeight.BOLD
-            fontSize = 22.px
+            fontSize = 36.px
         }
 
         tableRowCell {
-            cellSize = 50.px
+            cellSize = 82.px
         }
 
         checkBox {
@@ -155,9 +159,6 @@ class Styles : Stylesheet() {
             }
         }
 
-        comboBox {
-            fontSize = 36.px
-        }
 
         vboxTextArea {
 //            backgroundColor += c("#6696bd")

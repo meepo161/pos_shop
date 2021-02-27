@@ -180,25 +180,24 @@ class MainView : View("Комплексный стенд для испытани
             }.addClass(megaHard)
         }
         center {
-            centralStation = vbox(spacing = 16.0) {
-                paddingAll = 16.0
+            centralStation = vbox(spacing = 8.0) {
                 alignmentProperty().set(Pos.CENTER)
 
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
-                    label("Выберите испытание:").addClass(superExtraHard)
+                    label("Выберите испытание:").addClass(Styles.hard)
                     comboBoxTests = combobox(values = tests, property = testsProp) {
                         useMaxWidth = true
                         alignment = Pos.CENTER
 
                         selectionModel.selectFirst()
-                    }.addClass(extraHard)
+                    }.addClass(Styles.hard)
                 }
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
-                    label("Выберите объект испытания :").addClass(superExtraHard)
+                    label("Выберите объект испытания :").addClass(Styles.hard)
                     comboBoxTestItem = combobox<TestItem>(values = testItems, property = placeTestItem) {
-                    }.addClass(extraHard)
+                    }.addClass(Styles.hard)
                 }
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
@@ -213,8 +212,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 104.0
-                            maxHeight = 104.0
+                            minHeight = 156.0
+                            maxHeight = 156.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             column("t, °C", TableValuesTest1::place1temp.getter).makeEditable()
                             column("t, м", TableValuesTest1::place1time.getter).makeEditable()
@@ -230,8 +229,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 104.0
-                            maxHeight = 104.0
+                            minHeight = 156.0
+                            maxHeight = 156.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             column("I, мА", TableValuesTest2::place1amperage.getter).makeEditable()
                             column("t, с", TableValuesTest2::place1time.getter).makeEditable()
@@ -251,8 +250,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("Секция", TableValuesPlace1Test1::descriptor.getter)
@@ -269,8 +268,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace1Test2::place1amperage.getter)
@@ -293,8 +292,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("Секция", TableValuesPlace2Test1::descriptor.getter)
@@ -311,8 +310,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace2Test2::place2amperage.getter)
@@ -336,8 +335,8 @@ class MainView : View("Комплексный стенд для испытани
                                 margin = insets(0, 0, 0, 0)
                             }
                             useMaxWidth = true
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("Секция", TableValuesPlace3Test1::descriptor.getter)
@@ -355,8 +354,8 @@ class MainView : View("Комплексный стенд для испытани
                                 margin = insets(0, 0, 0, 0)
                             }
                             useMaxWidth = true
-                            minHeight = 346.0
-                            maxHeight = 346.0
+                            minHeight = 566.0
+                            maxHeight = 566.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace3Test2::place3amperage.getter)
