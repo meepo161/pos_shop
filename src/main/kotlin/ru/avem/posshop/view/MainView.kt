@@ -182,26 +182,29 @@ class MainView : View("Комплексный стенд для испытани
         center {
             centralStation = vbox(spacing = 8.0) {
                 alignmentProperty().set(Pos.CENTER)
-
-                hbox(spacing = 16.0) {
+                hbox(spacing = 64.0) {
                     alignmentProperty().set(Pos.CENTER)
-                    label("Выберите испытание:").addClass(Styles.hard)
-                    comboBoxTests = combobox(values = tests, property = testsProp) {
-                        useMaxWidth = true
-                        alignment = Pos.CENTER
+                    hbox(spacing = 16.0) {
+                        alignmentProperty().set(Pos.CENTER)
+                        label("Выберите испытание:").addClass(Styles.extraHard)
+                        comboBoxTests = combobox(values = tests, property = testsProp) {
+                            useMaxWidth = true
+                            alignment = Pos.CENTER
 
-                        selectionModel.selectFirst()
-                    }.addClass(Styles.hard)
-                }
-                hbox(spacing = 16.0) {
-                    alignmentProperty().set(Pos.CENTER)
-                    label("Выберите объект испытания :").addClass(Styles.hard)
-                    comboBoxTestItem = combobox<TestItem>(values = testItems, property = placeTestItem) {
-                    }.addClass(Styles.hard)
+                            selectionModel.selectFirst()
+                        }.addClass(Styles.extraHard)
+                    }
+                    hbox(spacing = 16.0) {
+                        alignmentProperty().set(Pos.CENTER)
+                        label("Выберите объект испытания :").addClass(Styles.extraHard)
+                        comboBoxTestItem = combobox<TestItem>(values = testItems, property = placeTestItem) {
+                        }.addClass(Styles.extraHard)
+                    }
                 }
                 hbox(spacing = 16.0) {
                     alignmentProperty().set(Pos.CENTER)
                     vbox(spacing = 16.0) {
+                        minWidth = 300.0
                         alignmentProperty().set(Pos.CENTER)
                         checkbox { }.isVisible = false
                         initTableTest1 = tableview(controller.tableValuesTest1) {
@@ -244,17 +247,25 @@ class MainView : View("Комплексный стенд для испытани
                             hGrow = Priority.ALWAYS
                         }
                         alignmentProperty().set(Pos.CENTER)
-                        checkBoxPlace1 = checkbox(property = place1Prop) {}.addClass(extraHard)
+                        checkBoxPlace1 = checkbox(text = "Объект 1", property = place1Prop) {
+                            action {
+                                style = if (isSelected) {
+                                    "-fx-background-color: #991400;"
+                                } else {
+                                    ""
+                                }
+                            }
+                        }.addClass(extraHard)
                         tableview(controller.tableValuesPlace1Test1) {
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
-                            column("Секция", TableValuesPlace1Test1::descriptor.getter)
+                            column("№", TableValuesPlace1Test1::descriptor.getter)
                             column("t, °C", TableValuesPlace1Test1::place1temp.getter)
                             column("U, В", TableValuesPlace1Test1::place1voltage.getter)
                             column("I, A", TableValuesPlace1Test1::place1amperage.getter)
@@ -268,8 +279,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace1Test2::place1amperage.getter)
@@ -285,18 +296,25 @@ class MainView : View("Комплексный стенд для испытани
                             hGrow = Priority.ALWAYS
                         }
                         alignmentProperty().set(Pos.CENTER)
-                        checkBoxPlace2 = checkbox(property = place2Prop) {
+                        checkBoxPlace2 = checkbox(text = "Объект 2", property = place2Prop) {
+                            action {
+                                style = if (isSelected) {
+                                    "-fx-background-color: #991400;"
+                                } else {
+                                    ""
+                                }
+                            }
                         }.addClass(extraHard)
                         tableview(controller.tableValuesPlace2Test1) {
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
-                            column("Секция", TableValuesPlace2Test1::descriptor.getter)
+                            column("№", TableValuesPlace2Test1::descriptor.getter)
                             column("t, °C", TableValuesPlace2Test1::place2temp.getter)
                             column("U, В", TableValuesPlace2Test1::place2voltage.getter)
                             column("I, A", TableValuesPlace2Test1::place2amperage.getter)
@@ -310,8 +328,8 @@ class MainView : View("Комплексный стенд для испытани
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
                             }
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace2Test2::place2amperage.getter)
@@ -327,7 +345,14 @@ class MainView : View("Комплексный стенд для испытани
                             hGrow = Priority.ALWAYS
                         }
                         alignmentProperty().set(Pos.CENTER)
-                        checkBoxPlace3 = checkbox(property = place3Prop) {
+                        checkBoxPlace3 = checkbox(text = "Объект 3", property = place3Prop) {
+                            action {
+                                style = if (isSelected) {
+                                    "-fx-background-color: #991400;"
+                                } else {
+                                    ""
+                                }
+                            }
                         }.addClass(extraHard)
                         tableview(controller.tableValuesPlace3Test1) {
                             vboxConstraints {
@@ -335,11 +360,11 @@ class MainView : View("Комплексный стенд для испытани
                                 margin = insets(0, 0, 0, 0)
                             }
                             useMaxWidth = true
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
-                            column("Секция", TableValuesPlace3Test1::descriptor.getter)
+                            column("№", TableValuesPlace3Test1::descriptor.getter)
                             column("t, °C", TableValuesPlace3Test1::place3temp.getter)
                             column("U, В", TableValuesPlace3Test1::place3voltage.getter)
                             column("I, A", TableValuesPlace3Test1::place3amperage.getter)
@@ -354,8 +379,8 @@ class MainView : View("Комплексный стенд для испытани
                                 margin = insets(0, 0, 0, 0)
                             }
                             useMaxWidth = true
-                            minHeight = 566.0
-                            maxHeight = 566.0
+                            minHeight = 556.0
+                            maxHeight = 556.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
                             mouseTransparentProperty().set(true)
                             column("I, мА", TableValuesPlace3Test2::place3amperage.getter)
