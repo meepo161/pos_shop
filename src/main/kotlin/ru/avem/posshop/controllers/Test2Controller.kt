@@ -1,6 +1,7 @@
 package ru.avem.posshop.controllers
 
 import javafx.application.Platform
+import javafx.scene.control.ButtonType
 import javafx.scene.text.Text
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.communication.model.CommunicationModel
@@ -16,9 +17,12 @@ import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrController
 import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrModel
 import ru.avem.posshop.database.entities.ProtocolInsulation
 import ru.avem.posshop.entities.TController
+import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.*
 import ru.avem.posshop.view.MainView
 import tornadofx.*
+import java.awt.Desktop
+import java.io.File
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 import kotlin.experimental.and
@@ -105,6 +109,8 @@ class Test2Controller : TController() {
 
     @Volatile
     var tickDrawJobInProcess = false
+
+    var isClicked = false
 
     private fun appendOneMessageToLog(tag: LogTag, message: String) {
         if (logBuffer == null || logBuffer != message) {
@@ -241,6 +247,7 @@ class Test2Controller : TController() {
             isExperimentEnded = false
             schemeAssembled = false
             isValuesCorrect = true
+            isClicked = false
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
             sleep(1000)
 
@@ -323,6 +330,8 @@ class Test2Controller : TController() {
             }
 
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest2()) {
+                soundWarning(1, 1000)
+
                 appendMessageToLog(LogTag.DEBUG, "Подготовка стенда")
 
                 appendMessageToLog(LogTag.DEBUG, "Сбор схемы")
@@ -445,19 +454,37 @@ class Test2Controller : TController() {
             appendMessageToLog(LogTag.MESSAGE, "Испытание завершено")
             setResult()
 
+            soundWarning(3, 1000)
             finalizeExperiment()
-            runLater {
-                mainView.labelTestStatus.text = ""
-                mainView.buttonStart.isDisable = false
-                mainView.buttonStop.isDisable = true
-                mainView.mainMenuBar.isDisable = false
-                mainView.comboBoxTests.isDisable = false
-                mainView.comboBoxTestItem.isDisable = false
-                mainView.initTableTest1.isDisable = false
-                mainView.initTableTest2.isDisable = false
-                mainView.checkBoxPlace1.isDisable = false
-                mainView.checkBoxPlace2.isDisable = false
-                mainView.checkBoxPlace3.isDisable = false
+
+            if (listOfValuesVoltage.isNotEmpty()) {
+                saveProtocolToDB()
+                Singleton.currentProtocolInsulation = transaction {
+                    ProtocolInsulation.all().toList().asObservable()
+                }.last()
+                runLater {
+                    confirm(
+                        "Печать протокола",
+                        "Вы хотите напечатать протокол?",
+                        ButtonType.YES, ButtonType.NO,
+                        owner = mainView.currentWindow,
+                        title = "Печать"
+                    ) {
+                        saveProtocolAsWorkbook(Singleton.currentProtocolInsulation)
+                        Desktop.getDesktop().print(File("protocolInsulation.xlsx"))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun soundWarning(times: Int, sleep: Long) {
+        thread(isDaemon = true) {
+            for (i in 0..times) {
+                owenPR.onSound()
+                sleep(sleep)
+                owenPR.offSound()
+                sleep(sleep)
             }
         }
     }
@@ -537,6 +564,7 @@ class Test2Controller : TController() {
         )
     }
 
+
     private fun isLatrInErrorMode(latrDevice: AvemLatrController) =
         when (latrDevice.getRegisterById(AvemLatrModel.DEVICE_STATUS).value) {
             0x81 -> {
@@ -590,8 +618,22 @@ class Test2Controller : TController() {
     }
 
     private fun finalizeExperiment() {
+        controller.isExperimentRunning = false
         isExperimentEnded = true
         owenPR.offAllKMs()
         CommunicationModel.clearPollingRegisters()
+        runLater {
+            mainView.labelTestStatus.text = ""
+            mainView.buttonStart.isDisable = false
+            mainView.buttonStop.isDisable = true
+            mainView.mainMenuBar.isDisable = false
+            mainView.comboBoxTests.isDisable = false
+            mainView.comboBoxTestItem.isDisable = false
+            mainView.initTableTest1.isDisable = false
+            mainView.initTableTest2.isDisable = false
+            mainView.checkBoxPlace1.isDisable = false
+            mainView.checkBoxPlace2.isDisable = false
+            mainView.checkBoxPlace3.isDisable = false
+        }
     }
 }

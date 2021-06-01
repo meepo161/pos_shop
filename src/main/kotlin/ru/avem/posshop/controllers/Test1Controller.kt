@@ -1,6 +1,7 @@
 package ru.avem.posshop.controllers
 
 import javafx.application.Platform
+import javafx.scene.control.ButtonType
 import javafx.scene.text.Text
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.communication.model.CommunicationModel
@@ -18,12 +19,12 @@ import ru.avem.posshop.communication.model.devices.parma.ParmaController
 import ru.avem.posshop.communication.model.devices.parma.ParmaModel
 import ru.avem.posshop.database.entities.Protocol
 import ru.avem.posshop.entities.TController
+import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.*
 import ru.avem.posshop.view.MainView
-import tornadofx.add
-import tornadofx.runLater
-import tornadofx.seconds
-import tornadofx.style
+import tornadofx.*
+import java.awt.Desktop
+import java.io.File
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 import kotlin.experimental.and
@@ -285,9 +286,6 @@ class Test1Controller : TController() {
     private var doorZone: Boolean = false
 
     @Volatile
-    private var visibleGap: Boolean = false
-
-    @Volatile
     private var startButton: Boolean = false
 
     @Volatile
@@ -318,6 +316,20 @@ class Test1Controller : TController() {
     @Volatile
     var isLatrRegulation = false
 
+    @Volatile
+    var currentStage = 0
+
+    @Volatile
+    var temperature: Double = 0.0
+
+    @Volatile
+    var isNeedHeating = false
+
+    @Volatile
+    var isHeating = false
+
+    private var isClicked: Boolean = false
+
     //region листы для БД
     private var listOfValues11 = mutableListOf<String>()
     private var listOfValues12 = mutableListOf<String>()
@@ -337,25 +349,6 @@ class Test1Controller : TController() {
     private var listOfValues34 = mutableListOf<String>()
     private var listOfValues35 = mutableListOf<String>()
     private var listOfValues36 = mutableListOf<String>()
-
-    private var listOfAmperage11 = mutableListOf<String>()
-    private var listOfAmperage12 = mutableListOf<String>()
-    private var listOfAmperage13 = mutableListOf<String>()
-    private var listOfAmperage14 = mutableListOf<String>()
-    private var listOfAmperage15 = mutableListOf<String>()
-    private var listOfAmperage16 = mutableListOf<String>()
-    private var listOfAmperage21 = mutableListOf<String>()
-    private var listOfAmperage22 = mutableListOf<String>()
-    private var listOfAmperage23 = mutableListOf<String>()
-    private var listOfAmperage24 = mutableListOf<String>()
-    private var listOfAmperage25 = mutableListOf<String>()
-    private var listOfAmperage26 = mutableListOf<String>()
-    private var listOfAmperage31 = mutableListOf<String>()
-    private var listOfAmperage32 = mutableListOf<String>()
-    private var listOfAmperage33 = mutableListOf<String>()
-    private var listOfAmperage34 = mutableListOf<String>()
-    private var listOfAmperage35 = mutableListOf<String>()
-    private var listOfAmperage36 = mutableListOf<String>()
     //endregion
 
     class RingBuffer<T>(private val size: Int) {
@@ -390,6 +383,7 @@ class Test1Controller : TController() {
                 LogTag.ERROR -> tag.c
                 LogTag.DEBUG -> tag.c
             }
+            fontSize = 26.px
         }
 
         Platform.runLater {
@@ -408,11 +402,6 @@ class Test1Controller : TController() {
             doorZone = value.toShort() and 2 > 0
             if (doorZone) {
                 controller.cause = "Открыта дверь зоны"
-            }
-
-            visibleGap = value.toShort() and 8 > 0
-            if (visibleGap) {
-                controller.cause = "Не замкнут видимый разрыв"
             }
 
             stopButton = value.toShort() and 32 > 0
@@ -642,59 +631,113 @@ class Test1Controller : TController() {
         //region trm poll
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_1) { value ->
             measuringt11 = value.toDouble()
+            if (measuringt11 > 75) {
+                controller.cause = "Перегрев 1 лопасти 1 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_2) { value ->
             measuringt12 = value.toDouble()
+            if (measuringt12 > 75) {
+                controller.cause = "Перегрев 1 лопасти 2 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_3) { value ->
             measuringt13 = value.toDouble()
+            if (measuringt13 > 75) {
+                controller.cause = "Перегрев 1 лопасти 3 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_4) { value ->
             measuringt14 = value.toDouble()
+            if (measuringt14 > 75) {
+                controller.cause = "Перегрев 1 лопасти 4 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_5) { value ->
             measuringt15 = value.toDouble()
+            if (measuringt15 > 75) {
+                controller.cause = "Перегрев 1 лопасти 5 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_6) { value ->
             measuringt16 = value.toDouble()
+            if (measuringt16 > 75) {
+                controller.cause = "Перегрев 1 лопасти 6 секции. Температура превысила 75°C"
+            }
         }
 
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_1) { value ->
             measuringt21 = value.toDouble()
+            if (measuringt21 > 75) {
+                controller.cause = "Перегрев 2 лопасти 1 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_2) { value ->
             measuringt22 = value.toDouble()
+            if (measuringt22 > 75) {
+                controller.cause = "Перегрев 2 лопасти 2 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_3) { value ->
             measuringt23 = value.toDouble()
+            if (measuringt23 > 75) {
+                controller.cause = "Перегрев 2 лопасти 3 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_4) { value ->
             measuringt24 = value.toDouble()
+            if (measuringt24 > 75) {
+                controller.cause = "Перегрев 2 лопасти 4 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_5) { value ->
             measuringt25 = value.toDouble()
+            if (measuringt25 > 75) {
+                controller.cause = "Перегрев 2 лопасти 5 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_6) { value ->
             measuringt26 = value.toDouble()
+            if (measuringt26 > 75) {
+                controller.cause = "Перегрев 2 лопасти 6 секции. Температура превысила 75°C"
+            }
         }
 
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_1) { value ->
             measuringt31 = value.toDouble()
+            if (measuringt31 > 75) {
+                controller.cause = "Перегрев 3 лопасти 1 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_2) { value ->
             measuringt32 = value.toDouble()
+            if (measuringt32 > 75) {
+                controller.cause = "Перегрев 3 лопасти 2 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_3) { value ->
             measuringt33 = value.toDouble()
+            if (measuringt33 > 75) {
+                controller.cause = "Перегрев 3 лопасти 3 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_4) { value ->
             measuringt34 = value.toDouble()
+            if (measuringt34 > 75) {
+                controller.cause = "Перегрев 3 лопасти 4 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_5) { value ->
             measuringt35 = value.toDouble()
+            if (measuringt35 > 75) {
+                controller.cause = "Перегрев 3 лопасти 5 секции. Температура превысила 75°C"
+            }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_6) { value ->
             measuringt36 = value.toDouble()
+            if (measuringt36 > 75) {
+                controller.cause = "Перегрев 3 лопасти 6 секции. Температура превысила 75°C"
+            }
         }
         //endregion
 
@@ -720,7 +763,12 @@ class Test1Controller : TController() {
             controller.cause = ""
             controller.isExperimentRunning = true
             isExperimentEnded = false
+            isClicked = false
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
+            clearTable()
+            temperature =
+                controller.tableValuesTest1[0].place1temp.value.toString().replace(",", ".").toDouble()
+
             sleep(1000)
 
             runLater {
@@ -814,7 +862,6 @@ class Test1Controller : TController() {
                     1.toShort()
                 )
                 owenPR.initOwenPR()
-                startPollDevices()
                 sleep(1000)
             }
 
@@ -822,12 +869,17 @@ class Test1Controller : TController() {
                 runLater {
                     Toast.makeText("Нажмите кнопку ПУСК").show(Toast.ToastType.WARNING)
                 }
+                appendOneMessageToLog(LogTag.DEBUG, "Нажмите кнопку ПУСК")
             }
 
             var timeToStart = 300
             while (!startButton && controller.isExperimentRunning && controller.isDevicesRespondingTest1() && timeToStart-- > 0) {
-                appendOneMessageToLog(LogTag.DEBUG, "Нажмите кнопку ПУСК")
                 sleep(100)
+            }
+
+            if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                soundError()
+                soundWarning(1, 1000)
             }
 
             if (!startButton && controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
@@ -912,734 +964,69 @@ class Test1Controller : TController() {
 
             isLatrRegulation = false
 
-            val allTime =
-                (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".").toDouble() * 60).toInt()
+            collectValuesInProtocolInTimer()
 
-            val callbackTimer = CallbackTimer(
-                tickPeriod = 1.seconds, tickTimes = allTime,
-                tickJob = {
-                    if (!tickJobInProcess) {
-                        tickJobInProcess = true
-                        if (!controller.isExperimentRunning) it.stop()
-                        runLater {
-                            mainView.labelTimeRemaining.text =
-                                "                   Осталось всего: " + toHHmmss((allTime - it.getCurrentTicks()) * 1000L)
-                            if (mainView.place1Prop.value) {
-                                controller.tableValuesPlace1Test1[0].place1voltage.value =
-                                    formatRealNumber(measuringU11).toString()
-                                controller.tableValuesPlace1Test1[1].place1voltage.value =
-                                    formatRealNumber(measuringU12).toString()
-                                controller.tableValuesPlace1Test1[2].place1voltage.value =
-                                    formatRealNumber(measuringU13).toString()
-                                controller.tableValuesPlace1Test1[3].place1voltage.value =
-                                    formatRealNumber(measuringU14).toString()
-                                controller.tableValuesPlace1Test1[4].place1voltage.value =
-                                    formatRealNumber(measuringU15).toString()
-                                controller.tableValuesPlace1Test1[5].place1voltage.value =
-                                    formatRealNumber(measuringU16).toString()
-                            }
-
-                            if (mainView.place2Prop.value) {
-                                controller.tableValuesPlace2Test1[0].place2voltage.value =
-                                    formatRealNumber(measuringU21).toString()
-                                controller.tableValuesPlace2Test1[1].place2voltage.value =
-                                    formatRealNumber(measuringU22).toString()
-                                controller.tableValuesPlace2Test1[2].place2voltage.value =
-                                    formatRealNumber(measuringU23).toString()
-                                controller.tableValuesPlace2Test1[3].place2voltage.value =
-                                    formatRealNumber(measuringU24).toString()
-                                controller.tableValuesPlace2Test1[4].place2voltage.value =
-                                    formatRealNumber(measuringU25).toString()
-                                controller.tableValuesPlace2Test1[5].place2voltage.value =
-                                    formatRealNumber(measuringU26).toString()
-                            }
-
-                            if (mainView.place3Prop.value) {
-                                controller.tableValuesPlace3Test1[0].place3voltage.value =
-                                    formatRealNumber(measuringU31).toString()
-                                controller.tableValuesPlace3Test1[1].place3voltage.value =
-                                    formatRealNumber(measuringU32).toString()
-                                controller.tableValuesPlace3Test1[2].place3voltage.value =
-                                    formatRealNumber(measuringU33).toString()
-                                controller.tableValuesPlace3Test1[3].place3voltage.value =
-                                    formatRealNumber(measuringU34).toString()
-                                controller.tableValuesPlace3Test1[4].place3voltage.value =
-                                    formatRealNumber(measuringU35).toString()
-                                controller.tableValuesPlace3Test1[5].place3voltage.value =
-                                    formatRealNumber(measuringU36).toString()
-                            }
-
-                            if (mainView.place1Prop.value) {
-                                controller.tableValuesPlace1Test1[0].place1amperage.value =
-                                    formatRealNumber(measuringI11).toString()
-                                controller.tableValuesPlace1Test1[1].place1amperage.value =
-                                    formatRealNumber(measuringI12).toString()
-                                controller.tableValuesPlace1Test1[2].place1amperage.value =
-                                    formatRealNumber(measuringI13).toString()
-                                controller.tableValuesPlace1Test1[3].place1amperage.value =
-                                    formatRealNumber(measuringI14).toString()
-                                controller.tableValuesPlace1Test1[4].place1amperage.value =
-                                    formatRealNumber(measuringI15).toString()
-                                controller.tableValuesPlace1Test1[5].place1amperage.value =
-                                    formatRealNumber(measuringI16).toString()
-                            }
-
-                            if (mainView.place2Prop.value) {
-                                controller.tableValuesPlace2Test1[0].place2amperage.value =
-                                    formatRealNumber(measuringI21).toString()
-                                controller.tableValuesPlace2Test1[1].place2amperage.value =
-                                    formatRealNumber(measuringI22).toString()
-                                controller.tableValuesPlace2Test1[2].place2amperage.value =
-                                    formatRealNumber(measuringI23).toString()
-                                controller.tableValuesPlace2Test1[3].place2amperage.value =
-                                    formatRealNumber(measuringI24).toString()
-                                controller.tableValuesPlace2Test1[4].place2amperage.value =
-                                    formatRealNumber(measuringI25).toString()
-                                controller.tableValuesPlace2Test1[5].place2amperage.value =
-                                    formatRealNumber(measuringI26).toString()
-                            }
-
-                            if (mainView.place3Prop.value) {
-                                controller.tableValuesPlace3Test1[0].place3amperage.value =
-                                    formatRealNumber(measuringI21).toString()
-                                controller.tableValuesPlace3Test1[1].place3amperage.value =
-                                    formatRealNumber(measuringI22).toString()
-                                controller.tableValuesPlace3Test1[2].place3amperage.value =
-                                    formatRealNumber(measuringI23).toString()
-                                controller.tableValuesPlace3Test1[3].place3amperage.value =
-                                    formatRealNumber(measuringI24).toString()
-                                controller.tableValuesPlace3Test1[4].place3amperage.value =
-                                    formatRealNumber(measuringI25).toString()
-                                controller.tableValuesPlace3Test1[5].place3amperage.value =
-                                    formatRealNumber(measuringI26).toString()
-                            }
-
-                            if (mainView.place1Prop.value) {
-                                if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
-                                    controller.tableValuesPlace1Test1[0].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[0].place1temp.value =
-                                        String.format("%.2f", measuringt11)
-                                }
-                                if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
-                                    controller.tableValuesPlace1Test1[1].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[1].place1temp.value =
-                                        String.format("%.2f", measuringt12)
-                                }
-                                if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
-                                    controller.tableValuesPlace1Test1[2].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[2].place1temp.value =
-                                        String.format("%.2f", measuringt13)
-                                }
-                                if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
-                                    controller.tableValuesPlace1Test1[3].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[3].place1temp.value =
-                                        String.format("%.2f", measuringt14)
-                                }
-                                if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
-                                    controller.tableValuesPlace1Test1[4].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[4].place1temp.value =
-                                        String.format("%.2f", measuringt15)
-                                }
-                                if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
-                                    controller.tableValuesPlace1Test1[5].place1temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace1Test1[5].place1temp.value =
-                                        String.format("%.2f", measuringt16)
-                                }
-                            }
-
-                            if (mainView.place2Prop.value) {
-                                if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
-                                    controller.tableValuesPlace2Test1[0].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[0].place2temp.value =
-                                        String.format("%.2f", measuringt21)
-                                }
-                                if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
-                                    controller.tableValuesPlace2Test1[1].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[1].place2temp.value =
-                                        String.format("%.2f", measuringt22)
-                                }
-                                if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
-                                    controller.tableValuesPlace2Test1[2].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[2].place2temp.value =
-                                        String.format("%.2f", measuringt23)
-                                }
-                                if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
-                                    controller.tableValuesPlace2Test1[3].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[3].place2temp.value =
-                                        String.format("%.2f", measuringt24)
-                                }
-                                if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
-                                    controller.tableValuesPlace2Test1[4].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[4].place2temp.value =
-                                        String.format("%.2f", measuringt25)
-                                }
-                                if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
-                                    controller.tableValuesPlace2Test1[5].place2temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace2Test1[5].place2temp.value =
-                                        String.format("%.2f", measuringt26)
-                                }
-                            }
-                            if (mainView.place3Prop.value) {
-                                if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
-                                    controller.tableValuesPlace3Test1[0].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[0].place3temp.value =
-                                        String.format("%.2f", measuringt31)
-                                }
-                                if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
-                                    controller.tableValuesPlace3Test1[1].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[1].place3temp.value =
-                                        String.format("%.2f", measuringt32)
-                                }
-                                if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
-                                    controller.tableValuesPlace3Test1[2].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[2].place3temp.value =
-                                        String.format("%.2f", measuringt33)
-                                }
-                                if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
-                                    controller.tableValuesPlace3Test1[3].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[3].place3temp.value =
-                                        String.format("%.2f", measuringt34)
-                                }
-                                if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
-                                    controller.tableValuesPlace3Test1[4].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[4].place3temp.value =
-                                        String.format("%.2f", measuringt35)
-                                }
-                                if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
-                                    controller.tableValuesPlace3Test1[5].place3temp.value = "-.--"
-                                } else {
-                                    controller.tableValuesPlace3Test1[5].place3temp.value =
-                                        String.format("%.2f", measuringt36)
-                                }
-                            }
-                        }
-
-                        val temperature =
-                            controller.tableValuesTest1[0].place1temp.value.toString().replace(",", ".").toDouble()
-                        val percent = 0.03
-
-//                        var firstTimeStart = true
-//
-//                        if (firstTimeStart) {
-//
-//                            if (mainView.place1Prop.value) {
-//                                if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
-//                                    owenPR.off11()
-//                                } else {
-//                                    if (measuringt11 < temperature / 2) {
-//                                        owenPR.on11()
-//                                    } else {
-//
-//                                    }
-//                                }
-//                                if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
-//                                    owenPR.off12()
-//                                } else {
-//                                    if (measuringt12 < temperature) {
-//                                        owenPR.on12()
-//                                    }
-//                                    if (measuringt12 > temperature * (1 + percent)) {
-//                                        owenPR.off12()
-//                                    }
-//                                }
-//                                if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
-//                                    owenPR.off13()
-//                                } else {
-//                                    if (measuringt13 < temperature) {
-//                                        owenPR.on13()
-//                                    }
-//                                    if (measuringt13 > temperature * (1 + percent)) {
-//                                        owenPR.off13()
-//                                    }
-//                                }
-//                                if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
-//                                    owenPR.off14()
-//                                } else {
-//                                    if (measuringt14 < temperature) {
-//                                        owenPR.on14()
-//                                    }
-//                                    if (measuringt14 > temperature * (1 + percent)) {
-//                                        owenPR.off14()
-//                                    }
-//                                }
-//                                if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
-//                                    owenPR.off15()
-//                                } else {
-//                                    if (measuringt15 < temperature) {
-//                                        owenPR.on15()
-//                                    }
-//                                    if (measuringt15 > temperature * (1 + percent)) {
-//                                        owenPR.off15()
-//                                    }
-//                                }
-//                                if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
-//                                    owenPR.off16()
-//                                } else {
-//                                    if (measuringt16 < temperature) {
-//                                        owenPR.on16()
-//                                    }
-//                                    if (measuringt16 > temperature * (1 + percent)) {
-//                                        owenPR.off16()
-//                                    }
-//                                }
-//                            }
-//
-//                            if (mainView.place2Prop.value) {
-//                                if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
-//                                    owenPR.off21()
-//                                } else {
-//                                    if (measuringt21 < temperature) {
-//                                        owenPR.on21()
-//                                    }
-//                                    if (measuringt21 > temperature * (1 + percent)) {
-//                                        owenPR.off21()
-//                                    }
-//                                }
-//                                if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
-//                                    owenPR.off22()
-//                                } else {
-//                                    if (measuringt22 < temperature) {
-//                                        owenPR.on22()
-//                                    }
-//                                    if (measuringt22 > temperature * (1 + percent)) {
-//                                        owenPR.off22()
-//                                    }
-//                                }
-//                                if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
-//                                    owenPR.off23()
-//                                } else {
-//                                    if (measuringt23 < temperature) {
-//                                        owenPR.on23()
-//                                    }
-//                                    if (measuringt23 > temperature * (1 + percent)) {
-//                                        owenPR.off23()
-//                                    }
-//                                }
-//                                if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
-//                                    owenPR.off24()
-//                                } else {
-//                                    if (measuringt24 < temperature) {
-//                                        owenPR.on24()
-//                                    }
-//                                    if (measuringt24 > temperature * (1 + percent)) {
-//                                        owenPR.off24()
-//                                    }
-//                                }
-//                                if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
-//                                    owenPR.off25()
-//                                } else {
-//                                    if (measuringt25 < temperature) {
-//                                        owenPR.on25()
-//                                    }
-//                                    if (measuringt25 > temperature * (1 + percent)) {
-//                                        owenPR.off25()
-//                                    }
-//                                }
-//                                if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
-//                                    owenPR.off26()
-//                                } else {
-//                                    if (measuringt26 < temperature) {
-//                                        owenPR.on26()
-//                                    }
-//                                    if (measuringt26 > temperature * (1 + percent)) {
-//                                        owenPR.off26()
-//                                    }
-//                                }
-//                            }
-//
-//                            if (mainView.place3Prop.value) {
-//                                if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
-//                                    owenPR.off31()
-//                                } else {
-//                                    if (measuringt31 < temperature) {
-//                                        owenPR.on31()
-//                                    }
-//                                    if (measuringt31 > temperature * (1 + percent)) {
-//                                        owenPR.off31()
-//                                    }
-//                                }
-//                                if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
-//                                    owenPR.off32()
-//                                } else {
-//                                    if (measuringt32 < temperature) {
-//                                        owenPR.on32()
-//                                    }
-//                                    if (measuringt32 > temperature * (1 + percent)) {
-//                                        owenPR.off32()
-//                                    }
-//                                }
-//                                if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
-//                                    owenPR.off33()
-//                                } else {
-//                                    if (measuringt33 < temperature) {
-//                                        owenPR.on33()
-//                                    }
-//                                    if (measuringt33 > temperature * (1 + percent)) {
-//                                        owenPR.off33()
-//                                    }
-//                                }
-//                                if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
-//                                    owenPR.off34()
-//                                } else {
-//                                    if (measuringt34 < temperature) {
-//                                        owenPR.on34()
-//                                    }
-//                                    if (measuringt34 > temperature * (1 + percent)) {
-//                                        owenPR.off34()
-//                                    }
-//                                }
-//                                if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
-//                                    owenPR.off35()
-//                                } else {
-//                                    if (measuringt35 < temperature) {
-//                                        owenPR.on35()
-//                                    }
-//                                    if (measuringt35 > temperature * (1 + percent)) {
-//                                        owenPR.off35()
-//                                    }
-//                                }
-//                                if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
-//                                    owenPR.off36()
-//                                } else {
-//                                    if (measuringt36 < temperature) {
-//                                        owenPR.on36()
-//                                    }
-//                                    if (measuringt36 > temperature * (1 + percent)) {
-//                                        owenPR.off36()
-//                                    }
-//                                }
-//                            }
-//                        }
-
-                        if (mainView.place1Prop.value) {
-                            if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
-                                owenPR.off11()
-                            } else {
-                                if (measuringt11 < temperature) {
-                                    owenPR.on11()
-                                }
-                                if (measuringt11 > temperature * (1 + percent)) {
-                                    owenPR.off11()
-                                }
-                            }
-                            if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
-                                owenPR.off12()
-                            } else {
-                                if (measuringt12 < temperature) {
-                                    owenPR.on12()
-                                }
-                                if (measuringt12 > temperature * (1 + percent)) {
-                                    owenPR.off12()
-                                }
-                            }
-                            if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
-                                owenPR.off13()
-                            } else {
-                                if (measuringt13 < temperature) {
-                                    owenPR.on13()
-                                }
-                                if (measuringt13 > temperature * (1 + percent)) {
-                                    owenPR.off13()
-                                }
-                            }
-                            if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
-                                owenPR.off14()
-                            } else {
-                                if (measuringt14 < temperature) {
-                                    owenPR.on14()
-                                }
-                                if (measuringt14 > temperature * (1 + percent)) {
-                                    owenPR.off14()
-                                }
-                            }
-                            if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
-                                owenPR.off15()
-                            } else {
-                                if (measuringt15 < temperature) {
-                                    owenPR.on15()
-                                }
-                                if (measuringt15 > temperature * (1 + percent)) {
-                                    owenPR.off15()
-                                }
-                            }
-                            if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
-                                owenPR.off16()
-                            } else {
-                                if (measuringt16 < temperature) {
-                                    owenPR.on16()
-                                }
-                                if (measuringt16 > temperature * (1 + percent)) {
-                                    owenPR.off16()
-                                }
-                            }
-                        }
-                        if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
-                            listOfValues11.add("-99.9")
-                        } else {
-                            listOfValues11.add(String.format("%.1f", measuringt11))
-                        }
-                        if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
-                            listOfValues12.add("-99.9")
-                        } else {
-                            listOfValues12.add(String.format("%.1f", measuringt12))
-                        }
-                        if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
-                            listOfValues13.add("-99.9")
-                        } else {
-                            listOfValues13.add(String.format("%.1f", measuringt13))
-                        }
-                        if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
-                            listOfValues14.add("-99.9")
-                        } else {
-                            listOfValues14.add(String.format("%.1f", measuringt14))
-                        }
-                        if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
-                            listOfValues15.add("-99.9")
-                        } else {
-                            listOfValues15.add(String.format("%.1f", measuringt15))
-                        }
-                        if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
-                            listOfValues16.add("-99.9")
-                        } else {
-                            listOfValues16.add(String.format("%.1f", measuringt16))
-                        }
-
-                        if (mainView.place2Prop.value) {
-                            if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
-                                owenPR.off21()
-                            } else {
-                                if (measuringt21 < temperature) {
-                                    owenPR.on21()
-                                }
-                                if (measuringt21 > temperature * (1 + percent)) {
-                                    owenPR.off21()
-                                }
-                            }
-                            if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
-                                owenPR.off22()
-                            } else {
-                                if (measuringt22 < temperature) {
-                                    owenPR.on22()
-                                }
-                                if (measuringt22 > temperature * (1 + percent)) {
-                                    owenPR.off22()
-                                }
-                            }
-                            if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
-                                owenPR.off23()
-                            } else {
-                                if (measuringt23 < temperature) {
-                                    owenPR.on23()
-                                }
-                                if (measuringt23 > temperature * (1 + percent)) {
-                                    owenPR.off23()
-                                }
-                            }
-                            if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
-                                owenPR.off24()
-                            } else {
-                                if (measuringt24 < temperature) {
-                                    owenPR.on24()
-                                }
-                                if (measuringt24 > temperature * (1 + percent)) {
-                                    owenPR.off24()
-                                }
-                            }
-                            if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
-                                owenPR.off25()
-                            } else {
-                                if (measuringt25 < temperature) {
-                                    owenPR.on25()
-                                }
-                                if (measuringt25 > temperature * (1 + percent)) {
-                                    owenPR.off25()
-                                }
-                            }
-                            if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
-                                owenPR.off26()
-                            } else {
-                                if (measuringt26 < temperature) {
-                                    owenPR.on26()
-                                }
-                                if (measuringt26 > temperature * (1 + percent)) {
-                                    owenPR.off26()
-                                }
-                            }
-                        }
-
-                        if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
-                            listOfValues21.add("-99.9")
-                        } else {
-                            listOfValues21.add(String.format("%.1f", measuringt21))
-                        }
-                        if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
-                            listOfValues22.add("-99.9")
-                        } else {
-                            listOfValues22.add(String.format("%.1f", measuringt22))
-                        }
-                        if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
-                            listOfValues23.add("-99.9")
-                        } else {
-                            listOfValues23.add(String.format("%.1f", measuringt23))
-                        }
-                        if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
-                            listOfValues24.add("-99.9")
-                        } else {
-                            listOfValues24.add(String.format("%.1f", measuringt24))
-                        }
-                        if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
-                            listOfValues25.add("-99.9")
-                        } else {
-                            listOfValues25.add(String.format("%.1f", measuringt25))
-                        }
-                        if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
-                            listOfValues26.add("-99.9")
-                        } else {
-                            listOfValues26.add(String.format("%.1f", measuringt26))
-                        }
-
-                        if (mainView.place3Prop.value) {
-                            if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
-                                owenPR.off31()
-                            } else {
-                                if (measuringt31 < temperature) {
-                                    owenPR.on31()
-                                }
-                                if (measuringt31 > temperature * (1 + percent)) {
-                                    owenPR.off31()
-                                }
-                            }
-                            if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
-                                owenPR.off32()
-                            } else {
-                                if (measuringt32 < temperature) {
-                                    owenPR.on32()
-                                }
-                                if (measuringt32 > temperature * (1 + percent)) {
-                                    owenPR.off32()
-                                }
-                            }
-                            if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
-                                owenPR.off33()
-                            } else {
-                                if (measuringt33 < temperature) {
-                                    owenPR.on33()
-                                }
-                                if (measuringt33 > temperature * (1 + percent)) {
-                                    owenPR.off33()
-                                }
-                            }
-                            if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
-                                owenPR.off34()
-                            } else {
-                                if (measuringt34 < temperature) {
-                                    owenPR.on34()
-                                }
-                                if (measuringt34 > temperature * (1 + percent)) {
-                                    owenPR.off34()
-                                }
-                            }
-                            if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
-                                owenPR.off35()
-                            } else {
-                                if (measuringt35 < temperature) {
-                                    owenPR.on35()
-                                }
-                                if (measuringt35 > temperature * (1 + percent)) {
-                                    owenPR.off35()
-                                }
-                            }
-                            if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
-                                owenPR.off36()
-                            } else {
-                                if (measuringt36 < temperature) {
-                                    owenPR.on36()
-                                }
-                                if (measuringt36 > temperature * (1 + percent)) {
-                                    owenPR.off36()
-                                }
-                            }
-                        }
-
-                        if (mainView.place3Prop.value) {
-                            if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
-                                listOfValues31.add("-99.9")
-                            } else {
-                                listOfValues31.add(String.format("%.1f", measuringt31))
-                            }
-                            if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
-                                listOfValues32.add("-99.9")
-                            } else {
-                                listOfValues32.add(String.format("%.1f", measuringt32))
-                            }
-                            if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
-                                listOfValues33.add("-99.9")
-                            } else {
-                                listOfValues33.add(String.format("%.1f", measuringt33))
-                            }
-                            if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
-                                listOfValues34.add("-99.9")
-                            } else {
-                                listOfValues34.add(String.format("%.1f", measuringt34))
-                            }
-                            if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
-                                listOfValues35.add("-99.9")
-                            } else {
-                                listOfValues35.add(String.format("%.1f", measuringt35))
-                            }
-                            if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
-                                listOfValues36.add("-99.9")
-                            } else {
-                                listOfValues36.add(String.format("%.1f", measuringt36))
-                            }
-                        }
-
-
-
-                        listOfAmperage11.add(String.format("%.1f", measuringI11))
-                        listOfAmperage12.add(String.format("%.1f", measuringI12))
-                        listOfAmperage13.add(String.format("%.1f", measuringI13))
-                        listOfAmperage14.add(String.format("%.1f", measuringI14))
-                        listOfAmperage15.add(String.format("%.1f", measuringI15))
-                        listOfAmperage16.add(String.format("%.1f", measuringI16))
-                        listOfAmperage21.add(String.format("%.1f", measuringI21))
-                        listOfAmperage22.add(String.format("%.1f", measuringI22))
-                        listOfAmperage23.add(String.format("%.1f", measuringI23))
-                        listOfAmperage24.add(String.format("%.1f", measuringI24))
-                        listOfAmperage25.add(String.format("%.1f", measuringI25))
-                        listOfAmperage26.add(String.format("%.1f", measuringI26))
-                        listOfAmperage31.add(String.format("%.1f", measuringI31))
-                        listOfAmperage32.add(String.format("%.1f", measuringI32))
-                        listOfAmperage33.add(String.format("%.1f", measuringI33))
-                        listOfAmperage34.add(String.format("%.1f", measuringI34))
-                        listOfAmperage35.add(String.format("%.1f", measuringI35))
-                        listOfAmperage36.add(String.format("%.1f", measuringI36))
-
-                        tickJobInProcess = false
+            for (currentSection in 0..5) {
+                if (mainView.listCB[currentSection].isSelected) {
+                    currentStage = currentSection
+                    runLater {
+                        mainView.tableTestPlace1Test1.selectionModel.select(currentSection)
+                        mainView.tableTestPlace2Test1.selectionModel.select(currentSection)
+                        mainView.tableTestPlace3Test1.selectionModel.select(currentSection)
+                        mainView.labelTimeRemaining.text =
+                            "               Нагрев ${currentSection + 1} секции. Пожалуйста, подождите"
                     }
-                }
-            )
 
-            while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
-                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения...")
-                sleep(100)
+                    if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                        appendOneMessageToLog(LogTag.MESSAGE, "Начался нагрев ${currentSection + 1} секции. Ожидайте")
+                        appendMessageToLog(LogTag.ERROR, "Первый нагрев секции")
+                        firstHeatingSection()
+                        appendMessageToLog(LogTag.ERROR, "Нагрев секции завершен")
+                        isHeating = false
+                        appendOneMessageToLog(LogTag.MESSAGE, "Температура выставлена.")
+                        appendOneMessageToLog(
+                            LogTag.MESSAGE,
+                            "Запущен отсчет времени для ${currentSection + 1} секции."
+                        )
+                    }
+
+                    val allTime =
+                        (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".")
+                            .toDouble() * 60).toInt()
+
+                    val callbackTimer = CallbackTimer(
+                        tickPeriod = 1.seconds, tickTimes = allTime,
+                        tickJob = {
+                            if (!tickJobInProcess) {
+                                tickJobInProcess = true
+                                if (!controller.isExperimentRunning) it.stop()
+                                runLater {
+                                    mainView.labelTimeRemaining.text =
+                                        "                   Испытание ${currentSection + 1} секции. Осталось: " + toHHmmss(
+                                            (allTime - it.getCurrentTicks()) * 1000L
+                                        )
+                                    setValuesInTimer()
+                                }
+                                tickJobInProcess = false
+                            }
+                        }
+                    )
+
+                    heatingSection()
+
+                    while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
+                        checkProtections()
+                        sleep(2000)
+                    }
+
+                    isNeedHeating = false
+                    if (currentSection < 6) {
+                        appendOneMessageToLog(LogTag.MESSAGE, "Переход к следующей секции")
+                    } else {
+                        appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения")
+                    }
+                    sleepWhile(5)
+                }
             }
 
             if (mainView.place1Prop.value) {
@@ -1652,31 +1039,436 @@ class Test1Controller : TController() {
                 gv240.reset()
             }
 
-            if (listOfValues11.isNotEmpty()) {
-                saveProtocolToDB()
-            }
-
             while (tickJobInProcess) {
                 sleep(100)
             }
 
-            owenPR.offAllKMs()
             appendMessageToLog(LogTag.MESSAGE, "Испытание завершено")
+            owenPR.offAllKMs()
             setResult()
 
+            soundWarning(3, 1000)
+
             finalizeExperiment()
-            runLater {
-                mainView.labelTestStatus.text = ""
-                mainView.buttonStart.isDisable = false
-                mainView.buttonStop.isDisable = true
-                mainView.mainMenuBar.isDisable = false
-                mainView.comboBoxTests.isDisable = false
-                mainView.comboBoxTestItem.isDisable = false
-                mainView.initTableTest1.isDisable = false
-                mainView.initTableTest2.isDisable = false
-                mainView.checkBoxPlace1.isDisable = false
-                mainView.checkBoxPlace2.isDisable = false
-                mainView.checkBoxPlace3.isDisable = false
+
+            if (listOfValues11.isNotEmpty() || listOfValues21.isNotEmpty() || listOfValues31.isNotEmpty()) {
+                saveProtocolToDB()
+                Singleton.currentProtocol = transaction {
+                    Protocol.all().toList().asObservable()
+                }.last()
+                runLater {
+                    confirm(
+                        "Печать протокола",
+                        "Испытание завершено. Хотите напечатать протокол?",
+                        ButtonType.YES, ButtonType.NO,
+                        owner = mainView.currentWindow,
+                        title = "Печать"
+                    ) {
+                        saveProtocolAsWorkbook(Singleton.currentProtocol)
+                        Desktop.getDesktop().print(File("protocol.xlsx"))
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun soundWarning(times: Int, sleep: Long) {
+        thread(isDaemon = true) {
+            for (i in 0..times) {
+                owenPR.onSound()
+                sleep(sleep)
+                owenPR.offSound()
+                sleep(sleep)
+            }
+        }
+    }
+
+    private fun checkProtections() {
+        if (
+            measuringt11 > 75 || measuringt12 > 75 || measuringt13 > 75 || measuringt14 > 75 || measuringt15 > 75 || measuringt16 > 75 ||
+            measuringt21 > 75 || measuringt22 > 75 || measuringt23 > 75 || measuringt24 > 75 || measuringt25 > 75 || measuringt26 > 75 ||
+            measuringt31 > 75 || measuringt32 > 75 || measuringt33 > 75 || measuringt34 > 75 || measuringt35 > 75 || measuringt36 > 75
+        ) {
+            soundError()
+            soundWarning(1, 1000)
+        }
+    }
+
+    private fun clearTable() {
+        controller.tableValuesPlace1Test1[0].place1voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[1].place1voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[2].place1voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[3].place1voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[4].place1voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[5].place1voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[0].place2voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[1].place2voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[2].place2voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[3].place2voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[4].place2voltage.value = "0.0"
+        controller.tableValuesPlace2Test1[5].place2voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[0].place3voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[1].place3voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[2].place3voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[3].place3voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[4].place3voltage.value = "0.0"
+        controller.tableValuesPlace3Test1[5].place3voltage.value = "0.0"
+        controller.tableValuesPlace1Test1[0].place1amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[1].place1amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[2].place1amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[3].place1amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[4].place1amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[5].place1amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[0].place2amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[1].place2amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[2].place2amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[3].place2amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[4].place2amperage.value = "0.0"
+        controller.tableValuesPlace2Test1[5].place2amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[0].place3amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[1].place3amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[2].place3amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[3].place3amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[4].place3amperage.value = "0.0"
+        controller.tableValuesPlace3Test1[5].place3amperage.value = "0.0"
+        controller.tableValuesPlace1Test1[0].place1temp.value = "0.0"
+        controller.tableValuesPlace1Test1[1].place1temp.value = "0.0"
+        controller.tableValuesPlace1Test1[2].place1temp.value = "0.0"
+        controller.tableValuesPlace1Test1[3].place1temp.value = "0.0"
+        controller.tableValuesPlace1Test1[4].place1temp.value = "0.0"
+        controller.tableValuesPlace1Test1[5].place1temp.value = "0.0"
+        controller.tableValuesPlace2Test1[0].place2temp.value = "0.0"
+        controller.tableValuesPlace2Test1[1].place2temp.value = "0.0"
+        controller.tableValuesPlace2Test1[2].place2temp.value = "0.0"
+        controller.tableValuesPlace2Test1[3].place2temp.value = "0.0"
+        controller.tableValuesPlace2Test1[4].place2temp.value = "0.0"
+        controller.tableValuesPlace2Test1[5].place2temp.value = "0.0"
+        controller.tableValuesPlace3Test1[0].place3temp.value = "0.0"
+        controller.tableValuesPlace3Test1[1].place3temp.value = "0.0"
+        controller.tableValuesPlace3Test1[2].place3temp.value = "0.0"
+        controller.tableValuesPlace3Test1[3].place3temp.value = "0.0"
+        controller.tableValuesPlace3Test1[4].place3temp.value = "0.0"
+        controller.tableValuesPlace3Test1[5].place3temp.value = "0.0"
+    }
+
+    private fun collectValuesInProtocolInTimer() {
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning) {
+                if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
+                    listOfValues11.add("-99.9")
+                } else {
+                    listOfValues11.add(String.format("%.1f", measuringt11))
+                }
+                if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
+                    listOfValues12.add("-99.9")
+                } else {
+                    listOfValues12.add(String.format("%.1f", measuringt12))
+                }
+                if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
+                    listOfValues13.add("-99.9")
+                } else {
+                    listOfValues13.add(String.format("%.1f", measuringt13))
+                }
+                if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
+                    listOfValues14.add("-99.9")
+                } else {
+                    listOfValues14.add(String.format("%.1f", measuringt14))
+                }
+                if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
+                    listOfValues15.add("-99.9")
+                } else {
+                    listOfValues15.add(String.format("%.1f", measuringt15))
+                }
+                if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
+                    listOfValues16.add("-99.9")
+                } else {
+                    listOfValues16.add(String.format("%.1f", measuringt16))
+                }
+
+                if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
+                    listOfValues21.add("-99.9")
+                } else {
+                    listOfValues21.add(String.format("%.1f", measuringt21))
+                }
+                if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
+                    listOfValues22.add("-99.9")
+                } else {
+                    listOfValues22.add(String.format("%.1f", measuringt22))
+                }
+                if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
+                    listOfValues23.add("-99.9")
+                } else {
+                    listOfValues23.add(String.format("%.1f", measuringt23))
+                }
+                if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
+                    listOfValues24.add("-99.9")
+                } else {
+                    listOfValues24.add(String.format("%.1f", measuringt24))
+                }
+                if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
+                    listOfValues25.add("-99.9")
+                } else {
+                    listOfValues25.add(String.format("%.1f", measuringt25))
+                }
+                if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
+                    listOfValues26.add("-99.9")
+                } else {
+                    listOfValues26.add(String.format("%.1f", measuringt26))
+                }
+
+                if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
+                    listOfValues31.add("-99.9")
+                } else {
+                    listOfValues31.add(String.format("%.1f", measuringt31))
+                }
+                if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
+                    listOfValues32.add("-99.9")
+                } else {
+                    listOfValues32.add(String.format("%.1f", measuringt32))
+                }
+                if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
+                    listOfValues33.add("-99.9")
+                } else {
+                    listOfValues33.add(String.format("%.1f", measuringt33))
+                }
+                if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
+                    listOfValues34.add("-99.9")
+                } else {
+                    listOfValues34.add(String.format("%.1f", measuringt34))
+                }
+                if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
+                    listOfValues35.add("-99.9")
+                } else {
+                    listOfValues35.add(String.format("%.1f", measuringt35))
+                }
+                if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
+                    listOfValues36.add("-99.9")
+                } else {
+                    listOfValues36.add(String.format("%.1f", measuringt36))
+                }
+                sleep(1000)
+//        listOfAmperage11.add(String.format("%.1f", measuringI11))
+//        listOfAmperage12.add(String.format("%.1f", measuringI12))
+//        listOfAmperage13.add(String.format("%.1f", measuringI13))
+//        listOfAmperage14.add(String.format("%.1f", measuringI14))
+//        listOfAmperage15.add(String.format("%.1f", measuringI15))
+//        listOfAmperage16.add(String.format("%.1f", measuringI16))
+//        listOfAmperage21.add(String.format("%.1f", measuringI21))
+//        listOfAmperage22.add(String.format("%.1f", measuringI22))
+//        listOfAmperage23.add(String.format("%.1f", measuringI23))
+//        listOfAmperage24.add(String.format("%.1f", measuringI24))
+//        listOfAmperage25.add(String.format("%.1f", measuringI25))
+//        listOfAmperage26.add(String.format("%.1f", measuringI26))
+//        listOfAmperage31.add(String.format("%.1f", measuringI31))
+//        listOfAmperage32.add(String.format("%.1f", measuringI32))
+//        listOfAmperage33.add(String.format("%.1f", measuringI33))
+//        listOfAmperage34.add(String.format("%.1f", measuringI34))
+//        listOfAmperage35.add(String.format("%.1f", measuringI35))
+//        listOfAmperage36.add(String.format("%.1f", measuringI36))
+            }
+        }
+    }
+
+    private fun setValuesInTimer() {
+        if (mainView.place1Prop.value) {
+            controller.tableValuesPlace1Test1[0].place1voltage.value =
+                formatRealNumber(measuringU11).toString()
+            controller.tableValuesPlace1Test1[1].place1voltage.value =
+                formatRealNumber(measuringU12).toString()
+            controller.tableValuesPlace1Test1[2].place1voltage.value =
+                formatRealNumber(measuringU13).toString()
+            controller.tableValuesPlace1Test1[3].place1voltage.value =
+                formatRealNumber(measuringU14).toString()
+            controller.tableValuesPlace1Test1[4].place1voltage.value =
+                formatRealNumber(measuringU15).toString()
+            controller.tableValuesPlace1Test1[5].place1voltage.value =
+                formatRealNumber(measuringU16).toString()
+        }
+        if (mainView.place2Prop.value) {
+            controller.tableValuesPlace2Test1[0].place2voltage.value =
+                formatRealNumber(measuringU21).toString()
+            controller.tableValuesPlace2Test1[1].place2voltage.value =
+                formatRealNumber(measuringU22).toString()
+            controller.tableValuesPlace2Test1[2].place2voltage.value =
+                formatRealNumber(measuringU23).toString()
+            controller.tableValuesPlace2Test1[3].place2voltage.value =
+                formatRealNumber(measuringU24).toString()
+            controller.tableValuesPlace2Test1[4].place2voltage.value =
+                formatRealNumber(measuringU25).toString()
+            controller.tableValuesPlace2Test1[5].place2voltage.value =
+                formatRealNumber(measuringU26).toString()
+        }
+        if (mainView.place3Prop.value) {
+            controller.tableValuesPlace3Test1[0].place3voltage.value =
+                formatRealNumber(measuringU31).toString()
+            controller.tableValuesPlace3Test1[1].place3voltage.value =
+                formatRealNumber(measuringU32).toString()
+            controller.tableValuesPlace3Test1[2].place3voltage.value =
+                formatRealNumber(measuringU33).toString()
+            controller.tableValuesPlace3Test1[3].place3voltage.value =
+                formatRealNumber(measuringU34).toString()
+            controller.tableValuesPlace3Test1[4].place3voltage.value =
+                formatRealNumber(measuringU35).toString()
+            controller.tableValuesPlace3Test1[5].place3voltage.value =
+                formatRealNumber(measuringU36).toString()
+        }
+
+        if (mainView.place1Prop.value) {
+            controller.tableValuesPlace1Test1[0].place1amperage.value =
+                String.format("%.2f", measuringI11)
+            controller.tableValuesPlace1Test1[1].place1amperage.value =
+                String.format("%.2f", measuringI12)
+            controller.tableValuesPlace1Test1[2].place1amperage.value =
+                String.format("%.2f", measuringI13)
+            controller.tableValuesPlace1Test1[3].place1amperage.value =
+                String.format("%.2f", measuringI14)
+            controller.tableValuesPlace1Test1[4].place1amperage.value =
+                String.format("%.2f", measuringI15)
+            controller.tableValuesPlace1Test1[5].place1amperage.value =
+                String.format("%.2f", measuringI16)
+        }
+        if (mainView.place2Prop.value) {
+            controller.tableValuesPlace2Test1[0].place2amperage.value =
+                String.format("%.2f", measuringI21)
+            controller.tableValuesPlace2Test1[1].place2amperage.value =
+                String.format("%.2f", measuringI22)
+            controller.tableValuesPlace2Test1[2].place2amperage.value =
+                String.format("%.2f", measuringI23)
+            controller.tableValuesPlace2Test1[3].place2amperage.value =
+                String.format("%.2f", measuringI24)
+            controller.tableValuesPlace2Test1[4].place2amperage.value =
+                String.format("%.2f", measuringI25)
+            controller.tableValuesPlace2Test1[5].place2amperage.value =
+                String.format("%.2f", measuringI26)
+        }
+        if (mainView.place3Prop.value) {
+            controller.tableValuesPlace3Test1[0].place3amperage.value =
+                String.format("%.2f", measuringI31)
+            controller.tableValuesPlace3Test1[1].place3amperage.value =
+                String.format("%.2f", measuringI32)
+            controller.tableValuesPlace3Test1[2].place3amperage.value =
+                String.format("%.2f", measuringI33)
+            controller.tableValuesPlace3Test1[3].place3amperage.value =
+                String.format("%.2f", measuringI34)
+            controller.tableValuesPlace3Test1[4].place3amperage.value =
+                String.format("%.2f", measuringI35)
+            controller.tableValuesPlace3Test1[5].place3amperage.value =
+                String.format("%.2f", measuringI36)
+        }
+
+        if (mainView.place1Prop.value) {
+            if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
+                controller.tableValuesPlace1Test1[0].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[0].place1temp.value =
+                    String.format("%.1f", measuringt11)
+            }
+            if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
+                controller.tableValuesPlace1Test1[1].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[1].place1temp.value =
+                    String.format("%.1f", measuringt12)
+            }
+            if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
+                controller.tableValuesPlace1Test1[2].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[2].place1temp.value =
+                    String.format("%.1f", measuringt13)
+            }
+            if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
+                controller.tableValuesPlace1Test1[3].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[3].place1temp.value =
+                    String.format("%.1f", measuringt14)
+            }
+            if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
+                controller.tableValuesPlace1Test1[4].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[4].place1temp.value =
+                    String.format("%.1f", measuringt15)
+            }
+            if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
+                controller.tableValuesPlace1Test1[5].place1temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace1Test1[5].place1temp.value =
+                    String.format("%.1f", measuringt16)
+            }
+        }
+        if (mainView.place2Prop.value) {
+            if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
+                controller.tableValuesPlace2Test1[0].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[0].place2temp.value =
+                    String.format("%.1f", measuringt21)
+            }
+            if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
+                controller.tableValuesPlace2Test1[1].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[1].place2temp.value =
+                    String.format("%.1f", measuringt22)
+            }
+            if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
+                controller.tableValuesPlace2Test1[2].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[2].place2temp.value =
+                    String.format("%.1f", measuringt23)
+            }
+            if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
+                controller.tableValuesPlace2Test1[3].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[3].place2temp.value =
+                    String.format("%.1f", measuringt24)
+            }
+            if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
+                controller.tableValuesPlace2Test1[4].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[4].place2temp.value =
+                    String.format("%.1f", measuringt25)
+            }
+            if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
+                controller.tableValuesPlace2Test1[5].place2temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace2Test1[5].place2temp.value =
+                    String.format("%.1f", measuringt26)
+            }
+        }
+        if (mainView.place3Prop.value) {
+            if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
+                controller.tableValuesPlace3Test1[0].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[0].place3temp.value =
+                    String.format("%.1f", measuringt31)
+            }
+            if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
+                controller.tableValuesPlace3Test1[1].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[1].place3temp.value =
+                    String.format("%.1f", measuringt32)
+            }
+            if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
+                controller.tableValuesPlace3Test1[2].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[2].place3temp.value =
+                    String.format("%.1f", measuringt33)
+            }
+            if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
+                controller.tableValuesPlace3Test1[3].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[3].place3temp.value =
+                    String.format("%.1f", measuringt34)
+            }
+            if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
+                controller.tableValuesPlace3Test1[4].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[4].place3temp.value =
+                    String.format("%.1f", measuringt35)
+            }
+            if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
+                controller.tableValuesPlace3Test1[5].place3temp.value = "-.--"
+            } else {
+                controller.tableValuesPlace3Test1[5].place3temp.value =
+                    String.format("%.1f", measuringt36)
             }
         }
     }
@@ -1685,136 +1477,834 @@ class Test1Controller : TController() {
         thread(isDaemon = true) {
             while (controller.isExperimentRunning && isLatrRegulation) {
                 runLater {
-                    if (mainView.place1Prop.value) {
-                        controller.tableValuesPlace1Test1[0].place1voltage.value =
-                            formatRealNumber(measuringU11).toString()
-                        controller.tableValuesPlace1Test1[1].place1voltage.value =
-                            formatRealNumber(measuringU12).toString()
-                        controller.tableValuesPlace1Test1[2].place1voltage.value =
-                            formatRealNumber(measuringU13).toString()
-                        controller.tableValuesPlace1Test1[3].place1voltage.value =
-                            formatRealNumber(measuringU14).toString()
-                        controller.tableValuesPlace1Test1[4].place1voltage.value =
-                            formatRealNumber(measuringU15).toString()
-                        controller.tableValuesPlace1Test1[5].place1voltage.value =
-                            formatRealNumber(measuringU16).toString()
-                    }
-                    if (mainView.place2Prop.value) {
-                        controller.tableValuesPlace2Test1[0].place2voltage.value =
-                            formatRealNumber(measuringU21).toString()
-                        controller.tableValuesPlace2Test1[1].place2voltage.value =
-                            formatRealNumber(measuringU22).toString()
-                        controller.tableValuesPlace2Test1[2].place2voltage.value =
-                            formatRealNumber(measuringU23).toString()
-                        controller.tableValuesPlace2Test1[3].place2voltage.value =
-                            formatRealNumber(measuringU24).toString()
-                        controller.tableValuesPlace2Test1[4].place2voltage.value =
-                            formatRealNumber(measuringU25).toString()
-                        controller.tableValuesPlace2Test1[5].place2voltage.value =
-                            formatRealNumber(measuringU26).toString()
-                    }
-                    if (mainView.place3Prop.value) {
-                        controller.tableValuesPlace3Test1[0].place3voltage.value =
-                            formatRealNumber(measuringU31).toString()
-                        controller.tableValuesPlace3Test1[1].place3voltage.value =
-                            formatRealNumber(measuringU32).toString()
-                        controller.tableValuesPlace3Test1[2].place3voltage.value =
-                            formatRealNumber(measuringU33).toString()
-                        controller.tableValuesPlace3Test1[3].place3voltage.value =
-                            formatRealNumber(measuringU34).toString()
-                        controller.tableValuesPlace3Test1[4].place3voltage.value =
-                            formatRealNumber(measuringU35).toString()
-                        controller.tableValuesPlace3Test1[5].place3voltage.value =
-                            formatRealNumber(measuringU36).toString()
-                    }
-                    if (mainView.place1Prop.value) {
-                        controller.tableValuesPlace1Test1[0].place1amperage.value =
-                            formatRealNumber(measuringI11).toString()
-                        controller.tableValuesPlace1Test1[1].place1amperage.value =
-                            formatRealNumber(measuringI12).toString()
-                        controller.tableValuesPlace1Test1[2].place1amperage.value =
-                            formatRealNumber(measuringI13).toString()
-                        controller.tableValuesPlace1Test1[3].place1amperage.value =
-                            formatRealNumber(measuringI14).toString()
-                        controller.tableValuesPlace1Test1[4].place1amperage.value =
-                            formatRealNumber(measuringI15).toString()
-                        controller.tableValuesPlace1Test1[5].place1amperage.value =
-                            formatRealNumber(measuringI16).toString()
-                    }
-                    if (mainView.place2Prop.value) {
-                        controller.tableValuesPlace2Test1[0].place2amperage.value =
-                            formatRealNumber(measuringI21).toString()
-                        controller.tableValuesPlace2Test1[1].place2amperage.value =
-                            formatRealNumber(measuringI22).toString()
-                        controller.tableValuesPlace2Test1[2].place2amperage.value =
-                            formatRealNumber(measuringI23).toString()
-                        controller.tableValuesPlace2Test1[3].place2amperage.value =
-                            formatRealNumber(measuringI24).toString()
-                        controller.tableValuesPlace2Test1[4].place2amperage.value =
-                            formatRealNumber(measuringI25).toString()
-                        controller.tableValuesPlace2Test1[5].place2amperage.value =
-                            formatRealNumber(measuringI26).toString()
-                    }
-                    if (mainView.place3Prop.value) {
-                        controller.tableValuesPlace3Test1[0].place3amperage.value =
-                            formatRealNumber(measuringI21).toString()
-                        controller.tableValuesPlace3Test1[1].place3amperage.value =
-                            formatRealNumber(measuringI22).toString()
-                        controller.tableValuesPlace3Test1[2].place3amperage.value =
-                            formatRealNumber(measuringI23).toString()
-                        controller.tableValuesPlace3Test1[3].place3amperage.value =
-                            formatRealNumber(measuringI24).toString()
-                        controller.tableValuesPlace3Test1[4].place3amperage.value =
-                            formatRealNumber(measuringI25).toString()
-                        controller.tableValuesPlace3Test1[5].place3amperage.value =
-                            formatRealNumber(measuringI26).toString()
-                    }
-
-                    if (mainView.place1Prop.value) {
-                        controller.tableValuesPlace1Test1[0].place1temp.value =
-                            formatRealNumber(measuringt11).toString()
-                        controller.tableValuesPlace1Test1[1].place1temp.value =
-                            formatRealNumber(measuringt12).toString()
-                        controller.tableValuesPlace1Test1[2].place1temp.value =
-                            formatRealNumber(measuringt13).toString()
-                        controller.tableValuesPlace1Test1[3].place1temp.value =
-                            formatRealNumber(measuringt14).toString()
-                        controller.tableValuesPlace1Test1[4].place1temp.value =
-                            formatRealNumber(measuringt15).toString()
-                        controller.tableValuesPlace1Test1[5].place1temp.value =
-                            formatRealNumber(measuringt16).toString()
-                    }
-                    if (mainView.place2Prop.value) {
-                        controller.tableValuesPlace2Test1[0].place2temp.value =
-                            formatRealNumber(measuringt21).toString()
-                        controller.tableValuesPlace2Test1[1].place2temp.value =
-                            formatRealNumber(measuringt22).toString()
-                        controller.tableValuesPlace2Test1[2].place2temp.value =
-                            formatRealNumber(measuringt23).toString()
-                        controller.tableValuesPlace2Test1[3].place2temp.value =
-                            formatRealNumber(measuringt24).toString()
-                        controller.tableValuesPlace2Test1[4].place2temp.value =
-                            formatRealNumber(measuringt25).toString()
-                        controller.tableValuesPlace2Test1[5].place2temp.value =
-                            formatRealNumber(measuringt26).toString()
-                    }
-                    if (mainView.place3Prop.value) {
-                        controller.tableValuesPlace3Test1[0].place3temp.value =
-                            formatRealNumber(measuringt21).toString()
-                        controller.tableValuesPlace3Test1[1].place3temp.value =
-                            formatRealNumber(measuringt22).toString()
-                        controller.tableValuesPlace3Test1[2].place3temp.value =
-                            formatRealNumber(measuringt23).toString()
-                        controller.tableValuesPlace3Test1[3].place3temp.value =
-                            formatRealNumber(measuringt24).toString()
-                        controller.tableValuesPlace3Test1[4].place3temp.value =
-                            formatRealNumber(measuringt25).toString()
-                        controller.tableValuesPlace3Test1[5].place3temp.value =
-                            formatRealNumber(measuringt26).toString()
-                    }
+                    setValuesInTable()
                 }
                 sleep(300)
             }
+        }
+    }
+
+    private fun firstHeatingSection() {
+        isHeating = true
+        owenPR.offAllKMs()
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isHeating) {
+                runLater {
+                    setValuesInTable()
+                }
+                sleep(300)
+            }
+        }
+
+        var isNeedHeatingFirst1 = mainView.place1Prop.value
+        var isNeedHeatingFirst2 = mainView.place2Prop.value
+        var isNeedHeatingFirst3 = mainView.place3Prop.value
+
+        var isNeedHeatingSecond1 = mainView.place1Prop.value
+        var isNeedHeatingSecond2 = mainView.place2Prop.value
+        var isNeedHeatingSecond3 = mainView.place3Prop.value
+
+        var isNeedHeatingThird1 = mainView.place1Prop.value
+        var isNeedHeatingThird2 = mainView.place2Prop.value
+        var isNeedHeatingThird3 = mainView.place3Prop.value
+
+
+        while (controller.isExperimentRunning && (isNeedHeatingFirst1 || isNeedHeatingFirst2 || isNeedHeatingFirst3)) {
+            val percent = 0.4
+            when (currentStage) {
+                0 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on11()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off11()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on31()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off31()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on12()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off12()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on32()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off32()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on13()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off13()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on33()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off33()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on14()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off14()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on34()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off34()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on15()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off15()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on35()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off35()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on16()
+                            isNeedHeatingFirst1 = true
+                        } else {
+                            owenPR.off16()
+                            isNeedHeatingFirst1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on26()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off26()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on36()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off36()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+            }
+            var time = 15 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && (isNeedHeatingSecond1 || isNeedHeatingSecond2 || isNeedHeatingSecond3)) {
+            val percent = 0.2
+            when (currentStage) {
+                0 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on11()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off11()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on31()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off31()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on12()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off12()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on32()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off32()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on13()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off13()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on33()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off33()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on14()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off14()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on34()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off34()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on15()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off15()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on35()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off35()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on16()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off16()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on26()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off26()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on36()
+                            isNeedHeatingSecond3 = true
+                        } else {
+                            owenPR.off36()
+                            isNeedHeatingSecond3 = false
+                        }
+                    }
+                }
+            }
+            var time = 10 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && (isNeedHeatingThird1 || isNeedHeatingThird2 || isNeedHeatingThird3)) {
+            val percent = 0
+            when (currentStage) {
+                0 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on11()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off11()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on31()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off31()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on12()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off12()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on32()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off32()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on13()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off13()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on33()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off33()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on14()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off14()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on34()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off34()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on15()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off15()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on35()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off35()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on16()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off16()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                    if (mainView.place2Prop.value) {
+                        if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on26()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off26()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                    if (mainView.place3Prop.value) {
+                        if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on36()
+                            isNeedHeatingThird3 = true
+                        } else {
+                            owenPR.off36()
+                            isNeedHeatingThird3 = false
+                        }
+                    }
+                }
+            }
+            var time = 5 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+    }
+
+    private fun heatingSection() {
+        isNeedHeating = true
+        val percent = 0.0
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isNeedHeating) {
+                when (currentStage) {
+                    0 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on11()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on21()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on31()
+                            }
+                        }
+                    }
+                    1 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on12()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on22()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on32()
+                            }
+                        }
+                    }
+                    2 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on13()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on23()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on33()
+                            }
+                        }
+                    }
+                    3 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on14()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on24()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on34()
+                            }
+                        }
+                    }
+                    4 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on15()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on25()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on35()
+                            }
+                        }
+                    }
+                    5 -> {
+                        if (mainView.place1Prop.value) {
+                            if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on16()
+                            }
+                        }
+                        if (mainView.place2Prop.value) {
+                            if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on26()
+                            }
+                        }
+                        if (mainView.place3Prop.value) {
+                            if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning && isNeedHeating) {
+                                owenPR.on36()
+                            }
+                        }
+                    }
+                }
+                var time = 5 * 100
+                while (controller.isExperimentRunning && isNeedHeating && time-- > 0) {
+                    sleep(10)
+                }
+                if (controller.isExperimentRunning && isNeedHeating) {
+                    owenPR.offAllKMs()
+                }
+                time = 30 * 100
+                while (controller.isExperimentRunning && isNeedHeating && time-- > 0) {
+                    sleep(10)
+                }
+            }
+        }
+    }
+
+    private fun setValuesInTable() {
+        if (mainView.place1Prop.value) {
+            controller.tableValuesPlace1Test1[0].place1voltage.value =
+                formatRealNumber(measuringU11).toString()
+            controller.tableValuesPlace1Test1[1].place1voltage.value =
+                formatRealNumber(measuringU12).toString()
+            controller.tableValuesPlace1Test1[2].place1voltage.value =
+                formatRealNumber(measuringU13).toString()
+            controller.tableValuesPlace1Test1[3].place1voltage.value =
+                formatRealNumber(measuringU14).toString()
+            controller.tableValuesPlace1Test1[4].place1voltage.value =
+                formatRealNumber(measuringU15).toString()
+            controller.tableValuesPlace1Test1[5].place1voltage.value =
+                formatRealNumber(measuringU16).toString()
+        }
+        if (mainView.place2Prop.value) {
+            controller.tableValuesPlace2Test1[0].place2voltage.value =
+                formatRealNumber(measuringU21).toString()
+            controller.tableValuesPlace2Test1[1].place2voltage.value =
+                formatRealNumber(measuringU22).toString()
+            controller.tableValuesPlace2Test1[2].place2voltage.value =
+                formatRealNumber(measuringU23).toString()
+            controller.tableValuesPlace2Test1[3].place2voltage.value =
+                formatRealNumber(measuringU24).toString()
+            controller.tableValuesPlace2Test1[4].place2voltage.value =
+                formatRealNumber(measuringU25).toString()
+            controller.tableValuesPlace2Test1[5].place2voltage.value =
+                formatRealNumber(measuringU26).toString()
+        }
+        if (mainView.place3Prop.value) {
+            controller.tableValuesPlace3Test1[0].place3voltage.value =
+                formatRealNumber(measuringU31).toString()
+            controller.tableValuesPlace3Test1[1].place3voltage.value =
+                formatRealNumber(measuringU32).toString()
+            controller.tableValuesPlace3Test1[2].place3voltage.value =
+                formatRealNumber(measuringU33).toString()
+            controller.tableValuesPlace3Test1[3].place3voltage.value =
+                formatRealNumber(measuringU34).toString()
+            controller.tableValuesPlace3Test1[4].place3voltage.value =
+                formatRealNumber(measuringU35).toString()
+            controller.tableValuesPlace3Test1[5].place3voltage.value =
+                formatRealNumber(measuringU36).toString()
+        }
+        if (mainView.place1Prop.value) {
+            controller.tableValuesPlace1Test1[0].place1amperage.value = String.format("%.2f", measuringI11)
+            controller.tableValuesPlace1Test1[1].place1amperage.value = String.format("%.2f", measuringI12)
+            controller.tableValuesPlace1Test1[2].place1amperage.value = String.format("%.2f", measuringI13)
+            controller.tableValuesPlace1Test1[3].place1amperage.value = String.format("%.2f", measuringI14)
+            controller.tableValuesPlace1Test1[4].place1amperage.value = String.format("%.2f", measuringI15)
+            controller.tableValuesPlace1Test1[5].place1amperage.value = String.format("%.2f", measuringI16)
+        }
+        if (mainView.place2Prop.value) {
+            controller.tableValuesPlace2Test1[0].place2amperage.value = String.format("%.2f", measuringI21)
+            controller.tableValuesPlace2Test1[1].place2amperage.value = String.format("%.2f", measuringI22)
+            controller.tableValuesPlace2Test1[2].place2amperage.value = String.format("%.2f", measuringI23)
+            controller.tableValuesPlace2Test1[3].place2amperage.value = String.format("%.2f", measuringI24)
+            controller.tableValuesPlace2Test1[4].place2amperage.value = String.format("%.2f", measuringI25)
+            controller.tableValuesPlace2Test1[5].place2amperage.value = String.format("%.2f", measuringI26)
+        }
+        if (mainView.place3Prop.value) {
+            controller.tableValuesPlace3Test1[0].place3amperage.value = String.format("%.2f", measuringI31)
+            controller.tableValuesPlace3Test1[1].place3amperage.value = String.format("%.2f", measuringI32)
+            controller.tableValuesPlace3Test1[2].place3amperage.value = String.format("%.2f", measuringI33)
+            controller.tableValuesPlace3Test1[3].place3amperage.value = String.format("%.2f", measuringI34)
+            controller.tableValuesPlace3Test1[4].place3amperage.value = String.format("%.2f", measuringI35)
+            controller.tableValuesPlace3Test1[5].place3amperage.value = String.format("%.2f", measuringI36)
+        }
+
+        if (mainView.place1Prop.value) {
+            controller.tableValuesPlace1Test1[0].place1temp.value = String.format("%.1f", measuringt11)
+            controller.tableValuesPlace1Test1[1].place1temp.value = String.format("%.1f", measuringt12)
+            controller.tableValuesPlace1Test1[2].place1temp.value = String.format("%.1f", measuringt13)
+            controller.tableValuesPlace1Test1[3].place1temp.value = String.format("%.1f", measuringt14)
+            controller.tableValuesPlace1Test1[4].place1temp.value = String.format("%.1f", measuringt15)
+            controller.tableValuesPlace1Test1[5].place1temp.value = String.format("%.1f", measuringt16)
+        }
+        if (mainView.place2Prop.value) {
+            controller.tableValuesPlace2Test1[0].place2temp.value = String.format("%.1f", measuringt21)
+            controller.tableValuesPlace2Test1[1].place2temp.value = String.format("%.1f", measuringt22)
+            controller.tableValuesPlace2Test1[2].place2temp.value = String.format("%.1f", measuringt23)
+            controller.tableValuesPlace2Test1[3].place2temp.value = String.format("%.1f", measuringt24)
+            controller.tableValuesPlace2Test1[4].place2temp.value = String.format("%.1f", measuringt25)
+            controller.tableValuesPlace2Test1[5].place2temp.value = String.format("%.1f", measuringt26)
+        }
+        if (mainView.place3Prop.value) {
+            controller.tableValuesPlace3Test1[0].place3temp.value = String.format("%.1f", measuringt31)
+            controller.tableValuesPlace3Test1[1].place3temp.value = String.format("%.1f", measuringt32)
+            controller.tableValuesPlace3Test1[2].place3temp.value = String.format("%.1f", measuringt33)
+            controller.tableValuesPlace3Test1[3].place3temp.value = String.format("%.1f", measuringt34)
+            controller.tableValuesPlace3Test1[4].place3temp.value = String.format("%.1f", measuringt35)
+            controller.tableValuesPlace3Test1[5].place3temp.value = String.format("%.1f", measuringt36)
+        }
+    }
+
+    private fun sleepWhile(second: Int) {
+        var timer = second * 10
+        while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && timer-- > 0) {
+            sleep(100)
         }
     }
 
@@ -1957,9 +2447,16 @@ class Test1Controller : TController() {
         val unixTime = System.currentTimeMillis()
 
         transaction {
-            Protocol.new {
+            Singleton.currentProtocol = Protocol.new {
                 date = dateFormatter.format(unixTime).toString()
                 time = timeFormatter.format(unixTime).toString()
+                operator = controller.position1
+                cipher1 = mainView.tfCipher1.text.toString()
+                productNumber1 = mainView.tfProductNumber1.text.toString()
+                cipher2 = mainView.tfCipher3.text.toString()
+                productNumber2 = mainView.tfProductNumber3.text.toString()
+                cipher3 = mainView.tfCipher3.text.toString()
+                productNumber3 = mainView.tfProductNumber3.text.toString()
                 temp11 = listOfValues11.toString()
                 temp12 = listOfValues12.toString()
                 temp13 = listOfValues13.toString()
@@ -1978,24 +2475,6 @@ class Test1Controller : TController() {
                 temp34 = listOfValues34.toString()
                 temp35 = listOfValues35.toString()
                 temp36 = listOfValues36.toString()
-                amperage11 = listOfAmperage11.toString()
-                amperage12 = listOfAmperage12.toString()
-                amperage13 = listOfAmperage13.toString()
-                amperage14 = listOfAmperage14.toString()
-                amperage15 = listOfAmperage15.toString()
-                amperage16 = listOfAmperage16.toString()
-                amperage21 = listOfAmperage21.toString()
-                amperage22 = listOfAmperage22.toString()
-                amperage23 = listOfAmperage23.toString()
-                amperage24 = listOfAmperage24.toString()
-                amperage25 = listOfAmperage25.toString()
-                amperage26 = listOfAmperage26.toString()
-                amperage31 = listOfAmperage31.toString()
-                amperage32 = listOfAmperage32.toString()
-                amperage33 = listOfAmperage33.toString()
-                amperage34 = listOfAmperage34.toString()
-                amperage35 = listOfAmperage35.toString()
-                amperage36 = listOfAmperage36.toString()
             }
         }
     }
@@ -2003,16 +2482,34 @@ class Test1Controller : TController() {
     private fun setResult() {
         if (controller.cause.isNotEmpty()) {
             appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: ${controller.cause}")
+            soundError()
         } else if (!controller.isDevicesRespondingTest1()) {
             appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: \nпотеряна связь с устройствами")
+            soundError()
         } else {
             appendMessageToLog(LogTag.MESSAGE, "Испытание завершено успешно")
+            soundError()
         }
     }
 
     private fun finalizeExperiment() {
+        controller.isExperimentRunning = false
         isExperimentEnded = true
         owenPR.offAllKMs()
         CommunicationModel.clearPollingRegisters()
+        runLater {
+            mainView.labelTimeRemaining.text = ""
+            mainView.labelTestStatus.text = ""
+            mainView.buttonStart.isDisable = false
+            mainView.buttonStop.isDisable = true
+            mainView.mainMenuBar.isDisable = false
+            mainView.comboBoxTests.isDisable = false
+            mainView.comboBoxTestItem.isDisable = false
+            mainView.initTableTest1.isDisable = false
+            mainView.initTableTest2.isDisable = false
+            mainView.checkBoxPlace1.isDisable = false
+            mainView.checkBoxPlace2.isDisable = false
+            mainView.checkBoxPlace3.isDisable = false
+        }
     }
 }

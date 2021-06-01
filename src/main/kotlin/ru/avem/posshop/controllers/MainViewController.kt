@@ -7,10 +7,7 @@ import ru.avem.posshop.app.Pos.Companion.isAppRunning
 import ru.avem.posshop.communication.model.CommunicationModel
 import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrModel
 import ru.avem.posshop.entities.*
-import ru.avem.posshop.utils.LogTag
-import ru.avem.posshop.utils.State
-import ru.avem.posshop.utils.Toast
-import ru.avem.posshop.utils.sleep
+import ru.avem.posshop.utils.*
 import ru.avem.posshop.view.MainView
 import tornadofx.*
 import java.text.SimpleDateFormat
@@ -324,7 +321,17 @@ class MainViewController : Controller() {
     }
 
     fun handleStopTest() {
-        cause = "Отменено оператором"
+        view.currentWindow?.let {
+            showTwoWayDialog(
+                "Отмена",
+                "Вы действительно хотите отменить испытание?",
+                "Нет",
+                "Да",
+                { },
+                { cause = "Отменено оператором" },
+                currentWindow = it
+            )
+        }
     }
 
     private fun appendMessageToLog(tag: LogTag, _msg: String) {
@@ -348,6 +355,6 @@ class MainViewController : Controller() {
     }
 
     fun showAboutUs() {
-        Toast.makeText("Версия ПО: 1.0.0\nВерсия БСУ: 1.0.0\nДата: 11.02.2021").show(Toast.ToastType.INFORMATION)
+        Toast.makeText("Версия ПО: 2.0.9\nВерсия БСУ: 1.0.0\nДата: 01.06.2021").show(Toast.ToastType.INFORMATION)
     }
 }

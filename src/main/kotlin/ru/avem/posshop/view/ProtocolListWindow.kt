@@ -10,13 +10,15 @@ import javafx.stage.Modality
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.database.entities.Protocol
+import ru.avem.posshop.database.entities.ProtocolRotorBlade
 import ru.avem.posshop.database.entities.ProtocolsTable
 import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.Singleton
 import ru.avem.posshop.utils.callKeyBoard
-import ru.avem.posshop.utils.openFile
 import tornadofx.*
 import tornadofx.controlsfx.confirmNotification
+import tornadofx.controlsfx.errorNotification
+import java.awt.Desktop
 import java.io.File
 
 class ProtocolListWindow : View("Протоколы графиков") {
@@ -31,8 +33,8 @@ class ProtocolListWindow : View("Протоколы графиков") {
 
 
     override val root = anchorpane {
-        prefWidth = 900.0
-        prefHeight = 500.0
+        prefWidth = 1800.0
+        prefHeight = 900.0
 
         vbox(spacing = 16.0) {
             anchorpaneConstraints {
@@ -53,7 +55,14 @@ class ProtocolListWindow : View("Протоколы графиков") {
 
                 onKeyReleased = EventHandler {
                     if (!text.isNullOrEmpty()) {
-                        tableViewProtocols.items = protocols.filter { it.date.contains(text) }.asObservable()
+                        tableViewProtocols.items = protocols.filter {
+                            it.date.contains(text)
+                                    || it.time.contains(text)
+                                    || it.operator.contains(text)
+                                    || it.productNumber1.contains(text)
+                                    || it.productNumber2.contains(text)
+                                    || it.productNumber3.contains(text)
+                        }.asObservable()
                     } else {
                         tableViewProtocols.items = protocols
                     }
@@ -67,14 +76,18 @@ class ProtocolListWindow : View("Протоколы графиков") {
                 items = protocols
                 prefHeight = 700.0
                 columnResizePolicyProperty().set(TableView.CONSTRAINED_RESIZE_POLICY)
+                column("№ изделия 1", Protocol::productNumber1)
+                column("№ изделия 2", Protocol::productNumber2)
+                column("№ изделия 3", Protocol::productNumber3)
                 column("Дата", Protocol::date)
                 column("Время", Protocol::time)
+                column("Оператор", Protocol::operator)
             }
 
             hbox(spacing = 16.0) {
                 alignmentProperty().set(Pos.CENTER)
 
-                button("Открыть") {
+                button("Печать") {
                     action {
                         if (tableViewProtocols.selectedItem != null) {
                             Singleton.currentProtocol = transaction {
@@ -84,7 +97,8 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             }.first()
                             saveProtocolAsWorkbook(Singleton.currentProtocol)
                             close()
-                            openFile(File("protocol.xlsx"))
+//                            openFile(File("protocol.xlsx"))
+                            Desktop.getDesktop().print(File("protocol.xlsx"))
                         }
                     }
                 }
@@ -110,7 +124,7 @@ class ProtocolListWindow : View("Протоколы графиков") {
                         if (tableViewProtocols.selectedItem != null) {
                             val files = chooseFile(
                                 "Выберите директорию для сохранения",
-                                arrayOf(FileChooser.ExtensionFilter("XSLX Files (*.xlsx)", "*.xlsx")),
+                                arrayOf(FileChooser.ExtensionFilter("XLSX Files (*.xlsx)", "*.xlsx")),
                                 FileChooserMode.Save,
                                 this@ProtocolListWindow.currentWindow
                             ) {
@@ -130,6 +144,21 @@ class ProtocolListWindow : View("Протоколы графиков") {
                                 }
                             }
                         }
+                    }
+                }
+                button("Сохранить 1 лопасть") {
+                    action {
+                        saveRotorBlade(1)
+                    }
+                }
+                button("Сохранить 2 лопасть") {
+                    action {
+                        saveRotorBlade(2)
+                    }
+                }
+                button("Сохранить 3 лопасть") {
+                    action {
+                        saveRotorBlade(3)
                     }
                 }
                 button("Сохранить все") {
@@ -176,4 +205,97 @@ class ProtocolListWindow : View("Протоколы графиков") {
             }
         }
     }.addClass(Styles.hard)
+
+    private fun saveRotorBlade(rotorBlade: Int) {
+        if (tableViewProtocols.selectedItem != null) {
+            var protocol = tableViewProtocols.selectedItem!!
+
+            val files = chooseFile(
+                "Выберите директорию для сохранения",
+                arrayOf(FileChooser.ExtensionFilter("XLSX Files (*.xlsx)", "*.xlsx")),
+                FileChooserMode.Save,
+                this@ProtocolListWindow.currentWindow
+            ) {
+                this.initialDirectory = File(System.getProperty("user.home"))
+            }
+
+            when (rotorBlade) {
+                1 -> {
+                    val protocolRotorBlade = transaction {
+                        ProtocolRotorBlade.new {
+                            date = protocol.date
+                            time = protocol.date
+                            cipher = protocol.cipher1
+                            productName = protocol.productNumber1
+                            operator = protocol.operator
+                            temp1 = protocol.temp11
+                            temp2 = protocol.temp12
+                            temp3 = protocol.temp13
+                            temp4 = protocol.temp14
+                            temp5 = protocol.temp15
+                            temp6 = protocol.temp16
+                        }
+                    }
+                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
+                }
+                2 -> {
+                    val protocolRotorBlade = transaction {
+                        ProtocolRotorBlade.new {
+                            date = protocol.date
+                            time = protocol.date
+                            cipher = protocol.cipher1
+                            productName = protocol.productNumber1
+                            operator = protocol.operator
+                            temp1 = protocol.temp21
+                            temp2 = protocol.temp22
+                            temp3 = protocol.temp23
+                            temp4 = protocol.temp24
+                            temp5 = protocol.temp25
+                            temp6 = protocol.temp26
+                        }
+                    }
+                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
+
+                }
+                3 -> {
+                    val protocolRotorBlade = transaction {
+                        ProtocolRotorBlade.new {
+                            date = protocol.date
+                            time = protocol.date
+                            cipher = protocol.cipher1
+                            productName = protocol.productNumber1
+                            operator = protocol.operator
+                            temp1 = protocol.temp31
+                            temp2 = protocol.temp32
+                            temp3 = protocol.temp33
+                            temp4 = protocol.temp34
+                            temp5 = protocol.temp35
+                            temp6 = protocol.temp36
+                        }
+                    }
+                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
+
+                }
+            }
+
+            Platform.runLater {
+                confirmNotification(
+                    "Готово",
+                    "Успешно сохранено",
+                    Pos.BOTTOM_CENTER,
+                    owner = this@ProtocolListWindow.currentWindow
+                )
+            }
+        } else {
+            runLater {
+                errorNotification(
+                    "Ошибка",
+                    "Выберите из какого протокола сохранять",
+                    Pos.BOTTOM_CENTER,
+                    owner = this@ProtocolListWindow.currentWindow
+                )
+            }
+        }
+    }
+
 }

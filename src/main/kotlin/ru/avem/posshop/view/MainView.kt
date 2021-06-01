@@ -11,9 +11,9 @@ import javafx.stage.Modality
 import ru.avem.posshop.controllers.MainViewController
 import ru.avem.posshop.entities.*
 import ru.avem.posshop.utils.callKeyBoard
+import ru.avem.posshop.utils.soundError
 import ru.avem.posshop.view.Styles.Companion.extraHard
 import ru.avem.posshop.view.Styles.Companion.megaHard
-import ru.avem.posshop.view.Styles.Companion.superExtraHard
 import tornadofx.*
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -30,9 +30,20 @@ class MainView : View("Комплексный стенд для испытани
     var comboBoxTests: ComboBox<Test> by singleAssign()
     var comboBoxTestItem: ComboBox<TestItem> by singleAssign()
 
+    var checkboxItem1: CheckBox by singleAssign()
+    var checkboxItem2: CheckBox by singleAssign()
+    var checkboxItem3: CheckBox by singleAssign()
+    var checkboxItem4: CheckBox by singleAssign()
+    var checkboxItem5: CheckBox by singleAssign()
+    var checkboxItem6: CheckBox by singleAssign()
+    var listCB = listOf<CheckBox>()
 
     var initTableTest1: TableView<TableValuesTest1> by singleAssign()
     var initTableTest2: TableView<TableValuesTest2> by singleAssign()
+
+    var tableTestPlace1Test1: TableView<TableValuesPlace1Test1> by singleAssign()
+    var tableTestPlace2Test1: TableView<TableValuesPlace2Test1> by singleAssign()
+    var tableTestPlace3Test1: TableView<TableValuesPlace3Test1> by singleAssign()
 
     var centralStation: VBox by singleAssign()
 
@@ -42,7 +53,22 @@ class MainView : View("Комплексный стенд для испытани
     var labelTestStatus: Label by singleAssign()
     var labelTestStatusEnd1: Label by singleAssign()
 
+    var tfProductNumber1: TextField by singleAssign()
+    var tfProductNumber2: TextField by singleAssign()
+    var tfProductNumber3: TextField by singleAssign()
+    var tfCipher1: TextField by singleAssign()
+    var tfCipher2: TextField by singleAssign()
+    var tfCipher3: TextField by singleAssign()
+
     var buttonStop: Button by singleAssign()
+
+    override fun onDock() {
+        super.onDock()
+        listCB = listOf(checkboxItem1, checkboxItem2, checkboxItem3, checkboxItem4, checkboxItem5, checkboxItem6)
+        listCB.forEach {
+            it.isSelected = true
+        }
+    }
 
     val t1 = vbox(spacing = 64.0) {
         hbox(spacing = 16.0) {
@@ -142,6 +168,11 @@ class MainView : View("Комплексный стенд для испытани
         top {
             mainMenuBar = menubar {
                 menu("Меню") {
+                    item("Сменить пользователя") {
+                        action {
+                            replaceWith<AuthorizationView>()
+                        }
+                    }
                     item("Выход") {
                         action {
                             exitProcess(0)
@@ -162,6 +193,16 @@ class MainView : View("Комплексный стенд для испытани
                     item("Протоколы проверки изоляции") {
                         action {
                             find<ProtocolInsulationListWindow>().openModal(
+                                modality = Modality.WINDOW_MODAL,
+                                escapeClosesWindow = true,
+                                resizable = false,
+                                owner = this@MainView.currentWindow
+                            )
+                        }
+                    }
+                    item("Пользователи") {
+                        action {
+                            find<UserEditorWindow>().openModal(
                                 modality = Modality.WINDOW_MODAL,
                                 escapeClosesWindow = true,
                                 resizable = false,
@@ -207,6 +248,7 @@ class MainView : View("Комплексный стенд для испытани
                         minWidth = 300.0
                         alignmentProperty().set(Pos.CENTER)
                         checkbox { }.isVisible = false
+                        label("Заданные параметры").addClass(extraHard)
                         initTableTest1 = tableview(controller.tableValuesTest1) {
                             onEditStart {
                                 callKeyBoard()
@@ -242,6 +284,28 @@ class MainView : View("Комплексный стенд для испытани
                             testsProp.isNotEqualTo(tests[1])
                         }
                     }
+                    vbox(spacing = 50.0) {
+                        paddingTop = 140.0
+                        checkboxItem1 = checkbox {
+                            text = "1"
+                        }
+                        checkboxItem2 = checkbox {
+                            text = "2"
+                        }
+                        checkboxItem3 = checkbox {
+                            text = "3"
+                        }
+                        checkboxItem4 = checkbox {
+                            text = "4"
+                        }
+                        checkboxItem5 = checkbox {
+                            text = "5"
+                        }
+                        checkboxItem6 = checkbox {
+                            text = "6"
+                        }
+                    }
+
                     vbox(spacing = 16.0) {
                         hboxConstraints {
                             hGrow = Priority.ALWAYS
@@ -256,7 +320,17 @@ class MainView : View("Комплексный стенд для испытани
                                 }
                             }
                         }.addClass(extraHard)
-                        tableview(controller.tableValuesPlace1Test1) {
+                        hbox {
+                            tfProductNumber1 = textfield {
+                                promptText = "Номер изделия"
+                                callKeyBoard()
+                            }
+                            tfCipher1 = textfield {
+                                promptText = "Шифр изделия"
+                                callKeyBoard()
+                            }
+                        }
+                        tableTestPlace1Test1 = tableview(controller.tableValuesPlace1Test1) {
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
@@ -305,7 +379,17 @@ class MainView : View("Комплексный стенд для испытани
                                 }
                             }
                         }.addClass(extraHard)
-                        tableview(controller.tableValuesPlace2Test1) {
+                        hbox {
+                            tfProductNumber2 = textfield {
+                                promptText = "Номер изделия"
+                                callKeyBoard()
+                            }
+                            tfCipher2 = textfield {
+                                promptText = "Шифр изделия"
+                                callKeyBoard()
+                            }
+                        }
+                        tableTestPlace2Test1 = tableview(controller.tableValuesPlace2Test1) {
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
@@ -354,7 +438,17 @@ class MainView : View("Комплексный стенд для испытани
                                 }
                             }
                         }.addClass(extraHard)
-                        tableview(controller.tableValuesPlace3Test1) {
+                        hbox {
+                            tfProductNumber3 = textfield {
+                                promptText = "Номер изделия"
+                                callKeyBoard()
+                            }
+                            tfCipher3 = textfield {
+                                promptText = "Шифр изделия"
+                                callKeyBoard()
+                            }
+                        }
+                        tableTestPlace3Test1 = tableview(controller.tableValuesPlace3Test1) {
                             vboxConstraints {
                                 vGrow = Priority.ALWAYS
                                 margin = insets(0, 0, 0, 0)
@@ -405,9 +499,9 @@ class MainView : View("Комплексный стенд для испытани
                             }
                             scrollpane {
                                 anchorpaneConstraints {
-                                    leftAnchor = 300.0
+                                    leftAnchor = 400.0
                                     topAnchor = 0.0
-                                    rightAnchor = 300.0
+                                    rightAnchor = 400.0
                                     bottomAnchor = 0.0
                                 }
                                 vBoxLog = vbox {

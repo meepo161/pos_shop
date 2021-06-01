@@ -194,7 +194,7 @@ fun getShortOrdered(inputBuffer: ByteBuffer, order: TypeByteOrder): List<Short> 
 
 fun getShortOrdered(value: Int, order: TypeByteOrder): List<Short> {
     val input = ByteBuffer.allocate(4)
-    input.putInt(value).array()//TODO зачем array() тут и ниже?
+    input.putInt(value).array() //TODO зачем array() тут и ниже?
 
     return getShortOrdered(input, order)
 }

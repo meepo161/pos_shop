@@ -106,6 +106,12 @@ class Styles : Stylesheet() {
 //            baseColor = c("#333")
         }
 
+        passwordField {
+            fontSize = 36.px
+            fontWeight = FontWeight.EXTRA_BOLD
+//            baseColor = c("#333")
+        }
+
         powerButtons {
             fontSize = 18.px
 //            baseColor = c("#2178CC")

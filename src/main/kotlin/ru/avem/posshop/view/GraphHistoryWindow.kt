@@ -58,12 +58,15 @@ class GraphHistoryWindow : View("История графика") {
     override fun onDock() {
         comboBoxTestItem.selectionModel.selectFirst()
         createLineChart("1 лопасть 1 секция")
+        values = Singleton.currentProtocol.temp11.removePrefix("[").removeSuffix("]")
+            .split(", ").map { it.replace(',', '.') }.map(String::toDouble)
         selectedItemProperty.onChange {
             createLineChart(it)
             handleOk()
         }
         tfOt.text = "0"
-        tfDo.text = "0"
+        tfDo.text = (values.size).toString()
+        handleOk()
     }
 
     override val root = anchorpane {
@@ -313,7 +316,7 @@ class GraphHistoryWindow : View("История графика") {
                     do1 = values.size.toDouble()
                     tfDo.text = (values.size).toString()
                 }
-                for (i in ot1.toInt()..do1.toInt()) {
+                for (i in ot1.toInt() until do1.toInt()) {
                     listOfValues.add(String.format("%.1f", values[i]))
                 }
 
@@ -325,13 +328,14 @@ class GraphHistoryWindow : View("История графика") {
                     ProtocolSingle.new {
                         date = dateFormatter.format(unixTime).toString()
                         time = timeFormatter.format(unixTime).toString()
+                        section = comboBoxTestItem.selectedItem.toString()
                         temp = listOfValues.toString()
                     }
                 }
 
                 val files = chooseFile(
                     "Выберите директорию для сохранения",
-                    arrayOf(FileChooser.ExtensionFilter("XSLX Files (*.xlsx)", "*.xlsx")),
+                    arrayOf(FileChooser.ExtensionFilter("XLSX Files (*.xlsx)", "*.xlsx")),
                     FileChooserMode.Save,
                     this@GraphHistoryWindow.currentWindow
                 ) {

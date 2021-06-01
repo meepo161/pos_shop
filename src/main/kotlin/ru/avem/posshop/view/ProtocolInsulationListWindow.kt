@@ -85,7 +85,7 @@ class ProtocolInsulationListWindow : View("Протоколы графиков")
                             }.first()
                             saveProtocolAsWorkbook(Singleton.currentProtocolInsulation)
                             close()
-                            openFile(File("protocol.xlsx"))
+                            openFile(File("protocolInsulation.xlsx"))
                         }
                     }
                 }

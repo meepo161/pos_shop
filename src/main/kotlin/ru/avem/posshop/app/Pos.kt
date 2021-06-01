@@ -4,13 +4,17 @@ import javafx.scene.image.Image
 import javafx.scene.input.KeyCombination
 import javafx.stage.Stage
 import ru.avem.posshop.database.validateDB
+import ru.avem.posshop.utils.soundError
+import ru.avem.posshop.view.AuthorizationView
 import ru.avem.posshop.view.MainView
 import ru.avem.posshop.view.Styles
 import tornadofx.App
 import tornadofx.FX
+import java.io.File
+import javax.sound.sampled.AudioSystem
 import kotlin.system.exitProcess
 
-class Pos : App(MainView::class, Styles::class) {
+class Pos : App(AuthorizationView::class, Styles::class) {
     companion object {
         var isAppRunning = true
     }

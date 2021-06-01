@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.database.entities.*
-import ru.avem.posshop.database.entities.Users.login
+import ru.avem.posshop.database.entities.Users.fullName
 import java.sql.Connection
 
 fun validateDB() {
@@ -13,20 +13,26 @@ fun validateDB() {
     TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
 
     transaction {
-        SchemaUtils.create(Users, ProtocolsTable, ProtocolsTableInsulation, ProtocolsSingleTable, ObjectsTypes)
+        SchemaUtils.create(
+            Users,
+            ProtocolsTable,
+            ProtocolsTableInsulation,
+            ProtocolsSingleTable,
+            ProtocolsRotorBladeTable,
+            ObjectsTypes
+        )
     }
 
     transaction {
         if (User.all().count() < 2) {
             val admin = User.find {
-                login eq "admin"
+                fullName eq "admin"
             }
 
             if (admin.empty()) {
                 User.new {
-                    login = "admin"
-                    password = "avem"
                     fullName = "admin"
+                    password = "avem"
                 }
             }
 
@@ -61,57 +67,79 @@ fun validateDB() {
                 ProtocolSingle.new {
                     date = "10.03.2020"
                     time = "11:30:00"
+                    section = "1 лопасть 1 секция"
                     temp = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
+                }
+
+                ProtocolRotorBlade.new {
+                    date = "10.03.2020"
+                    time = "11:30:00"
+                    cipher = "#666"
+                    productName = "123456789"
+                    operator = "Иванов И.И."
+                    temp1 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
+                    temp2 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
+                    temp3 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
+                    temp4 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
+                    temp5 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
+                    temp6 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
                 }
 
                 Protocol.new {
                     date = "10.03.2020"
                     time = "11:30:00"
-                    temp11 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp12 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp13 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    temp14 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp15 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp16 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    temp21 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp22 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp23 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    temp24 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp25 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp26 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    temp31 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp32 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp33 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    temp34 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    temp35 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    temp36 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage11 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage12 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage13 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage14 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage15 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage16 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage21 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage22 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage23 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage24 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage25 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage26 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage31 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage32 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage33 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage34 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage35 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage36 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
+                    cipher1 = "#1616161"
+                    cipher2 = "#2626262"
+                    cipher3 = "#3636363"
+                    productNumber1 = "11111111111"
+                    productNumber2 = "22222222222"
+                    productNumber3 = "33333333333"
+                    operator = "Иванов И.И."
+                    val list1 = mutableListOf<String>()
+                    val list2 = mutableListOf<String>()
+                    val list3 = mutableListOf<String>()
+                    for (i in 0..10000) {
+                        list1.add("1")
+                        list2.add((i).toString())
+                        list3.add((i * i).toString())
+                    }
+                    temp11 = list1.toString()
+                    temp12 = list2.toString()
+                    temp13 = list3.toString()
+                    temp14 = list1.toString()
+                    temp15 = list2.toString()
+                    temp16 = list3.toString()
+                    temp21 = list1.toString()
+                    temp22 = list2.toString()
+                    temp23 = list3.toString()
+                    temp24 = list1.toString()
+                    temp25 = list2.toString()
+                    temp26 = list3.toString()
+                    temp31 = list1.toString()
+                    temp32 = list2.toString()
+                    temp33 = list3.toString()
+                    temp34 = list1.toString()
+                    temp35 = list2.toString()
+                    temp36 = list3.toString()
                 }
 
                 ProtocolInsulation.new {
                     date = "10.03.2020"
                     time = "11:30:00"
-                    voltage = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
-                    amperage1 = "[1,0, 2,0, 3,0, 4,0, 5,0, 6,0, 7,0, 8,0, 9,0, 10,0, 11,0, 12,0]"
-                    amperage2 = "[0,1, 0,2, 0,4, 0,8, 1,6, 3,2, 6,4, 12,8, 25,6, 51,2, 102,4, 204,8]"
-                    amperage3 = "[1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,0]"
+
+                    val list1 = mutableListOf<String>()
+                    val list2 = mutableListOf<String>()
+                    val list3 = mutableListOf<String>()
+                    for (i in 0..10000) {
+                        list1.add("1")
+                        list2.add((i).toString())
+                        list3.add((i * i).toString())
+                    }
+
+                    voltage = list1.toString()
+                    amperage1 = list2.toString()
+                    amperage2 = list3.toString()
+                    amperage3 = list1.toString()
                 }
             }
         }
