@@ -2199,7 +2199,7 @@ class Test1Controller : TController() {
                 if (controller.isExperimentRunning && isNeedHeating) {
                     owenPR.offAllKMs()
                 }
-                time = 30 * 100
+                time = 40 * 100
                 while (controller.isExperimentRunning && isNeedHeating && time-- > 0) {
                     sleep(10)
                 }
