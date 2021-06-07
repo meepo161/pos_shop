@@ -454,7 +454,7 @@ class Test2Controller : TController() {
             appendMessageToLog(LogTag.MESSAGE, "Испытание завершено")
             setResult()
 
-            soundWarning(3, 1000)
+            soundWarning(2, 1000)
             finalizeExperiment()
 
             if (listOfValuesVoltage.isNotEmpty()) {
@@ -480,7 +480,7 @@ class Test2Controller : TController() {
 
     private fun soundWarning(times: Int, sleep: Long) {
         thread(isDaemon = true) {
-            for (i in 0..times) {
+            for (i in 0 until times) {
                 owenPR.onSound()
                 sleep(sleep)
                 owenPR.offSound()

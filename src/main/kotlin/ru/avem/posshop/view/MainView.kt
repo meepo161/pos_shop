@@ -260,7 +260,7 @@ class MainView : View("Комплексный стенд для испытани
                             minHeight = 156.0
                             maxHeight = 156.0
                             columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
-                            column("t, °C", TableValuesTest1::place1temp.getter).makeEditable()
+                            column("t, °C", TableValuesTest1::place1temp.getter)
                             column("t, м", TableValuesTest1::place1time.getter).makeEditable()
                             column("U, В", TableValuesTest1::place1voltage.getter).makeEditable()
                         }.removeWhen {

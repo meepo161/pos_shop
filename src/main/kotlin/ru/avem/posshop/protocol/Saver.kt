@@ -622,7 +622,7 @@ private fun drawLineChart6(workbook: XSSFWorkbook) {
     val lastRowIndex = sheet.lastRowNum - 1
     var i = 0
 
-    val timeData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
+    val timeData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, i, i))
     val valueData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData12 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData13 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
@@ -631,17 +631,17 @@ private fun drawLineChart6(workbook: XSSFWorkbook) {
     val valueData16 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
 
     val lineChart11 = createLineChart(sheet, 16, 26, 8, 38)
-    drawLineChart36(lineChart11, timeData11, valueData11, "1 секция")
+    drawLineChart36(lineChart11, timeData11, valueData11, "1 секция, сек")
     val lineChart12 = createLineChart(sheet, 27, 37, 8, 38)
-    drawLineChart36(lineChart12, timeData11, valueData12, "2 секция")
+    drawLineChart36(lineChart12, timeData11, valueData12, "2 секция, сек")
     val lineChart13 = createLineChart(sheet, 38, 48, 8, 38)
-    drawLineChart36(lineChart13, timeData11, valueData13, "3 секция")
+    drawLineChart36(lineChart13, timeData11, valueData13, "3 секция, сек")
     val lineChart14 = createLineChart(sheet, 49, 59, 8, 38)
-    drawLineChart36(lineChart14, timeData11, valueData14, "4 секция")
+    drawLineChart36(lineChart14, timeData11, valueData14, "4 секция, сек")
     val lineChart15 = createLineChart(sheet, 60, 70, 8, 38)
-    drawLineChart36(lineChart15, timeData11, valueData15, "5 секция")
+    drawLineChart36(lineChart15, timeData11, valueData15, "5 секция, сек")
     val lineChart16 = createLineChart(sheet, 72, 82, 8, 38)
-    drawLineChart36(lineChart16, timeData11, valueData16, "6 секция")
+    drawLineChart36(lineChart16, timeData11, valueData16, "6 секция, сек")
 }
 
 private fun createLineChartInsulation(sheet: XSSFSheet, rowStart: Int, rowEnd: Int): XSSFChart {

@@ -14,6 +14,7 @@ import ru.avem.posshop.database.entities.ProtocolRotorBlade
 import ru.avem.posshop.database.entities.ProtocolsTable
 import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.Singleton
+import ru.avem.posshop.utils.Toast
 import ru.avem.posshop.utils.callKeyBoard
 import tornadofx.*
 import tornadofx.controlsfx.confirmNotification
@@ -146,17 +147,17 @@ class ProtocolListWindow : View("Протоколы графиков") {
                         }
                     }
                 }
-                button("Сохранить 1 лопасть") {
+                button("Печать 1 лопасть") {
                     action {
                         saveRotorBlade(1)
                     }
                 }
-                button("Сохранить 2 лопасть") {
+                button("Печать 2 лопасть") {
                     action {
                         saveRotorBlade(2)
                     }
                 }
-                button("Сохранить 3 лопасть") {
+                button("Печать 3 лопасть") {
                     action {
                         saveRotorBlade(3)
                     }
@@ -208,23 +209,23 @@ class ProtocolListWindow : View("Протоколы графиков") {
 
     private fun saveRotorBlade(rotorBlade: Int) {
         if (tableViewProtocols.selectedItem != null) {
-            var protocol = tableViewProtocols.selectedItem!!
+            val protocol = tableViewProtocols.selectedItem!!
 
-            val files = chooseFile(
-                "Выберите директорию для сохранения",
-                arrayOf(FileChooser.ExtensionFilter("XLSX Files (*.xlsx)", "*.xlsx")),
-                FileChooserMode.Save,
-                this@ProtocolListWindow.currentWindow
-            ) {
-                this.initialDirectory = File(System.getProperty("user.home"))
-            }
+//            val files = chooseFile(
+//                "Выберите директорию для сохранения",
+//                arrayOf(FileChooser.ExtensionFilter("XLSX Files (*.xlsx)", "*.xlsx")),
+//                FileChooserMode.Save,
+//                this@ProtocolListWindow.currentWindow
+//            ) {
+//                this.initialDirectory = File(System.getProperty("user.home"))
+//            }
 
             when (rotorBlade) {
                 1 -> {
                     val protocolRotorBlade = transaction {
                         ProtocolRotorBlade.new {
                             date = protocol.date
-                            time = protocol.date
+                            time = protocol.time
                             cipher = protocol.cipher1
                             productName = protocol.productNumber1
                             operator = protocol.operator
@@ -236,15 +237,16 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             temp6 = protocol.temp16
                         }
                     }
-                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
+                    saveProtocolAsWorkbook(protocolRotorBlade)
+                    Desktop.getDesktop().print(File("protocol1RotorBlade.xlsx"))
                 }
                 2 -> {
                     val protocolRotorBlade = transaction {
                         ProtocolRotorBlade.new {
                             date = protocol.date
-                            time = protocol.date
-                            cipher = protocol.cipher1
-                            productName = protocol.productNumber1
+                            time = protocol.time
+                            cipher = protocol.cipher2
+                            productName = protocol.productNumber2
                             operator = protocol.operator
                             temp1 = protocol.temp21
                             temp2 = protocol.temp22
@@ -254,16 +256,16 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             temp6 = protocol.temp26
                         }
                     }
-                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
-
+                    saveProtocolAsWorkbook(protocolRotorBlade)
+                    Desktop.getDesktop().print(File("protocol1RotorBlade.xlsx"))
                 }
                 3 -> {
                     val protocolRotorBlade = transaction {
                         ProtocolRotorBlade.new {
                             date = protocol.date
-                            time = protocol.date
-                            cipher = protocol.cipher1
-                            productName = protocol.productNumber1
+                            time = protocol.time
+                            cipher = protocol.cipher3
+                            productName = protocol.productNumber3
                             operator = protocol.operator
                             temp1 = protocol.temp31
                             temp2 = protocol.temp32
@@ -273,18 +275,14 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             temp6 = protocol.temp36
                         }
                     }
-                    saveProtocolAsWorkbook(protocolRotorBlade, files.first().absolutePath)
+                    saveProtocolAsWorkbook(protocolRotorBlade)
+                    Desktop.getDesktop().print(File("protocol1RotorBlade.xlsx"))
 
                 }
             }
 
-            Platform.runLater {
-                confirmNotification(
-                    "Готово",
-                    "Успешно сохранено",
-                    Pos.BOTTOM_CENTER,
-                    owner = this@ProtocolListWindow.currentWindow
-                )
+            runLater {
+                Toast.makeText("Началась печать протокола").show(Toast.ToastType.INFORMATION)
             }
         } else {
             runLater {
