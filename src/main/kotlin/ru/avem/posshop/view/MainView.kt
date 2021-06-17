@@ -180,6 +180,16 @@ class MainView : View("Комплексный стенд для испытани
                     }
                 }
                 menu("База данных") {
+                    item("Переменные для протокола") {
+                        action {
+                            find<ProtocolVarsWindow>().openModal(
+                                modality = Modality.WINDOW_MODAL,
+                                escapeClosesWindow = true,
+                                resizable = false,
+                                owner = this@MainView.currentWindow
+                            )
+                        }
+                    }
                     item("Протоколы") {
                         action {
                             find<ProtocolListWindow>().openModal(
@@ -227,19 +237,19 @@ class MainView : View("Комплексный стенд для испытани
                     alignmentProperty().set(Pos.CENTER)
                     hbox(spacing = 16.0) {
                         alignmentProperty().set(Pos.CENTER)
-                        label("Выберите испытание:").addClass(Styles.extraHard)
+                        label("Выберите испытание:").addClass(extraHard)
                         comboBoxTests = combobox(values = tests, property = testsProp) {
                             useMaxWidth = true
                             alignment = Pos.CENTER
 
                             selectionModel.selectFirst()
-                        }.addClass(Styles.extraHard)
+                        }.addClass(extraHard)
                     }
                     hbox(spacing = 16.0) {
                         alignmentProperty().set(Pos.CENTER)
-                        label("Выберите объект испытания :").addClass(Styles.extraHard)
+                        label("Выберите объект испытания :").addClass(extraHard)
                         comboBoxTestItem = combobox<TestItem>(values = testItems, property = placeTestItem) {
-                        }.addClass(Styles.extraHard)
+                        }.addClass(extraHard)
                     }
                 }
                 hbox(spacing = 16.0) {
@@ -285,7 +295,7 @@ class MainView : View("Комплексный стенд для испытани
                         }
                     }
                     vbox(spacing = 50.0) {
-                        paddingTop = 140.0
+                        paddingTop = 194.0
                         checkboxItem1 = checkbox {
                             text = "1"
                         }

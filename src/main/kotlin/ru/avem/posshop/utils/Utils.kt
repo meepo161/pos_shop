@@ -9,10 +9,16 @@ import tornadofx.runLater
 import tornadofx.seconds
 import tornadofx.warning
 import java.awt.Desktop
+import java.awt.Rectangle
+import java.awt.Robot
+import java.awt.Toolkit
+import java.awt.image.BufferedImage
 import java.io.*
 import java.nio.ByteBuffer
 import java.nio.file.Paths
+import java.text.SimpleDateFormat
 import java.util.*
+import javax.imageio.ImageIO
 import javax.sound.sampled.AudioSystem
 import kotlin.concurrent.thread
 import kotlin.math.abs
@@ -259,4 +265,16 @@ fun showTwoWayDialog(
 //            throw Exception("Время ожидания диалога превышено")
 //        }
 //    }
+}
+
+fun createScreenShot() {
+    val screenRect = Rectangle(Toolkit.getDefaultToolkit().screenSize)
+    val capture: BufferedImage = Robot().createScreenCapture(screenRect)
+    val timeFormatter = SimpleDateFormat("HH:mm:ss")
+    val unixTime = System.currentTimeMillis()
+    val imageFile = File("screen - ${timeFormatter.format(unixTime)}.bmp")
+    try {
+        ImageIO.write(capture, "bmp", imageFile)
+    } catch (e: Exception) {
+    }
 }

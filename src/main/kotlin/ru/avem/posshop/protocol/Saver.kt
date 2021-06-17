@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 
-
 var TO_DESIRED_ROW = 0
 
 fun saveProtocolAsWorkbook(protocol: Protocol, path: String = "protocol.xlsx") {
@@ -40,7 +39,9 @@ fun saveProtocolAsWorkbook(protocol: Protocol, path: String = "protocol.xlsx") {
                             when (cell.stringCellValue) {
                                 "#PROTOCOL_NUMBER#" -> cell.setCellValue(protocol.id.toString())
                                 "#DATE#" -> cell.setCellValue(protocol.date)
+                                "#DATE_END#" -> cell.setCellValue(protocol.dateEnd)
                                 "#TIME#" -> cell.setCellValue(protocol.time)
+                                "#TIME_END#" -> cell.setCellValue(protocol.timeEnd)
                                 "#CIPHER1#" -> cell.setCellValue(protocol.cipher1)
                                 "#NUMBER_PRODUCT1#" -> cell.setCellValue(protocol.productNumber1)
                                 "#CIPHER2#" -> cell.setCellValue(protocol.cipher2)
@@ -48,6 +49,28 @@ fun saveProtocolAsWorkbook(protocol: Protocol, path: String = "protocol.xlsx") {
                                 "#CIPHER3#" -> cell.setCellValue(protocol.cipher3)
                                 "#NUMBER_PRODUCT3#" -> cell.setCellValue(protocol.productNumber3)
                                 "#OPERATOR#" -> cell.setCellValue(protocol.operator)
+
+                                "#NUMBER_DATE_ATTESTATION#" -> cell.setCellValue(protocol.NUMBER_DATE_ATTESTATION)
+                                "#NAME_OF_OPERATION#" -> cell.setCellValue(protocol.NAME_OF_OPERATION)
+                                "#NUMBER_CONTROLLER#" -> cell.setCellValue(protocol.NUMBER_CONTROLLER)
+                                "#T1#" -> cell.setCellValue(protocol.T1)
+                                "#T2#" -> cell.setCellValue(protocol.T2)
+                                "#T3#" -> cell.setCellValue(protocol.T3)
+                                "#T4#" -> cell.setCellValue(protocol.T4)
+                                "#T5#" -> cell.setCellValue(protocol.T5)
+                                "#T6#" -> cell.setCellValue(protocol.T6)
+                                "#T7#" -> cell.setCellValue(protocol.T7)
+                                "#T8#" -> cell.setCellValue(protocol.T8)
+                                "#T9#" -> cell.setCellValue(protocol.T9)
+                                "#T10#" -> cell.setCellValue(protocol.T10)
+                                "#T11#" -> cell.setCellValue(protocol.T11)
+                                "#T12#" -> cell.setCellValue(protocol.T12)
+                                "#T13#" -> cell.setCellValue(protocol.T13)
+                                "#T14#" -> cell.setCellValue(protocol.T14)
+                                "#T15#" -> cell.setCellValue(protocol.T15)
+                                "#T16#" -> cell.setCellValue(protocol.T16)
+                                "#T17#" -> cell.setCellValue(protocol.T17)
+                                "#T18#" -> cell.setCellValue(protocol.T18)
 
                                 else -> {
                                     if (cell.stringCellValue.contains("#")) {
@@ -87,7 +110,7 @@ fun saveProtocolAsWorkbook(protocol: Protocol, path: String = "protocol.xlsx") {
             wb.write(outStream)
             outStream.close()
         }
-    } catch (e: FileNotFoundException) {
+    } catch (e: Exception) {
         Toast.makeText("Не удалось сохранить протокол на диск")
     }
 }
@@ -108,7 +131,19 @@ fun saveProtocolAsWorkbook(protocol: ProtocolInsulation, path: String = "protoco
                             when (cell.stringCellValue) {
                                 "#PROTOCOL_NUMBER#" -> cell.setCellValue(protocol.id.toString())
                                 "#DATE#" -> cell.setCellValue(protocol.date)
+                                "#DATE_END#" -> cell.setCellValue(protocol.dateEnd)
                                 "#TIME#" -> cell.setCellValue(protocol.time)
+                                "#TIME_END#" -> cell.setCellValue(protocol.timeEnd)
+                                "#NUMBER_DATE_ATTESTATION#" -> cell.setCellValue(protocol.NUMBER_DATE_ATTESTATION)
+                                "#NAME_OF_OPERATION#" -> cell.setCellValue(protocol.NAME_OF_OPERATION)
+                                "#NUMBER_CONTROLLER#" -> cell.setCellValue(protocol.NUMBER_CONTROLLER)
+                                "#CIPHER1#" -> cell.setCellValue(protocol.cipher1)
+                                "#NUMBER_PRODUCT1#" -> cell.setCellValue(protocol.productNumber1)
+                                "#CIPHER2#" -> cell.setCellValue(protocol.cipher2)
+                                "#NUMBER_PRODUCT2#" -> cell.setCellValue(protocol.productNumber2)
+                                "#CIPHER3#" -> cell.setCellValue(protocol.cipher3)
+                                "#NUMBER_PRODUCT3#" -> cell.setCellValue(protocol.productNumber3)
+                                "#OPERATOR#" -> cell.setCellValue(protocol.operator)
 
                                 else -> {
                                     if (cell.stringCellValue.contains("#")) {
@@ -134,15 +169,12 @@ fun saveProtocolAsWorkbook(protocol: ProtocolInsulation, path: String = "protoco
             wb.write(outStream)
             outStream.close()
         }
-    } catch (e: FileNotFoundException) {
+    } catch (e: Exception) {
         Toast.makeText("Не удалось сохранить протокол на диск")
     }
 }
 
-fun saveProtocolAsWorkbook(
-    protocolRotorBlade: ProtocolRotorBlade,
-    path: String = "protocol1RotorBlade.xlsx"
-) {
+fun saveProtocolAsWorkbook(protocolRotorBlade: ProtocolRotorBlade, path: String = "protocol1RotorBlade.xlsx") {
     val template = File(path)
     copyFileFromStream(Pos::class.java.getResource("protocol1RotorBlade.xlsx").openStream(), template)
     try {
@@ -157,10 +189,21 @@ fun saveProtocolAsWorkbook(
                             when (cell.stringCellValue) {
                                 "#PROTOCOL_NUMBER#" -> cell.setCellValue(protocolRotorBlade.id.toString())
                                 "#DATE#" -> cell.setCellValue(protocolRotorBlade.date)
+                                "#DATE_END#" -> cell.setCellValue(protocolRotorBlade.dateEnd)
                                 "#TIME#" -> cell.setCellValue(protocolRotorBlade.time)
+                                "#TIME_END#" -> cell.setCellValue(protocolRotorBlade.timeEnd)
                                 "#CIPHER#" -> cell.setCellValue(protocolRotorBlade.cipher)
                                 "#NUMBER_PRODUCT#" -> cell.setCellValue(protocolRotorBlade.productName)
                                 "#OPERATOR#" -> cell.setCellValue(protocolRotorBlade.operator)
+                                "#NUMBER_DATE_ATTESTATION#" -> cell.setCellValue(protocolRotorBlade.NUMBER_DATE_ATTESTATION)
+                                "#NAME_OF_OPERATION#" -> cell.setCellValue(protocolRotorBlade.NAME_OF_OPERATION)
+                                "#NUMBER_CONTROLLER#" -> cell.setCellValue(protocolRotorBlade.NUMBER_CONTROLLER)
+                                "#T1#" -> cell.setCellValue(protocolRotorBlade.T1)
+                                "#T2#" -> cell.setCellValue(protocolRotorBlade.T2)
+                                "#T3#" -> cell.setCellValue(protocolRotorBlade.T3)
+                                "#T4#" -> cell.setCellValue(protocolRotorBlade.T4)
+                                "#T5#" -> cell.setCellValue(protocolRotorBlade.T5)
+                                "#T6#" -> cell.setCellValue(protocolRotorBlade.T6)
                                 else -> {
                                     if (cell.stringCellValue.contains("#")) {
                                         cell.setCellValue("")
@@ -187,7 +230,7 @@ fun saveProtocolAsWorkbook(
             wb.write(outStream)
             outStream.close()
         }
-    } catch (e: FileNotFoundException) {
+    } catch (e: Exception) {
         Toast.makeText("Не удалось сохранить протокол на диск")
     }
 }
@@ -341,7 +384,7 @@ fun fillParameters18(
     row = sheet.createRow(rowNum)
     var dot = 0
     for (i in valuesForExcel11.indices) {
-        fillOneCell(row, columnNumber, cellStyle, dot)
+        fillOneCell(row, columnNumber, cellStyle, dot / 60)
         fillOneCell(row, columnNumber + 1, cellStyle, valuesForExcel11[i])
         fillOneCell(row, columnNumber + 2, cellStyle, valuesForExcel12[i])
         fillOneCell(row, columnNumber + 3, cellStyle, valuesForExcel13[i])
@@ -464,7 +507,7 @@ fun fillParameters6(
     row = sheet.createRow(rowNum)
     var dot = 0
     for (i in valuesForExcel11.indices) {
-        fillOneCell(row, columnNumber, cellStyle, dot)
+        fillOneCell(row, columnNumber, cellStyle, dot / 60)
         fillOneCell(row, columnNumber + 1, cellStyle, valuesForExcel11[i])
         fillOneCell(row, columnNumber + 2, cellStyle, valuesForExcel12[i])
         fillOneCell(row, columnNumber + 3, cellStyle, valuesForExcel13[i])
@@ -533,96 +576,99 @@ private fun drawLineChart36(workbook: XSSFWorkbook) {
     val valueData36 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
 
     var lastRowForGraph = 0
-    val graphHeight = 20
-    val graphSpace = graphHeight + 2
+    val graphHeight = 41
+    val graphSpace = graphHeight + 3
     val lineChart11 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart11, timeData, valueData11, "сек, 1 лопасть 1 секция")
+    drawLineChart36(lineChart11, timeData, valueData11, "мин, 1 лопасть 1 секция")
     lastRowForGraph += graphSpace
     val lineChart12 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart12, timeData, valueData12, "сек, 1 лопасть 2 секция")
+    drawLineChart36(lineChart12, timeData, valueData12, "мин, 1 лопасть 2 секция")
     lastRowForGraph += graphSpace
     val lineChart13 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart13, timeData, valueData13, "сек, 1 лопасть 3 секция")
+    drawLineChart36(lineChart13, timeData, valueData13, "мин, 1 лопасть 3 секция")
     lastRowForGraph += graphSpace
     val lineChart14 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart14, timeData, valueData14, "сек, 1 лопасть 4 секция")
+    drawLineChart36(lineChart14, timeData, valueData14, "мин, 1 лопасть 4 секция")
     lastRowForGraph += graphSpace
     val lineChart15 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart15, timeData, valueData15, "сек, 1 лопасть 5 секция")
+    drawLineChart36(lineChart15, timeData, valueData15, "мин, 1 лопасть 5 секция")
     lastRowForGraph += graphSpace
     val lineChart16 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart16, timeData, valueData16, "сек, 1 лопасть 6 секция")
+    drawLineChart36(lineChart16, timeData, valueData16, "мин, 1 лопасть 6 секция")
     lastRowForGraph += graphSpace
     val lineChart21 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart21, timeData, valueData21, "сек, 2 лопасть 1 секция")
+    drawLineChart36(lineChart21, timeData, valueData21, "мин, 2 лопасть 1 секция")
     lastRowForGraph += graphSpace
     val lineChart22 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart22, timeData, valueData22, "сек, 2 лопасть 2 секция")
+    drawLineChart36(lineChart22, timeData, valueData22, "мин, 2 лопасть 2 секция")
     lastRowForGraph += graphSpace
     val lineChart23 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart23, timeData, valueData23, "сек, 2 лопасть 3 секция")
+    drawLineChart36(lineChart23, timeData, valueData23, "мин, 2 лопасть 3 секция")
     lastRowForGraph += graphSpace
     val lineChart24 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart24, timeData, valueData24, "сек, 2 лопасть 4 секция")
+    drawLineChart36(lineChart24, timeData, valueData24, "мин, 2 лопасть 4 секция")
     lastRowForGraph += graphSpace
     val lineChart25 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart25, timeData, valueData25, "сек, 2 лопасть 5 секция")
+    drawLineChart36(lineChart25, timeData, valueData25, "мин, 2 лопасть 5 секция")
     lastRowForGraph += graphSpace
     val lineChart26 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart26, timeData, valueData26, "сек, 2 лопасть 6 секция")
+    drawLineChart36(lineChart26, timeData, valueData26, "мин, 2 лопасть 6 секция")
     lastRowForGraph += graphSpace
     val lineChart31 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart31, timeData, valueData31, "сек, 3 лопасть 1 секция")
+    drawLineChart36(lineChart31, timeData, valueData31, "мин, 3 лопасть 1 секция")
     lastRowForGraph += graphSpace
     val lineChart32 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart32, timeData, valueData32, "сек, 3 лопасть 2 секция")
+    drawLineChart36(lineChart32, timeData, valueData32, "мин, 3 лопасть 2 секция")
     lastRowForGraph += graphSpace
     val lineChart33 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart33, timeData, valueData33, "сек, 3 лопасть 3 секция")
+    drawLineChart36(lineChart33, timeData, valueData33, "мин, 3 лопасть 3 секция")
     lastRowForGraph += graphSpace
     val lineChart34 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart34, timeData, valueData34, "сек, 3 лопасть 4 секция")
+    drawLineChart36(lineChart34, timeData, valueData34, "мин, 3 лопасть 4 секция")
     lastRowForGraph += graphSpace
     val lineChart35 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart35, timeData, valueData35, "сек, 3 лопасть 5 секция")
+    drawLineChart36(lineChart35, timeData, valueData35, "мин, 3 лопасть 5 секция")
     lastRowForGraph += graphSpace
     val lineChart36 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart36, timeData, valueData36, "сек, 3 лопасть 6 секция")
+    drawLineChart36(lineChart36, timeData, valueData36, "мин, 3 лопасть 6 секция")
 }
 
 private fun drawLineChart4(workbook: XSSFWorkbook) {
     val sheet = workbook.getSheet("Sheet1")
+    val sheet2 = workbook.getSheet("Sheet2")
     val lastRowIndex = sheet.lastRowNum - 1
 
-    val timeData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, 0, 0))
-    val valueData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, 1, 1))
-    val valueData12 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, 2, 2))
-    val valueData13 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, 3, 3))
-    val valueData14 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, 4, 4))
+    var i = 0
+    val timeData = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, i, i))
+    val valueData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
+    val valueData12 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
+    val valueData13 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
+    val valueData14 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
 
-    val lineChart11 = createLineChartInsulation(sheet, 16, 36)
-    drawLineChart36(lineChart11, timeData11, valueData11, "Время, сек", "U, В")
-    val lineChart12 = createLineChartInsulation(sheet, 38, 58)
-    drawLineChart36(lineChart12, timeData11, valueData12, "Время, сек", "I1, А")
-    val lineChart13 = createLineChartInsulation(sheet, 60, 80)
-    drawLineChart36(lineChart13, timeData11, valueData13, "Время, сек", "I2, А")
-    val lineChart14 = createLineChartInsulation(sheet, 82, 102)
-    drawLineChart36(lineChart14, timeData11, valueData14, "Время, сек", "I3, А")
+    var lastRowForGraph = 0
+    val graphHeight = 41
+    val graphSpace = graphHeight + 3
+    val lineChart11 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart11, timeData, valueData11, "Время, сек", "U, В")
+    lastRowForGraph += graphSpace
+    val lineChart12 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart12, timeData, valueData12, "Время, сек", "I1, А")
+    lastRowForGraph += graphSpace
+    val lineChart13 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart13, timeData, valueData13, "Время, сек", "I2, А")
+    lastRowForGraph += graphSpace
+    val lineChart14 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart14, timeData, valueData14, "Время, сек", "I3, А")
 }
 
-private fun createLineChart(sheet: XSSFSheet, rowStart: Int, rowEnd: Int, col1: Int = 1, col2: Int = 19): XSSFChart {
-    val drawing = sheet.createDrawingPatriarch()
-    val anchor = drawing.createAnchor(0, 0, 0, 0, col1, rowStart, col2, rowEnd)
-
-    return drawing.createChart(anchor)
-}
 
 private fun drawLineChart6(workbook: XSSFWorkbook) {
     val sheet = workbook.getSheet("Sheet1")
+    val sheet2 = workbook.getSheet("Sheet2")
     val lastRowIndex = sheet.lastRowNum - 1
     var i = 0
 
-    val timeData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, i, i))
+    val timeData = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, i, i))
     val valueData11 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData12 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData13 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
@@ -630,18 +676,33 @@ private fun drawLineChart6(workbook: XSSFWorkbook) {
     val valueData15 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData16 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
 
-    val lineChart11 = createLineChart(sheet, 16, 26, 8, 38)
-    drawLineChart36(lineChart11, timeData11, valueData11, "1 секция, сек")
-    val lineChart12 = createLineChart(sheet, 27, 37, 8, 38)
-    drawLineChart36(lineChart12, timeData11, valueData12, "2 секция, сек")
-    val lineChart13 = createLineChart(sheet, 38, 48, 8, 38)
-    drawLineChart36(lineChart13, timeData11, valueData13, "3 секция, сек")
-    val lineChart14 = createLineChart(sheet, 49, 59, 8, 38)
-    drawLineChart36(lineChart14, timeData11, valueData14, "4 секция, сек")
-    val lineChart15 = createLineChart(sheet, 60, 70, 8, 38)
-    drawLineChart36(lineChart15, timeData11, valueData15, "5 секция, сек")
-    val lineChart16 = createLineChart(sheet, 72, 82, 8, 38)
-    drawLineChart36(lineChart16, timeData11, valueData16, "6 секция, сек")
+    var lastRowForGraph = 0
+    val graphHeight = 41
+    val graphSpace = graphHeight + 3
+    val lineChart11 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart11, timeData, valueData11, "мин, 1 секция")
+    lastRowForGraph += graphSpace
+    val lineChart12 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart12, timeData, valueData12, "мин, 2 секция")
+    lastRowForGraph += graphSpace
+    val lineChart13 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart13, timeData, valueData13, "мин, 3 секция")
+    lastRowForGraph += graphSpace
+    val lineChart14 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart14, timeData, valueData14, "мин, 4 секция")
+    lastRowForGraph += graphSpace
+    val lineChart15 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart15, timeData, valueData15, "мин, 5 секция")
+    lastRowForGraph += graphSpace
+    val lineChart16 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
+    drawLineChart36(lineChart16, timeData, valueData16, "мин, 6 секция")
+}
+
+private fun createLineChart(sheet: XSSFSheet, rowStart: Int, rowEnd: Int, col1: Int = 1, col2: Int = 19): XSSFChart {
+    val drawing = sheet.createDrawingPatriarch()
+    val anchor = drawing.createAnchor(0, 0, 0, 0, col1, rowStart, col2, rowEnd)
+
+    return drawing.createChart(anchor)
 }
 
 private fun createLineChartInsulation(sheet: XSSFSheet, rowStart: Int, rowEnd: Int): XSSFChart {

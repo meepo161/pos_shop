@@ -6,7 +6,6 @@ import javafx.event.EventHandler
 import javafx.geometry.Pos
 import javafx.scene.control.TableView
 import javafx.stage.FileChooser
-import javafx.stage.Modality
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.database.entities.ProtocolInsulation
@@ -14,10 +13,11 @@ import ru.avem.posshop.database.entities.ProtocolsTable
 import ru.avem.posshop.database.entities.ProtocolsTableInsulation
 import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.Singleton
+import ru.avem.posshop.utils.Toast
 import ru.avem.posshop.utils.callKeyBoard
-import ru.avem.posshop.utils.openFile
 import tornadofx.*
 import tornadofx.controlsfx.confirmNotification
+import java.awt.Desktop
 import java.io.File
 
 class ProtocolInsulationListWindow : View("Протоколы графиков") {
@@ -75,7 +75,7 @@ class ProtocolInsulationListWindow : View("Протоколы графиков")
             hbox(spacing = 16.0) {
                 alignmentProperty().set(Pos.CENTER)
 
-                button("Открыть") {
+                button("Печать") {
                     action {
                         if (tableViewProtocols.selectedItem != null) {
                             Singleton.currentProtocolInsulation = transaction {
@@ -85,7 +85,11 @@ class ProtocolInsulationListWindow : View("Протоколы графиков")
                             }.first()
                             saveProtocolAsWorkbook(Singleton.currentProtocolInsulation)
                             close()
-                            openFile(File("protocolInsulation.xlsx"))
+//                            openFile(File("protocolInsulation.xlsx"))
+                            Desktop.getDesktop().print(File("protocolInsulation.xlsx"))
+                        }
+                        runLater {
+                            Toast.makeText("Началась печать протокола").show(Toast.ToastType.INFORMATION)
                         }
                     }
                 }

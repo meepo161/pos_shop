@@ -229,8 +229,8 @@ class MainViewController : Controller() {
         )
     )
 
-
     init {
+        createScreenShot()
         thread(isDaemon = true) {
             runLater {
                 view.buttonStop.isDisable = true

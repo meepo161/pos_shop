@@ -16,6 +16,7 @@ import ru.avem.posshop.communication.model.devices.avem.latr.LatrControllerConfi
 import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrController
 import ru.avem.posshop.communication.model.devices.owen.pr.OwenPrModel
 import ru.avem.posshop.database.entities.ProtocolInsulation
+import ru.avem.posshop.database.entities.ProtocolVars
 import ru.avem.posshop.entities.TController
 import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.*
@@ -111,6 +112,7 @@ class Test2Controller : TController() {
     var tickDrawJobInProcess = false
 
     var isClicked = false
+    var unixTimeStart = 0L
 
     private fun appendOneMessageToLog(tag: LogTag, message: String) {
         if (logBuffer == null || logBuffer != message) {
@@ -248,6 +250,7 @@ class Test2Controller : TController() {
             schemeAssembled = false
             isValuesCorrect = true
             isClicked = false
+            unixTimeStart = System.currentTimeMillis()
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
             sleep(1000)
 
@@ -595,14 +598,30 @@ class Test2Controller : TController() {
         val timeFormatter = SimpleDateFormat("HH:mm:ss")
         val unixTime = System.currentTimeMillis()
 
+        var protocolVars = transaction {
+            ProtocolVars.all().toList().asObservable()
+        }.first()
+
         transaction {
             ProtocolInsulation.new {
-                date = dateFormatter.format(unixTime).toString()
-                time = timeFormatter.format(unixTime).toString()
+                date = dateFormatter.format(unixTimeStart).toString()
+                time = timeFormatter.format(unixTimeStart).toString()
+                dateEnd = dateFormatter.format(unixTime).toString()
+                dateEnd = timeFormatter.format(unixTime).toString()
+                operator = controller.position1
                 voltage = listOfValuesVoltage.toString()
                 amperage1 = listOfValuesAmperage1.toString()
                 amperage2 = listOfValuesAmperage2.toString()
                 amperage3 = listOfValuesAmperage3.toString()
+                NUMBER_DATE_ATTESTATION = protocolVars.NUMBER_DATE_ATTESTATION
+                NAME_OF_OPERATION = protocolVars.NAME_OF_OPERATION
+                NUMBER_CONTROLLER = protocolVars.NUMBER_CONTROLLER
+                cipher1 = mainView.tfCipher1.text.toString()
+                productNumber1 = mainView.tfProductNumber1.text.toString()
+                cipher2 = mainView.tfCipher2.text.toString()
+                productNumber2 = mainView.tfProductNumber2.text.toString()
+                cipher3 = mainView.tfCipher3.text.toString()
+                productNumber3 = mainView.tfProductNumber3.text.toString()
             }
         }
     }

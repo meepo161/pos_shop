@@ -19,6 +19,7 @@ import ru.avem.posshop.communication.model.devices.parma.ParmaController
 import ru.avem.posshop.communication.model.devices.parma.ParmaModel
 import ru.avem.posshop.database.entities.Protocol
 import ru.avem.posshop.database.entities.ProtocolRotorBlade
+import ru.avem.posshop.database.entities.ProtocolVars
 import ru.avem.posshop.entities.TController
 import ru.avem.posshop.protocol.saveProtocolAsWorkbook
 import ru.avem.posshop.utils.*
@@ -351,6 +352,8 @@ class Test1Controller : TController() {
     private var listOfValues35 = mutableListOf<String>()
     private var listOfValues36 = mutableListOf<String>()
     //endregion
+
+    var unixTimeStart = 0L
 
     class RingBuffer<T>(private val size: Int) {
         private val innerStorage = mutableListOf<T>()
@@ -766,6 +769,7 @@ class Test1Controller : TController() {
             isExperimentEnded = false
             isClicked = false
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
+            unixTimeStart = System.currentTimeMillis()
             clearTable()
             temperature = if (controller.tableValuesTest1[0].place1temp.value.toString() == "60-70") {
                 65.0
@@ -2581,12 +2585,18 @@ class Test1Controller : TController() {
     private fun saveProtocolToDB() {
         val dateFormatter = SimpleDateFormat("dd.MM.y")
         val timeFormatter = SimpleDateFormat("HH:mm:ss")
-        val unixTime = System.currentTimeMillis()
+        val unixTimeEnd = System.currentTimeMillis()
+
+        var protocolVars = transaction {
+            ProtocolVars.all().toList().asObservable()
+        }.first()
 
         transaction {
             Singleton.currentProtocol = Protocol.new {
-                date = dateFormatter.format(unixTime).toString()
-                time = timeFormatter.format(unixTime).toString()
+                date = dateFormatter.format(unixTimeStart).toString()
+                time = timeFormatter.format(unixTimeStart).toString()
+                dateEnd = dateFormatter.format(unixTimeEnd).toString()
+                timeEnd = timeFormatter.format(unixTimeEnd).toString()
                 operator = controller.position1
                 cipher1 = mainView.tfCipher1.text.toString()
                 productNumber1 = mainView.tfProductNumber1.text.toString()
@@ -2612,6 +2622,27 @@ class Test1Controller : TController() {
                 temp34 = listOfValues34.toString()
                 temp35 = listOfValues35.toString()
                 temp36 = listOfValues36.toString()
+                NUMBER_DATE_ATTESTATION = protocolVars.NUMBER_DATE_ATTESTATION
+                NAME_OF_OPERATION = protocolVars.NAME_OF_OPERATION
+                NUMBER_CONTROLLER = protocolVars.NUMBER_CONTROLLER
+                T1 = protocolVars.T1
+                T2 = protocolVars.T2
+                T3 = protocolVars.T3
+                T4 = protocolVars.T4
+                T5 = protocolVars.T5
+                T6 = protocolVars.T6
+                T7 = protocolVars.T7
+                T8 = protocolVars.T8
+                T9 = protocolVars.T9
+                T10 = protocolVars.T10
+                T11 = protocolVars.T11
+                T12 = protocolVars.T12
+                T13 = protocolVars.T13
+                T14 = protocolVars.T14
+                T15 = protocolVars.T15
+                T16 = protocolVars.T16
+                T17 = protocolVars.T17
+                T18 = protocolVars.T18
             }
         }
     }
