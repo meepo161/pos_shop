@@ -104,7 +104,7 @@ fun saveProtocolAsWorkbook(protocol: Protocol, path: String = "protocol.xlsx") {
                 protocol.temp36,
                 0, 15
             )
-            drawLineChart36(wb)
+            drawLineChart36(wb, protocol)
             sheet.protectSheet("avem")
             val outStream = ByteArrayOutputStream()
             wb.write(outStream)
@@ -224,7 +224,7 @@ fun saveProtocolAsWorkbook(protocolRotorBlade: ProtocolRotorBlade, path: String 
                 protocolRotorBlade.temp6,
                 0, 15
             ) //TODO
-            drawLineChart6(wb)
+            drawLineChart6(wb, protocolRotorBlade)
             sheet.protectSheet("avem")
             val outStream = ByteArrayOutputStream()
             wb.write(outStream)
@@ -549,7 +549,7 @@ private fun generateStyles(wb: XSSFWorkbook): CellStyle {
     return headStyle
 }
 
-private fun drawLineChart36(workbook: XSSFWorkbook) {
+private fun drawLineChart36(workbook: XSSFWorkbook, protocol: Protocol) {
     val sheet = workbook.getSheet("Sheet1")
     val sheet2 = workbook.getSheet("Sheet2")
     val lastRowIndex = sheet.lastRowNum - 4
@@ -579,58 +579,149 @@ private fun drawLineChart36(workbook: XSSFWorkbook) {
     val graphHeight = 41
     val graphSpace = graphHeight + 3
     val lineChart11 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart11, timeData, valueData11, "мин, 1 лопасть 1 секция")
+    drawLineChart36(
+        lineChart11, timeData, valueData11,
+        "Время, мин.    1 лоп 1 секция, " +
+                "Начало: ${protocol.unixTimeStartProtocol11}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol11}, " +
+                "Конец: ${protocol.unixTimeEndProtocol11}"
+    )
     lastRowForGraph += graphSpace
     val lineChart12 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart12, timeData, valueData12, "мин, 1 лопасть 2 секция")
+    drawLineChart36(
+        lineChart12, timeData, valueData12, "Время, мин.    1 лопасть 2 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol12}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol12}, " +
+                "Конец: ${protocol.unixTimeEndProtocol12}"
+    )
     lastRowForGraph += graphSpace
     val lineChart13 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart13, timeData, valueData13, "мин, 1 лопасть 3 секция")
+    drawLineChart36(
+        lineChart13, timeData, valueData13, "Время, мин.    1 лопасть 3 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol13}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol13}, " +
+                "Конец: ${protocol.unixTimeEndProtocol13}"
+    )
     lastRowForGraph += graphSpace
     val lineChart14 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart14, timeData, valueData14, "мин, 1 лопасть 4 секция")
+    drawLineChart36(
+        lineChart14, timeData, valueData14, "Время, мин.    1 лопасть 4 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol14}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol14}, " +
+                "Конец: ${protocol.unixTimeEndProtocol14}"
+    )
     lastRowForGraph += graphSpace
     val lineChart15 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart15, timeData, valueData15, "мин, 1 лопасть 5 секция")
+    drawLineChart36(
+        lineChart15, timeData, valueData15, "Время, мин.    1 лопасть 5 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol15}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol15}, " +
+                "Конец: ${protocol.unixTimeEndProtocol15}"
+    )
     lastRowForGraph += graphSpace
     val lineChart16 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart16, timeData, valueData16, "мин, 1 лопасть 6 секция")
+    drawLineChart36(
+        lineChart16, timeData, valueData16, "Время, мин.    1 лопасть 6 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol16}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol16}, " +
+                "Конец: ${protocol.unixTimeEndProtocol16}"
+    )
     lastRowForGraph += graphSpace
     val lineChart21 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart21, timeData, valueData21, "мин, 2 лопасть 1 секция")
+    drawLineChart36(
+        lineChart21, timeData, valueData21, "Время, мин.    2 лопасть 1 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol21}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol21}, " +
+                "Конец: ${protocol.unixTimeEndProtocol21}"
+    )
     lastRowForGraph += graphSpace
     val lineChart22 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart22, timeData, valueData22, "мин, 2 лопасть 2 секция")
+    drawLineChart36(
+        lineChart22, timeData, valueData22, "Время, мин.    2 лопасть 2 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol22}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol22}, " +
+                "Конец: ${protocol.unixTimeEndProtocol22}"
+    )
     lastRowForGraph += graphSpace
     val lineChart23 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart23, timeData, valueData23, "мин, 2 лопасть 3 секция")
+    drawLineChart36(
+        lineChart23, timeData, valueData23, "Время, мин.    2 лопасть 3 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol23}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol23}, " +
+                "Конец: ${protocol.unixTimeEndProtocol23}"
+    )
     lastRowForGraph += graphSpace
     val lineChart24 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart24, timeData, valueData24, "мин, 2 лопасть 4 секция")
+    drawLineChart36(
+        lineChart24, timeData, valueData24, "Время, мин.    2 лопасть 4 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol24}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol24}, " +
+                "Конец: ${protocol.unixTimeEndProtocol24}"
+    )
     lastRowForGraph += graphSpace
     val lineChart25 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart25, timeData, valueData25, "мин, 2 лопасть 5 секция")
+    drawLineChart36(
+        lineChart25, timeData, valueData25, "Время, мин.    2 лопасть 5 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol25}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol25}, " +
+                "Конец: ${protocol.unixTimeEndProtocol25}"
+    )
     lastRowForGraph += graphSpace
     val lineChart26 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart26, timeData, valueData26, "мин, 2 лопасть 6 секция")
+    drawLineChart36(
+        lineChart26, timeData, valueData26, "Время, мин.    2 лопасть 6 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol26}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol26}, " +
+                "Конец: ${protocol.unixTimeEndProtocol26}"
+    )
     lastRowForGraph += graphSpace
     val lineChart31 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart31, timeData, valueData31, "мин, 3 лопасть 1 секция")
+    drawLineChart36(
+        lineChart31, timeData, valueData31, "Время, мин.    3 лопасть 1 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol31}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol31}, " +
+                "Конец: ${protocol.unixTimeEndProtocol31}"
+    )
     lastRowForGraph += graphSpace
     val lineChart32 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart32, timeData, valueData32, "мин, 3 лопасть 2 секция")
+    drawLineChart36(
+        lineChart32, timeData, valueData32, "Время, мин.    3 лопасть 2 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol32}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol32}, " +
+                "Конец: ${protocol.unixTimeEndProtocol32}"
+    )
     lastRowForGraph += graphSpace
     val lineChart33 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart33, timeData, valueData33, "мин, 3 лопасть 3 секция")
+    drawLineChart36(
+        lineChart33, timeData, valueData33, "Время, мин.    3 лопасть 3 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol33}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol33}, " +
+                "Конец: ${protocol.unixTimeEndProtocol33}"
+    )
     lastRowForGraph += graphSpace
     val lineChart34 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart34, timeData, valueData34, "мин, 3 лопасть 4 секция")
+    drawLineChart36(
+        lineChart34, timeData, valueData34, "Время, мин.    3 лопасть 4 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol34}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol34}, " +
+                "Конец: ${protocol.unixTimeEndProtocol34}"
+    )
     lastRowForGraph += graphSpace
     val lineChart35 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart35, timeData, valueData35, "мин, 3 лопасть 5 секция")
+    drawLineChart36(
+        lineChart35, timeData, valueData35, "Время, мин.    3 лопасть 5 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol35}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol35}, " +
+                "Конец: ${protocol.unixTimeEndProtocol35}"
+    )
     lastRowForGraph += graphSpace
     val lineChart36 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart36, timeData, valueData36, "мин, 3 лопасть 6 секция")
+    drawLineChart36(
+        lineChart36, timeData, valueData36, "Время, мин.    3 лопасть 6 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol36}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol36}, " +
+                "Конец: ${protocol.unixTimeEndProtocol36}"
+    )
 }
 
 private fun drawLineChart4(workbook: XSSFWorkbook) {
@@ -662,7 +753,7 @@ private fun drawLineChart4(workbook: XSSFWorkbook) {
 }
 
 
-private fun drawLineChart6(workbook: XSSFWorkbook) {
+private fun drawLineChart6(workbook: XSSFWorkbook, protocol: ProtocolRotorBlade) {
     val sheet = workbook.getSheet("Sheet1")
     val sheet2 = workbook.getSheet("Sheet2")
     val lastRowIndex = sheet.lastRowNum - 1
@@ -675,27 +766,57 @@ private fun drawLineChart6(workbook: XSSFWorkbook) {
     val valueData14 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData15 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
     val valueData16 = DataSources.fromNumericCellRange(sheet, CellRangeAddress(15, lastRowIndex, ++i, i))
-
     var lastRowForGraph = 0
     val graphHeight = 41
     val graphSpace = graphHeight + 3
     val lineChart11 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart11, timeData, valueData11, "мин, 1 секция")
+    drawLineChart36(
+        lineChart11, timeData, valueData11,
+        "Время, мин.    1 лоп 1 секция, " +
+                "Начало: ${protocol.unixTimeStartProtocol1}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol1}, " +
+                "Конец: ${protocol.unixTimeEndProtocol1}"
+    )
     lastRowForGraph += graphSpace
     val lineChart12 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart12, timeData, valueData12, "мин, 2 секция")
+    drawLineChart36(
+        lineChart12, timeData, valueData12, "Время, мин.   2 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol2}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol2}, " +
+                "Конец: ${protocol.unixTimeEndProtocol2}"
+    )
     lastRowForGraph += graphSpace
     val lineChart13 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart13, timeData, valueData13, "мин, 3 секция")
+    drawLineChart36(
+        lineChart13, timeData, valueData13, "Время, мин.   3 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol3}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol3}, " +
+                "Конец: ${protocol.unixTimeEndProtocol3}"
+    )
     lastRowForGraph += graphSpace
     val lineChart14 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart14, timeData, valueData14, "мин, 4 секция")
+    drawLineChart36(
+        lineChart14, timeData, valueData14, "Время, мин.   4 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol4}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol4}, " +
+                "Конец: ${protocol.unixTimeEndProtocol4}"
+    )
     lastRowForGraph += graphSpace
     val lineChart15 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart15, timeData, valueData15, "мин, 5 секция")
+    drawLineChart36(
+        lineChart15, timeData, valueData15, "Время, мин.   5 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol1}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol5}, " +
+                "Конец: ${protocol.unixTimeEndProtocol5}"
+    )
     lastRowForGraph += graphSpace
     val lineChart16 = createLineChart(sheet2, lastRowForGraph, lastRowForGraph + graphHeight)
-    drawLineChart36(lineChart16, timeData, valueData16, "мин, 6 секция")
+    drawLineChart36(
+        lineChart16, timeData, valueData16, "Время, мин.   6 секция " +
+                "Начало: ${protocol.unixTimeStartProtocol6}, " +
+                "Режим: ${protocol.unixTimeWorkProtocol6}, " +
+                "Конец: ${protocol.unixTimeEndProtocol6}"
+    )
 }
 
 private fun createLineChart(sheet: XSSFSheet, rowStart: Int, rowEnd: Int, col1: Int = 1, col2: Int = 19): XSSFChart {

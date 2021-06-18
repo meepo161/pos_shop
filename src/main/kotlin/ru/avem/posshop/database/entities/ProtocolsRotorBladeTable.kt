@@ -28,6 +28,27 @@ object ProtocolsRotorBladeTable : IntIdTable() {
     var T4 = varchar("T4", 512)
     var T5 = varchar("T5", 512)
     var T6 = varchar("T6", 512)
+
+    var unixTimeStartProtocol1 = varchar("unixTimeStartProtocol1", 256)
+    var unixTimeStartProtocol2 = varchar("unixTimeStartProtocol2", 256)
+    var unixTimeStartProtocol3 = varchar("unixTimeStartProtocol3", 256)
+    var unixTimeStartProtocol4 = varchar("unixTimeStartProtocol4", 256)
+    var unixTimeStartProtocol5 = varchar("unixTimeStartProtocol5", 256)
+    var unixTimeStartProtocol6 = varchar("unixTimeStartProtocol6", 256)
+
+    var  unixTimeWorkProtocol1 =  varchar("unixTimeWorkProtocol1", 256)
+    var  unixTimeWorkProtocol2 =  varchar("unixTimeWorkProtocol2", 256)
+    var  unixTimeWorkProtocol3 =  varchar("unixTimeWorkProtocol3", 256)
+    var  unixTimeWorkProtocol4 =  varchar("unixTimeWorkProtocol4", 256)
+    var  unixTimeWorkProtocol5 =  varchar("unixTimeWorkProtocol5", 256)
+    var  unixTimeWorkProtocol6 =  varchar("unixTimeWorkProtocol6", 256)
+
+    var   unixTimeEndProtocol1 =   varchar("unixTimeEndProtocol1", 256)
+    var   unixTimeEndProtocol2 =   varchar("unixTimeEndProtocol2", 256)
+    var   unixTimeEndProtocol3 =   varchar("unixTimeEndProtocol3", 256)
+    var   unixTimeEndProtocol4 =   varchar("unixTimeEndProtocol4", 256)
+    var   unixTimeEndProtocol5 =   varchar("unixTimeEndProtocol5", 256)
+    var   unixTimeEndProtocol6 =   varchar("unixTimeEndProtocol6", 256)
 }
 
 class ProtocolRotorBlade(id: EntityID<Int>) : IntEntity(id) {
@@ -54,6 +75,25 @@ class ProtocolRotorBlade(id: EntityID<Int>) : IntEntity(id) {
     var T4 by ProtocolsRotorBladeTable. T4
     var T5 by ProtocolsRotorBladeTable. T5
     var T6 by ProtocolsRotorBladeTable. T6
+
+    var unixTimeStartProtocol1 by ProtocolsRotorBladeTable.unixTimeStartProtocol1
+    var unixTimeStartProtocol2 by ProtocolsRotorBladeTable.unixTimeStartProtocol2
+    var unixTimeStartProtocol3 by ProtocolsRotorBladeTable.unixTimeStartProtocol3
+    var unixTimeStartProtocol4 by ProtocolsRotorBladeTable.unixTimeStartProtocol4
+    var unixTimeStartProtocol5 by ProtocolsRotorBladeTable.unixTimeStartProtocol5
+    var unixTimeStartProtocol6 by ProtocolsRotorBladeTable.unixTimeStartProtocol6
+    var unixTimeWorkProtocol1 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol1
+    var unixTimeWorkProtocol2 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol2
+    var unixTimeWorkProtocol3 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol3
+    var unixTimeWorkProtocol4 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol4
+    var unixTimeWorkProtocol5 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol5
+    var unixTimeWorkProtocol6 by  ProtocolsRotorBladeTable.unixTimeWorkProtocol6
+    var unixTimeEndProtocol1 by   ProtocolsRotorBladeTable.unixTimeEndProtocol1
+    var unixTimeEndProtocol2 by   ProtocolsRotorBladeTable.unixTimeEndProtocol2
+    var unixTimeEndProtocol3 by   ProtocolsRotorBladeTable.unixTimeEndProtocol3
+    var unixTimeEndProtocol4 by   ProtocolsRotorBladeTable.unixTimeEndProtocol4
+    var unixTimeEndProtocol5 by   ProtocolsRotorBladeTable.unixTimeEndProtocol5
+    var unixTimeEndProtocol6 by   ProtocolsRotorBladeTable.unixTimeEndProtocol6
 
     override fun toString(): String {
         return "$id"

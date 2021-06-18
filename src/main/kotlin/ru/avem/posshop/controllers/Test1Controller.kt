@@ -6,8 +6,6 @@ import javafx.scene.text.Text
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.avem.posshop.communication.model.CommunicationModel
 import ru.avem.posshop.communication.model.devices.LatrStuckException
-import ru.avem.posshop.communication.model.devices.avem.avem4.Avem4Controller
-import ru.avem.posshop.communication.model.devices.avem.avem7.Avem7Controller
 import ru.avem.posshop.communication.model.devices.avem.latr.AvemLatrController
 import ru.avem.posshop.communication.model.devices.avem.latr.AvemLatrModel
 import ru.avem.posshop.communication.model.devices.avem.latr.LatrControllerConfiguration
@@ -35,21 +33,12 @@ import kotlin.time.ExperimentalTime
 class Test1Controller : TController() {
     protected val owenPR = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2) as OwenPrController
     protected val parma1 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA1) as ParmaController
-    protected val par11ma2 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA2) as ParmaController
-    protected val parma3 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA3) as ParmaController
-    protected val parma4 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA4) as ParmaController
-    protected val parma5 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA5) as ParmaController
-    protected val parma6 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.PARMA6) as ParmaController
     protected val trm1 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.TRM1) as Trm136Controller
     protected val trm2 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.TRM2) as Trm136Controller
     protected val trm3 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.TRM3) as Trm136Controller
     protected val gv238 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238) as AvemLatrController
     protected val gv239 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV239) as AvemLatrController
     protected val gv240 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV240) as AvemLatrController
-    protected val a71 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71) as Avem7Controller
-    protected val a72 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72) as Avem7Controller
-    protected val a73 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73) as Avem7Controller
-    protected val a41 = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41) as Avem4Controller
 
     val controller: MainViewController by inject()
     val mainView: MainView by inject()
@@ -221,63 +210,6 @@ class Test1Controller : TController() {
 
     @Volatile
     private var measuringt36: Double = 0.0
-
-    @Volatile
-    private var trmStatus11: Boolean = false
-
-    @Volatile
-    private var trmStatus12: Boolean = false
-
-    @Volatile
-    private var trmStatus13: Boolean = false
-
-    @Volatile
-    private var trmStatus14: Boolean = false
-
-    @Volatile
-    private var trmStatus15: Boolean = false
-
-    @Volatile
-    private var trmStatus16: Boolean = false
-
-    @Volatile
-    private var trmStatus17: Boolean = false
-
-    @Volatile
-    private var trmStatus21: Boolean = false
-
-    @Volatile
-    private var trmStatus22: Boolean = false
-
-    @Volatile
-    private var trmStatus23: Boolean = false
-
-    @Volatile
-    private var trmStatus24: Boolean = false
-
-    @Volatile
-    private var trmStatus25: Boolean = false
-
-    @Volatile
-    private var trmStatus26: Boolean = false
-
-    @Volatile
-    private var trmStatus31: Boolean = false
-
-    @Volatile
-    private var trmStatus32: Boolean = false
-
-    @Volatile
-    private var trmStatus33: Boolean = false
-
-    @Volatile
-    private var trmStatus34: Boolean = false
-
-    @Volatile
-    private var trmStatus35: Boolean = false
-
-    @Volatile
-    private var trmStatus36: Boolean = false
     //endregion
 
     //region переменные для защит ПР
@@ -355,22 +287,68 @@ class Test1Controller : TController() {
 
     var unixTimeStart = 0L
 
-    class RingBuffer<T>(private val size: Int) {
-        private val innerStorage = mutableListOf<T>()
-        private var position = 0
+    var unixTimeStart11 = 0L
+    var unixTimeStart12 = 0L
+    var unixTimeStart13 = 0L
+    var unixTimeStart14 = 0L
+    var unixTimeStart15 = 0L
+    var unixTimeStart16 = 0L
 
-        fun add(value: T) {
-            if (innerStorage.size != size) {
-                innerStorage.add(value)
-            } else {
-                innerStorage[position] = value
-                position++
-            }
-            if (position >= size) position %= size
-        }
+    var unixTimeWork11 = 0L
+    var unixTimeWork12 = 0L
+    var unixTimeWork13 = 0L
+    var unixTimeWork14 = 0L
+    var unixTimeWork15 = 0L
+    var unixTimeWork16 = 0L
 
-        fun isNotEmpty() = innerStorage.isNotEmpty()
-    }
+    var unixTimeEnd11 = 0L
+    var unixTimeEnd12 = 0L
+    var unixTimeEnd13 = 0L
+    var unixTimeEnd14 = 0L
+    var unixTimeEnd15 = 0L
+    var unixTimeEnd16 = 0L
+
+    var unixTimeStart21 = 0L
+    var unixTimeStart22 = 0L
+    var unixTimeStart23 = 0L
+    var unixTimeStart24 = 0L
+    var unixTimeStart25 = 0L
+    var unixTimeStart26 = 0L
+
+    var unixTimeWork21 = 0L
+    var unixTimeWork22 = 0L
+    var unixTimeWork23 = 0L
+    var unixTimeWork24 = 0L
+    var unixTimeWork25 = 0L
+    var unixTimeWork26 = 0L
+
+    var unixTimeEnd21 = 0L
+    var unixTimeEnd22 = 0L
+    var unixTimeEnd23 = 0L
+    var unixTimeEnd24 = 0L
+    var unixTimeEnd25 = 0L
+    var unixTimeEnd26 = 0L
+
+    var unixTimeStart31 = 0L
+    var unixTimeStart32 = 0L
+    var unixTimeStart33 = 0L
+    var unixTimeStart34 = 0L
+    var unixTimeStart35 = 0L
+    var unixTimeStart36 = 0L
+
+    var unixTimeWork31 = 0L
+    var unixTimeWork32 = 0L
+    var unixTimeWork33 = 0L
+    var unixTimeWork34 = 0L
+    var unixTimeWork35 = 0L
+    var unixTimeWork36 = 0L
+
+    var unixTimeEnd31 = 0L
+    var unixTimeEnd32 = 0L
+    var unixTimeEnd33 = 0L
+    var unixTimeEnd34 = 0L
+    var unixTimeEnd35 = 0L
+    var unixTimeEnd36 = 0L
 
     private fun appendOneMessageToLog(tag: LogTag, message: String) {
         if (logBuffer == null || logBuffer != message) {
@@ -887,7 +865,7 @@ class Test1Controller : TController() {
 
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
                 soundError()
-                soundWarning(1, 1000)
+                soundWarning(1)
             }
 
             if (!startButton && controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
@@ -896,9 +874,6 @@ class Test1Controller : TController() {
 
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
                 appendMessageToLog(LogTag.DEBUG, "Подготовка стенда")
-                appendMessageToLog(LogTag.DEBUG, "Проверка датчиков")
-                startCheckStatusTrmSensors()
-                sleep(2000)
             }
 
             val voltage = controller.tableValuesTest1[0].place1voltage.value.toString().replace(",", ".").toDouble()
@@ -988,6 +963,38 @@ class Test1Controller : TController() {
                     if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
                         appendOneMessageToLog(LogTag.MESSAGE, "Начался нагрев ${currentSection + 1} секции. Ожидайте")
                         appendMessageToLog(LogTag.ERROR, "Первый нагрев секции")
+                        when (currentSection) {
+                            0 -> {
+                                unixTimeStart11 = System.currentTimeMillis()
+                                unixTimeStart21 = System.currentTimeMillis()
+                                unixTimeStart31 = System.currentTimeMillis()
+                            }
+                            1 -> {
+                                unixTimeStart12 = System.currentTimeMillis()
+                                unixTimeStart22 = System.currentTimeMillis()
+                                unixTimeStart32 = System.currentTimeMillis()
+                            }
+                            2 -> {
+                                unixTimeStart13 = System.currentTimeMillis()
+                                unixTimeStart23 = System.currentTimeMillis()
+                                unixTimeStart33 = System.currentTimeMillis()
+                            }
+                            3 -> {
+                                unixTimeStart14 = System.currentTimeMillis()
+                                unixTimeStart24 = System.currentTimeMillis()
+                                unixTimeStart34 = System.currentTimeMillis()
+                            }
+                            4 -> {
+                                unixTimeStart15 = System.currentTimeMillis()
+                                unixTimeStart25 = System.currentTimeMillis()
+                                unixTimeStart35 = System.currentTimeMillis()
+                            }
+                            5 -> {
+                                unixTimeStart16 = System.currentTimeMillis()
+                                unixTimeStart26 = System.currentTimeMillis()
+                                unixTimeStart36 = System.currentTimeMillis()
+                            }
+                        }
                         firstHeatingSection()
                         appendMessageToLog(LogTag.ERROR, "Нагрев секции завершен")
                         isHeating = false
@@ -1019,12 +1026,77 @@ class Test1Controller : TController() {
                             }
                         }
                     )
-
+                    when (currentSection) {
+                        0 -> {
+                            unixTimeWork11 = System.currentTimeMillis()
+                            unixTimeWork21 = System.currentTimeMillis()
+                            unixTimeWork31 = System.currentTimeMillis()
+                        }
+                        1 -> {
+                            unixTimeWork12 = System.currentTimeMillis()
+                            unixTimeWork22 = System.currentTimeMillis()
+                            unixTimeWork32 = System.currentTimeMillis()
+                        }
+                        2 -> {
+                            unixTimeWork13 = System.currentTimeMillis()
+                            unixTimeWork23 = System.currentTimeMillis()
+                            unixTimeWork33 = System.currentTimeMillis()
+                        }
+                        3 -> {
+                            unixTimeWork14 = System.currentTimeMillis()
+                            unixTimeWork24 = System.currentTimeMillis()
+                            unixTimeWork34 = System.currentTimeMillis()
+                        }
+                        4 -> {
+                            unixTimeWork15 = System.currentTimeMillis()
+                            unixTimeWork25 = System.currentTimeMillis()
+                            unixTimeWork35 = System.currentTimeMillis()
+                        }
+                        5 -> {
+                            unixTimeWork16 = System.currentTimeMillis()
+                            unixTimeWork26 = System.currentTimeMillis()
+                            unixTimeWork36 = System.currentTimeMillis()
+                        }
+                    }
                     heatingSection()
+
 
                     while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
                         checkProtections()
                         sleep(2000)
+                    }
+
+                    when (currentSection) {
+                        0 -> {
+                            unixTimeEnd11 = System.currentTimeMillis()
+                            unixTimeEnd21 = System.currentTimeMillis()
+                            unixTimeEnd31 = System.currentTimeMillis()
+                        }
+                        1 -> {
+                            unixTimeEnd12 = System.currentTimeMillis()
+                            unixTimeEnd22 = System.currentTimeMillis()
+                            unixTimeEnd32 = System.currentTimeMillis()
+                        }
+                        2 -> {
+                            unixTimeEnd13 = System.currentTimeMillis()
+                            unixTimeEnd23 = System.currentTimeMillis()
+                            unixTimeEnd33 = System.currentTimeMillis()
+                        }
+                        3 -> {
+                            unixTimeEnd14 = System.currentTimeMillis()
+                            unixTimeEnd24 = System.currentTimeMillis()
+                            unixTimeEnd34 = System.currentTimeMillis()
+                        }
+                        4 -> {
+                            unixTimeEnd15 = System.currentTimeMillis()
+                            unixTimeEnd25 = System.currentTimeMillis()
+                            unixTimeEnd35 = System.currentTimeMillis()
+                        }
+                        5 -> {
+                            unixTimeEnd16 = System.currentTimeMillis()
+                            unixTimeEnd26 = System.currentTimeMillis()
+                            unixTimeEnd36 = System.currentTimeMillis()
+                        }
                     }
 
                     isNeedHeating = false
@@ -1055,7 +1127,7 @@ class Test1Controller : TController() {
             owenPR.offAllKMs()
             setResult()
 
-            soundWarning(2, 1000)
+            soundWarning(2)
 
             finalizeExperiment()
 
@@ -1144,13 +1216,130 @@ class Test1Controller : TController() {
         }
     }
 
-    private fun soundWarning(times: Int, sleep: Long) {
-        thread(isDaemon = true) {
-            for (i in 0 until times) {
-                owenPR.onSound()
-                sleep(sleep)
-                owenPR.offSound()
-                sleep(sleep)
+    private fun saveProtocolToDB() {
+        val dateFormatter = SimpleDateFormat("dd.MM.y")
+        val timeFormatter = SimpleDateFormat("HH:mm:ss")
+        val unixTimeEnd = System.currentTimeMillis()
+
+        val protocolVars = transaction {
+            ProtocolVars.all().toList().asObservable()
+        }.first()
+
+        transaction {
+            Singleton.currentProtocol = Protocol.new {
+                date = dateFormatter.format(unixTimeStart).toString()
+                time = timeFormatter.format(unixTimeStart).toString()
+                dateEnd = dateFormatter.format(unixTimeEnd).toString()
+                timeEnd = timeFormatter.format(unixTimeEnd).toString()
+                operator = controller.position1
+                cipher1 = mainView.tfCipher1.text.toString()
+                productNumber1 = mainView.tfProductNumber1.text.toString()
+                cipher2 = mainView.tfCipher3.text.toString()
+                productNumber2 = mainView.tfProductNumber3.text.toString()
+                cipher3 = mainView.tfCipher3.text.toString()
+                productNumber3 = mainView.tfProductNumber3.text.toString()
+                temp11 = listOfValues11.toString()
+                temp12 = listOfValues12.toString()
+                temp13 = listOfValues13.toString()
+                temp14 = listOfValues14.toString()
+                temp15 = listOfValues15.toString()
+                temp16 = listOfValues16.toString()
+                temp21 = listOfValues21.toString()
+                temp22 = listOfValues22.toString()
+                temp23 = listOfValues23.toString()
+                temp24 = listOfValues24.toString()
+                temp25 = listOfValues25.toString()
+                temp26 = listOfValues26.toString()
+                temp31 = listOfValues31.toString()
+                temp32 = listOfValues32.toString()
+                temp33 = listOfValues33.toString()
+                temp34 = listOfValues34.toString()
+                temp35 = listOfValues35.toString()
+                temp36 = listOfValues36.toString()
+                NUMBER_DATE_ATTESTATION = protocolVars.NUMBER_DATE_ATTESTATION
+                NAME_OF_OPERATION = protocolVars.NAME_OF_OPERATION
+                NUMBER_CONTROLLER = protocolVars.NUMBER_CONTROLLER
+                T1 = protocolVars.T1
+                T2 = protocolVars.T2
+                T3 = protocolVars.T3
+                T4 = protocolVars.T4
+                T5 = protocolVars.T5
+                T6 = protocolVars.T6
+                T7 = protocolVars.T7
+                T8 = protocolVars.T8
+                T9 = protocolVars.T9
+                T10 = protocolVars.T10
+                T11 = protocolVars.T11
+                T12 = protocolVars.T12
+                T13 = protocolVars.T13
+                T14 = protocolVars.T14
+                T15 = protocolVars.T15
+                T16 = protocolVars.T16
+                T17 = protocolVars.T17
+                T18 = protocolVars.T18
+
+                unixTimeStartProtocol11 = timeFormatter.format(unixTimeStart11).toString()
+                unixTimeStartProtocol12 = timeFormatter.format(unixTimeStart12).toString()
+                unixTimeStartProtocol13 = timeFormatter.format(unixTimeStart13).toString()
+                unixTimeStartProtocol14 = timeFormatter.format(unixTimeStart14).toString()
+                unixTimeStartProtocol15 = timeFormatter.format(unixTimeStart15).toString()
+                unixTimeStartProtocol16 = timeFormatter.format(unixTimeStart16).toString()
+
+                unixTimeWorkProtocol11 = timeFormatter.format(unixTimeWork11).toString()
+                unixTimeWorkProtocol12 = timeFormatter.format(unixTimeWork12).toString()
+                unixTimeWorkProtocol13 = timeFormatter.format(unixTimeWork13).toString()
+                unixTimeWorkProtocol14 = timeFormatter.format(unixTimeWork14).toString()
+                unixTimeWorkProtocol15 = timeFormatter.format(unixTimeWork15).toString()
+                unixTimeWorkProtocol16 = timeFormatter.format(unixTimeWork16).toString()
+
+                unixTimeEndProtocol11 = timeFormatter.format(unixTimeEnd11).toString()
+                unixTimeEndProtocol12 = timeFormatter.format(unixTimeEnd12).toString()
+                unixTimeEndProtocol13 = timeFormatter.format(unixTimeEnd13).toString()
+                unixTimeEndProtocol14 = timeFormatter.format(unixTimeEnd14).toString()
+                unixTimeEndProtocol15 = timeFormatter.format(unixTimeEnd15).toString()
+                unixTimeEndProtocol16 = timeFormatter.format(unixTimeEnd16).toString()
+
+                unixTimeStartProtocol11 = timeFormatter.format(unixTimeStart21).toString()
+                unixTimeStartProtocol12 = timeFormatter.format(unixTimeStart22).toString()
+                unixTimeStartProtocol13 = timeFormatter.format(unixTimeStart23).toString()
+                unixTimeStartProtocol14 = timeFormatter.format(unixTimeStart24).toString()
+                unixTimeStartProtocol15 = timeFormatter.format(unixTimeStart25).toString()
+                unixTimeStartProtocol16 = timeFormatter.format(unixTimeStart26).toString()
+
+                unixTimeWorkProtocol11 = timeFormatter.format(unixTimeWork21).toString()
+                unixTimeWorkProtocol12 = timeFormatter.format(unixTimeWork22).toString()
+                unixTimeWorkProtocol13 = timeFormatter.format(unixTimeWork23).toString()
+                unixTimeWorkProtocol14 = timeFormatter.format(unixTimeWork24).toString()
+                unixTimeWorkProtocol15 = timeFormatter.format(unixTimeWork25).toString()
+                unixTimeWorkProtocol16 = timeFormatter.format(unixTimeWork26).toString()
+
+                unixTimeEndProtocol11 = timeFormatter.format(unixTimeEnd21).toString()
+                unixTimeEndProtocol12 = timeFormatter.format(unixTimeEnd22).toString()
+                unixTimeEndProtocol13 = timeFormatter.format(unixTimeEnd23).toString()
+                unixTimeEndProtocol14 = timeFormatter.format(unixTimeEnd24).toString()
+                unixTimeEndProtocol15 = timeFormatter.format(unixTimeEnd25).toString()
+                unixTimeEndProtocol16 = timeFormatter.format(unixTimeEnd26).toString()
+
+                unixTimeStartProtocol31 = timeFormatter.format(unixTimeStart31).toString()
+                unixTimeStartProtocol32 = timeFormatter.format(unixTimeStart32).toString()
+                unixTimeStartProtocol33 = timeFormatter.format(unixTimeStart33).toString()
+                unixTimeStartProtocol34 = timeFormatter.format(unixTimeStart34).toString()
+                unixTimeStartProtocol35 = timeFormatter.format(unixTimeStart35).toString()
+                unixTimeStartProtocol36 = timeFormatter.format(unixTimeStart36).toString()
+
+                unixTimeWorkProtocol31 = timeFormatter.format(unixTimeWork31).toString()
+                unixTimeWorkProtocol32 = timeFormatter.format(unixTimeWork32).toString()
+                unixTimeWorkProtocol33 = timeFormatter.format(unixTimeWork33).toString()
+                unixTimeWorkProtocol34 = timeFormatter.format(unixTimeWork34).toString()
+                unixTimeWorkProtocol35 = timeFormatter.format(unixTimeWork35).toString()
+                unixTimeWorkProtocol36 = timeFormatter.format(unixTimeWork36).toString()
+
+                unixTimeEndProtocol31 = timeFormatter.format(unixTimeEnd31).toString()
+                unixTimeEndProtocol32 = timeFormatter.format(unixTimeEnd32).toString()
+                unixTimeEndProtocol33 = timeFormatter.format(unixTimeEnd33).toString()
+                unixTimeEndProtocol34 = timeFormatter.format(unixTimeEnd34).toString()
+                unixTimeEndProtocol35 = timeFormatter.format(unixTimeEnd35).toString()
+                unixTimeEndProtocol36 = timeFormatter.format(unixTimeEnd36).toString()
             }
         }
     }
@@ -1162,7 +1351,7 @@ class Test1Controller : TController() {
             measuringt31 > 75 || measuringt32 > 75 || measuringt33 > 75 || measuringt34 > 75 || measuringt35 > 75 || measuringt36 > 75
         ) {
             soundError()
-            soundWarning(1, 1000)
+            soundWarning(1)
         }
     }
 
@@ -1226,117 +1415,99 @@ class Test1Controller : TController() {
     private fun collectValuesInProtocolInTimer() {
         thread(isDaemon = true) {
             while (controller.isExperimentRunning) {
-                if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
+                if (measuringt11 < -50 || measuringt11 > 100) {
                     listOfValues11.add("-99.9")
                 } else {
                     listOfValues11.add(String.format("%.1f", measuringt11))
                 }
-                if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
+                if (measuringt12 < -50 || measuringt12 > 100) {
                     listOfValues12.add("-99.9")
                 } else {
                     listOfValues12.add(String.format("%.1f", measuringt12))
                 }
-                if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
+                if (measuringt13 < -50 || measuringt13 > 100) {
                     listOfValues13.add("-99.9")
                 } else {
                     listOfValues13.add(String.format("%.1f", measuringt13))
                 }
-                if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
+                if (measuringt14 < -50 || measuringt14 > 100) {
                     listOfValues14.add("-99.9")
                 } else {
                     listOfValues14.add(String.format("%.1f", measuringt14))
                 }
-                if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
+                if (measuringt15 < -50 || measuringt15 > 100) {
                     listOfValues15.add("-99.9")
                 } else {
                     listOfValues15.add(String.format("%.1f", measuringt15))
                 }
-                if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
+                if (measuringt16 < -50 || measuringt16 > 100) {
                     listOfValues16.add("-99.9")
                 } else {
                     listOfValues16.add(String.format("%.1f", measuringt16))
                 }
 
-                if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
+                if (measuringt21 < -50 || measuringt21 > 100) {
                     listOfValues21.add("-99.9")
                 } else {
                     listOfValues21.add(String.format("%.1f", measuringt21))
                 }
-                if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
+                if (measuringt22 < -50 || measuringt22 > 100) {
                     listOfValues22.add("-99.9")
                 } else {
                     listOfValues22.add(String.format("%.1f", measuringt22))
                 }
-                if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
+                if (measuringt23 < -50 || measuringt23 > 100) {
                     listOfValues23.add("-99.9")
                 } else {
                     listOfValues23.add(String.format("%.1f", measuringt23))
                 }
-                if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
+                if (measuringt24 < -50 || measuringt24 > 100) {
                     listOfValues24.add("-99.9")
                 } else {
                     listOfValues24.add(String.format("%.1f", measuringt24))
                 }
-                if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
+                if (measuringt25 < -50 || measuringt25 > 100) {
                     listOfValues25.add("-99.9")
                 } else {
                     listOfValues25.add(String.format("%.1f", measuringt25))
                 }
-                if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
+                if (measuringt26 < -50 || measuringt26 > 100) {
                     listOfValues26.add("-99.9")
                 } else {
                     listOfValues26.add(String.format("%.1f", measuringt26))
                 }
 
-                if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
+                if (measuringt31 < -50 || measuringt31 > 100) {
                     listOfValues31.add("-99.9")
                 } else {
                     listOfValues31.add(String.format("%.1f", measuringt31))
                 }
-                if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
+                if (measuringt32 < -50 || measuringt32 > 100) {
                     listOfValues32.add("-99.9")
                 } else {
                     listOfValues32.add(String.format("%.1f", measuringt32))
                 }
-                if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
+                if (measuringt33 < -50 || measuringt33 > 100) {
                     listOfValues33.add("-99.9")
                 } else {
                     listOfValues33.add(String.format("%.1f", measuringt33))
                 }
-                if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
+                if (measuringt34 < -50 || measuringt34 > 100) {
                     listOfValues34.add("-99.9")
                 } else {
                     listOfValues34.add(String.format("%.1f", measuringt34))
                 }
-                if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
+                if (measuringt35 < -50 || measuringt35 > 100) {
                     listOfValues35.add("-99.9")
                 } else {
                     listOfValues35.add(String.format("%.1f", measuringt35))
                 }
-                if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
+                if (measuringt36 < -50 || measuringt36 > 100) {
                     listOfValues36.add("-99.9")
                 } else {
                     listOfValues36.add(String.format("%.1f", measuringt36))
                 }
                 sleep(1000)
-//        listOfAmperage11.add(String.format("%.1f", measuringI11))
-//        listOfAmperage12.add(String.format("%.1f", measuringI12))
-//        listOfAmperage13.add(String.format("%.1f", measuringI13))
-//        listOfAmperage14.add(String.format("%.1f", measuringI14))
-//        listOfAmperage15.add(String.format("%.1f", measuringI15))
-//        listOfAmperage16.add(String.format("%.1f", measuringI16))
-//        listOfAmperage21.add(String.format("%.1f", measuringI21))
-//        listOfAmperage22.add(String.format("%.1f", measuringI22))
-//        listOfAmperage23.add(String.format("%.1f", measuringI23))
-//        listOfAmperage24.add(String.format("%.1f", measuringI24))
-//        listOfAmperage25.add(String.format("%.1f", measuringI25))
-//        listOfAmperage26.add(String.format("%.1f", measuringI26))
-//        listOfAmperage31.add(String.format("%.1f", measuringI31))
-//        listOfAmperage32.add(String.format("%.1f", measuringI32))
-//        listOfAmperage33.add(String.format("%.1f", measuringI33))
-//        listOfAmperage34.add(String.format("%.1f", measuringI34))
-//        listOfAmperage35.add(String.format("%.1f", measuringI35))
-//        listOfAmperage36.add(String.format("%.1f", measuringI36))
             }
         }
     }
@@ -1429,37 +1600,37 @@ class Test1Controller : TController() {
         }
 
         if (mainView.place1Prop.value) {
-            if (measuringt11 < -50 || measuringt11 > 100 || !trmStatus11) {
+            if (measuringt11 < -50 || measuringt11 > 100) {
                 controller.tableValuesPlace1Test1[0].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[0].place1temp.value =
                     String.format("%.1f", measuringt11)
             }
-            if (measuringt12 < -50 || measuringt12 > 100 || !trmStatus12) {
+            if (measuringt12 < -50 || measuringt12 > 100) {
                 controller.tableValuesPlace1Test1[1].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[1].place1temp.value =
                     String.format("%.1f", measuringt12)
             }
-            if (measuringt13 < -50 || measuringt13 > 100 || !trmStatus13) {
+            if (measuringt13 < -50 || measuringt13 > 100) {
                 controller.tableValuesPlace1Test1[2].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[2].place1temp.value =
                     String.format("%.1f", measuringt13)
             }
-            if (measuringt14 < -50 || measuringt14 > 100 || !trmStatus14) {
+            if (measuringt14 < -50 || measuringt14 > 100) {
                 controller.tableValuesPlace1Test1[3].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[3].place1temp.value =
                     String.format("%.1f", measuringt14)
             }
-            if (measuringt15 < -50 || measuringt15 > 100 || !trmStatus15) {
+            if (measuringt15 < -50 || measuringt15 > 100) {
                 controller.tableValuesPlace1Test1[4].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[4].place1temp.value =
                     String.format("%.1f", measuringt15)
             }
-            if (measuringt16 < -50 || measuringt16 > 100 || !trmStatus16) {
+            if (measuringt16 < -50 || measuringt16 > 100) {
                 controller.tableValuesPlace1Test1[5].place1temp.value = "-.--"
             } else {
                 controller.tableValuesPlace1Test1[5].place1temp.value =
@@ -1467,37 +1638,37 @@ class Test1Controller : TController() {
             }
         }
         if (mainView.place2Prop.value) {
-            if (measuringt21 < -50 || measuringt21 > 100 || !trmStatus21) {
+            if (measuringt21 < -50 || measuringt21 > 100) {
                 controller.tableValuesPlace2Test1[0].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[0].place2temp.value =
                     String.format("%.1f", measuringt21)
             }
-            if (measuringt22 < -50 || measuringt22 > 100 || !trmStatus22) {
+            if (measuringt22 < -50 || measuringt22 > 100) {
                 controller.tableValuesPlace2Test1[1].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[1].place2temp.value =
                     String.format("%.1f", measuringt22)
             }
-            if (measuringt23 < -50 || measuringt23 > 100 || !trmStatus23) {
+            if (measuringt23 < -50 || measuringt23 > 100) {
                 controller.tableValuesPlace2Test1[2].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[2].place2temp.value =
                     String.format("%.1f", measuringt23)
             }
-            if (measuringt24 < -50 || measuringt24 > 100 || !trmStatus24) {
+            if (measuringt24 < -50 || measuringt24 > 100) {
                 controller.tableValuesPlace2Test1[3].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[3].place2temp.value =
                     String.format("%.1f", measuringt24)
             }
-            if (measuringt25 < -50 || measuringt25 > 100 || !trmStatus25) {
+            if (measuringt25 < -50 || measuringt25 > 100) {
                 controller.tableValuesPlace2Test1[4].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[4].place2temp.value =
                     String.format("%.1f", measuringt25)
             }
-            if (measuringt26 < -50 || measuringt26 > 100 || !trmStatus26) {
+            if (measuringt26 < -50 || measuringt26 > 100) {
                 controller.tableValuesPlace2Test1[5].place2temp.value = "-.--"
             } else {
                 controller.tableValuesPlace2Test1[5].place2temp.value =
@@ -1505,37 +1676,37 @@ class Test1Controller : TController() {
             }
         }
         if (mainView.place3Prop.value) {
-            if (measuringt31 < -50 || measuringt31 > 100 || !trmStatus31) {
+            if (measuringt31 < -50 || measuringt31 > 100) {
                 controller.tableValuesPlace3Test1[0].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[0].place3temp.value =
                     String.format("%.1f", measuringt31)
             }
-            if (measuringt32 < -50 || measuringt32 > 100 || !trmStatus32) {
+            if (measuringt32 < -50 || measuringt32 > 100) {
                 controller.tableValuesPlace3Test1[1].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[1].place3temp.value =
                     String.format("%.1f", measuringt32)
             }
-            if (measuringt33 < -50 || measuringt33 > 100 || !trmStatus33) {
+            if (measuringt33 < -50 || measuringt33 > 100) {
                 controller.tableValuesPlace3Test1[2].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[2].place3temp.value =
                     String.format("%.1f", measuringt33)
             }
-            if (measuringt34 < -50 || measuringt34 > 100 || !trmStatus34) {
+            if (measuringt34 < -50 || measuringt34 > 100) {
                 controller.tableValuesPlace3Test1[3].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[3].place3temp.value =
                     String.format("%.1f", measuringt34)
             }
-            if (measuringt35 < -50 || measuringt35 > 100 || !trmStatus35) {
+            if (measuringt35 < -50 || measuringt35 > 100) {
                 controller.tableValuesPlace3Test1[4].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[4].place3temp.value =
                     String.format("%.1f", measuringt35)
             }
-            if (measuringt36 < -50 || measuringt36 > 100 || !trmStatus36) {
+            if (measuringt36 < -50 || measuringt36 > 100) {
                 controller.tableValuesPlace3Test1[5].place3temp.value = "-.--"
             } else {
                 controller.tableValuesPlace3Test1[5].place3temp.value =
@@ -2442,6 +2613,89 @@ class Test1Controller : TController() {
         }
     }
 
+    private fun setResult() {
+        if (controller.cause.isNotEmpty()) {
+            appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: ${controller.cause}")
+            soundError()
+        } else if (!controller.isDevicesRespondingTest1()) {
+            appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: \nпотеряна связь с устройствами")
+            soundError()
+        } else {
+            appendMessageToLog(LogTag.MESSAGE, "Испытание завершено успешно")
+            soundError()
+        }
+    }
+
+    private fun finalizeExperiment() {
+        controller.isExperimentRunning = false
+        isExperimentEnded = true
+        owenPR.offAllKMs()
+        CommunicationModel.clearPollingRegisters()
+        runLater {
+            mainView.labelTimeRemaining.text = ""
+            mainView.labelTestStatus.text = ""
+            mainView.buttonStart.isDisable = false
+            mainView.buttonStop.isDisable = true
+            mainView.mainMenuBar.isDisable = false
+            mainView.comboBoxTests.isDisable = false
+            mainView.comboBoxTestItem.isDisable = false
+            mainView.initTableTest1.isDisable = false
+            mainView.initTableTest2.isDisable = false
+            mainView.checkBoxPlace1.isDisable = false
+            mainView.checkBoxPlace2.isDisable = false
+            mainView.checkBoxPlace3.isDisable = false
+        }
+    }
+
+    private fun presetAccurateParameters(latrDevice: AvemLatrController) {
+        latrDevice.presetParameters(
+            LatrControllerConfiguration(
+                minDuttyPercent = 50f,
+                maxDuttyPercent = 50f,
+                corridor = 0.2f,
+                delta = 0.03f,
+                timePulseMin = 100,
+                timePulseMax = 100
+            )
+        )
+    }
+
+    private fun isLatrInErrorMode(latrDevice: AvemLatrController) =
+        when (latrDevice.getRegisterById(AvemLatrModel.DEVICE_STATUS).value) {
+            0x81 -> {
+                appendMessageToLog(LogTag.ERROR, "Сработал верхний концевик при движении вверх")
+                true
+            }
+            0x82 -> {
+                appendMessageToLog(LogTag.ERROR, "Сработал нижний концевик при движении вниз")
+                true
+            }
+            0x83 -> {
+                appendMessageToLog(LogTag.ERROR, "Сработали оба концевика")
+                true
+            }
+            0x84 -> {
+                appendMessageToLog(LogTag.ERROR, "Время регулирования превысило заданное")
+                true
+            }
+            0x85 -> {
+                appendMessageToLog(LogTag.ERROR, "Застревание АРН")
+                true
+            }
+            else -> false
+        }
+
+    private fun soundWarning(times: Int) {
+        thread(isDaemon = true) {
+            for (i in 0 until times) {
+                owenPR.onSound()
+                sleep(1000)
+                owenPR.offSound()
+                sleep(1000)
+            }
+        }
+    }
+
     private fun sleepWhile(second: Int) {
         var timer = second * 10
         while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && timer-- > 0) {
@@ -2451,12 +2705,7 @@ class Test1Controller : TController() {
 
     private fun initLatr(latrDevice: AvemLatrController) {
         try {
-            latrDevice.reset {
-//                appendOneMessageToLog(
-//                    LogTag.MESSAGE,
-//                    "В предыдущем испытании АРН не завершил свою работу нормально. АРН возвращается в начало."
-//                )
-            }
+            latrDevice.reset {}
         } catch (e: LatrStuckException) {
             appendMessageToLog(LogTag.ERROR, "Ошибка возврата АРН в начало. АРН застрял.")
             controller.cause = "Застрял ЛАТР"
@@ -2515,169 +2764,4 @@ class Test1Controller : TController() {
         latrDevice.stop()
     }
 
-    private fun presetAccurateParameters(latrDevice: AvemLatrController) {
-        latrDevice.presetParameters(
-            LatrControllerConfiguration(
-                minDuttyPercent = 50f,
-                maxDuttyPercent = 50f,
-                corridor = 0.2f,
-                delta = 0.03f,
-                timePulseMin = 100,
-                timePulseMax = 100
-            )
-        )
-    }
-
-    private fun isLatrInErrorMode(latrDevice: AvemLatrController) =
-        when (latrDevice.getRegisterById(AvemLatrModel.DEVICE_STATUS).value) {
-            0x81 -> {
-                appendMessageToLog(LogTag.ERROR, "Сработал верхний концевик при движении вверх")
-                true
-            }
-            0x82 -> {
-                appendMessageToLog(LogTag.ERROR, "Сработал нижний концевик при движении вниз")
-                true
-            }
-            0x83 -> {
-                appendMessageToLog(LogTag.ERROR, "Сработали оба концевика")
-                true
-            }
-            0x84 -> {
-                appendMessageToLog(LogTag.ERROR, "Время регулирования превысило заданное")
-                true
-            }
-            0x85 -> {
-                appendMessageToLog(LogTag.ERROR, "Застревание АРН")
-                true
-            }
-            else -> false
-        }
-
-    private fun startCheckStatusTrmSensors() {
-        thread(isDaemon = true) {
-            while (controller.isExperimentRunning) {
-                trmStatus11 = true //trm1.checkStatus(0) == 1
-                trmStatus12 = true //trm1.checkStatus(1) == 1
-                trmStatus13 = true //trm1.checkStatus(2) == 1
-                trmStatus14 = true //trm1.checkStatus(3) == 1
-                trmStatus15 = true //trm1.checkStatus(4) == 1
-                trmStatus16 = true //trm1.checkStatus(5) == 1
-                trmStatus17 = true //trm1.checkStatus(6) == 1
-
-                trmStatus21 = true //trm2.checkStatus(0) == 1
-                trmStatus22 = true //trm2.checkStatus(1) == 1
-                trmStatus23 = true //trm2.checkStatus(2) == 1
-                trmStatus24 = true //trm2.checkStatus(3) == 1
-                trmStatus25 = true //trm2.checkStatus(4) == 1
-                trmStatus26 = true //trm2.checkStatus(5) == 1
-
-                trmStatus31 = true //trm3.checkStatus(0) == 1
-                trmStatus32 = true //trm3.checkStatus(1) == 1
-                trmStatus33 = true //trm3.checkStatus(2) == 1
-                trmStatus34 = true //trm3.checkStatus(3) == 1
-                trmStatus35 = true //trm3.checkStatus(4) == 1
-                trmStatus36 = true //trm3.checkStatus(5) == 1
-                sleep(100)
-            }
-        }
-    }
-
-    private fun saveProtocolToDB() {
-        val dateFormatter = SimpleDateFormat("dd.MM.y")
-        val timeFormatter = SimpleDateFormat("HH:mm:ss")
-        val unixTimeEnd = System.currentTimeMillis()
-
-        var protocolVars = transaction {
-            ProtocolVars.all().toList().asObservable()
-        }.first()
-
-        transaction {
-            Singleton.currentProtocol = Protocol.new {
-                date = dateFormatter.format(unixTimeStart).toString()
-                time = timeFormatter.format(unixTimeStart).toString()
-                dateEnd = dateFormatter.format(unixTimeEnd).toString()
-                timeEnd = timeFormatter.format(unixTimeEnd).toString()
-                operator = controller.position1
-                cipher1 = mainView.tfCipher1.text.toString()
-                productNumber1 = mainView.tfProductNumber1.text.toString()
-                cipher2 = mainView.tfCipher3.text.toString()
-                productNumber2 = mainView.tfProductNumber3.text.toString()
-                cipher3 = mainView.tfCipher3.text.toString()
-                productNumber3 = mainView.tfProductNumber3.text.toString()
-                temp11 = listOfValues11.toString()
-                temp12 = listOfValues12.toString()
-                temp13 = listOfValues13.toString()
-                temp14 = listOfValues14.toString()
-                temp15 = listOfValues15.toString()
-                temp16 = listOfValues16.toString()
-                temp21 = listOfValues21.toString()
-                temp22 = listOfValues22.toString()
-                temp23 = listOfValues23.toString()
-                temp24 = listOfValues24.toString()
-                temp25 = listOfValues25.toString()
-                temp26 = listOfValues26.toString()
-                temp31 = listOfValues31.toString()
-                temp32 = listOfValues32.toString()
-                temp33 = listOfValues33.toString()
-                temp34 = listOfValues34.toString()
-                temp35 = listOfValues35.toString()
-                temp36 = listOfValues36.toString()
-                NUMBER_DATE_ATTESTATION = protocolVars.NUMBER_DATE_ATTESTATION
-                NAME_OF_OPERATION = protocolVars.NAME_OF_OPERATION
-                NUMBER_CONTROLLER = protocolVars.NUMBER_CONTROLLER
-                T1 = protocolVars.T1
-                T2 = protocolVars.T2
-                T3 = protocolVars.T3
-                T4 = protocolVars.T4
-                T5 = protocolVars.T5
-                T6 = protocolVars.T6
-                T7 = protocolVars.T7
-                T8 = protocolVars.T8
-                T9 = protocolVars.T9
-                T10 = protocolVars.T10
-                T11 = protocolVars.T11
-                T12 = protocolVars.T12
-                T13 = protocolVars.T13
-                T14 = protocolVars.T14
-                T15 = protocolVars.T15
-                T16 = protocolVars.T16
-                T17 = protocolVars.T17
-                T18 = protocolVars.T18
-            }
-        }
-    }
-
-    private fun setResult() {
-        if (controller.cause.isNotEmpty()) {
-            appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: ${controller.cause}")
-            soundError()
-        } else if (!controller.isDevicesRespondingTest1()) {
-            appendMessageToLog(LogTag.ERROR, "Испытание прервано по причине: \nпотеряна связь с устройствами")
-            soundError()
-        } else {
-            appendMessageToLog(LogTag.MESSAGE, "Испытание завершено успешно")
-            soundError()
-        }
-    }
-
-    private fun finalizeExperiment() {
-        controller.isExperimentRunning = false
-        isExperimentEnded = true
-        owenPR.offAllKMs()
-        CommunicationModel.clearPollingRegisters()
-        runLater {
-            mainView.labelTimeRemaining.text = ""
-            mainView.labelTestStatus.text = ""
-            mainView.buttonStart.isDisable = false
-            mainView.buttonStop.isDisable = true
-            mainView.mainMenuBar.isDisable = false
-            mainView.comboBoxTests.isDisable = false
-            mainView.comboBoxTestItem.isDisable = false
-            mainView.initTableTest1.isDisable = false
-            mainView.initTableTest2.isDisable = false
-            mainView.checkBoxPlace1.isDisable = false
-            mainView.checkBoxPlace2.isDisable = false
-            mainView.checkBoxPlace3.isDisable = false
-        }
-    }
 }

@@ -239,6 +239,25 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             T4 = protocol.T4
                             T5 = protocol.T5
                             T6 = protocol.T6
+
+                            unixTimeStartProtocol1 = protocol.unixTimeStartProtocol11
+                            unixTimeStartProtocol2 = protocol.unixTimeStartProtocol12
+                            unixTimeStartProtocol3 = protocol.unixTimeStartProtocol13
+                            unixTimeStartProtocol4 = protocol.unixTimeStartProtocol14
+                            unixTimeStartProtocol5 = protocol.unixTimeStartProtocol15
+                            unixTimeStartProtocol6 = protocol.unixTimeStartProtocol16
+                            unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol11
+                            unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol12
+                            unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol13
+                            unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol14
+                            unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol15
+                            unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol16
+                            unixTimeEndProtocol1 = protocol.unixTimeEndProtocol11
+                            unixTimeEndProtocol2 = protocol.unixTimeEndProtocol12
+                            unixTimeEndProtocol3 = protocol.unixTimeEndProtocol13
+                            unixTimeEndProtocol4 = protocol.unixTimeEndProtocol14
+                            unixTimeEndProtocol5 = protocol.unixTimeEndProtocol15
+                            unixTimeEndProtocol6 = protocol.unixTimeEndProtocol16
                         }
                     }
                     saveProtocolAsWorkbook(protocolRotorBlade)
@@ -269,6 +288,24 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             T4 = protocol.T10
                             T5 = protocol.T11
                             T6 = protocol.T12
+                            unixTimeStartProtocol1 = protocol.unixTimeStartProtocol21
+                            unixTimeStartProtocol2 = protocol.unixTimeStartProtocol22
+                            unixTimeStartProtocol3 = protocol.unixTimeStartProtocol23
+                            unixTimeStartProtocol4 = protocol.unixTimeStartProtocol24
+                            unixTimeStartProtocol5 = protocol.unixTimeStartProtocol25
+                            unixTimeStartProtocol6 = protocol.unixTimeStartProtocol26
+                            unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol21
+                            unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol22
+                            unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol23
+                            unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol24
+                            unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol25
+                            unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol26
+                            unixTimeEndProtocol1 = protocol.unixTimeEndProtocol21
+                            unixTimeEndProtocol2 = protocol.unixTimeEndProtocol22
+                            unixTimeEndProtocol3 = protocol.unixTimeEndProtocol23
+                            unixTimeEndProtocol4 = protocol.unixTimeEndProtocol24
+                            unixTimeEndProtocol5 = protocol.unixTimeEndProtocol25
+                            unixTimeEndProtocol6 = protocol.unixTimeEndProtocol26
                         }
                     }
                     saveProtocolAsWorkbook(protocolRotorBlade)
@@ -299,6 +336,24 @@ class ProtocolListWindow : View("Протоколы графиков") {
                             T4 = protocol.T16
                             T5 = protocol.T17
                             T6 = protocol.T18
+                            unixTimeStartProtocol1 = protocol.unixTimeStartProtocol31
+                            unixTimeStartProtocol2 = protocol.unixTimeStartProtocol32
+                            unixTimeStartProtocol3 = protocol.unixTimeStartProtocol33
+                            unixTimeStartProtocol4 = protocol.unixTimeStartProtocol34
+                            unixTimeStartProtocol5 = protocol.unixTimeStartProtocol35
+                            unixTimeStartProtocol6 = protocol.unixTimeStartProtocol36
+                            unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol31
+                            unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol32
+                            unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol33
+                            unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol34
+                            unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol35
+                            unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol36
+                            unixTimeEndProtocol1 = protocol.unixTimeEndProtocol31
+                            unixTimeEndProtocol2 = protocol.unixTimeEndProtocol32
+                            unixTimeEndProtocol3 = protocol.unixTimeEndProtocol33
+                            unixTimeEndProtocol4 = protocol.unixTimeEndProtocol34
+                            unixTimeEndProtocol5 = protocol.unixTimeEndProtocol35
+                            unixTimeEndProtocol6 = protocol.unixTimeEndProtocol36
                         }
                     }
                     saveProtocolAsWorkbook(protocolRotorBlade)
