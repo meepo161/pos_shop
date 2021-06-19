@@ -1163,6 +1163,34 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp14
                                         temp5 = protocol.temp15
                                         temp6 = protocol.temp16
+                                        NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
+                                        NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
+                                        NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
+                                        T1 = protocol.T1
+                                        T2 = protocol.T2
+                                        T3 = protocol.T3
+                                        T4 = protocol.T4
+                                        T5 = protocol.T5
+                                        T6 = protocol.T6
+
+                                        unixTimeStartProtocol1 = protocol.unixTimeStartProtocol11
+                                        unixTimeStartProtocol2 = protocol.unixTimeStartProtocol12
+                                        unixTimeStartProtocol3 = protocol.unixTimeStartProtocol13
+                                        unixTimeStartProtocol4 = protocol.unixTimeStartProtocol14
+                                        unixTimeStartProtocol5 = protocol.unixTimeStartProtocol15
+                                        unixTimeStartProtocol6 = protocol.unixTimeStartProtocol16
+                                        unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol11
+                                        unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol12
+                                        unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol13
+                                        unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol14
+                                        unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol15
+                                        unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol16
+                                        unixTimeEndProtocol1 = protocol.unixTimeEndProtocol11
+                                        unixTimeEndProtocol2 = protocol.unixTimeEndProtocol12
+                                        unixTimeEndProtocol3 = protocol.unixTimeEndProtocol13
+                                        unixTimeEndProtocol4 = protocol.unixTimeEndProtocol14
+                                        unixTimeEndProtocol5 = protocol.unixTimeEndProtocol15
+                                        unixTimeEndProtocol6 = protocol.unixTimeEndProtocol16
                                     }
                                 }
                                 saveProtocolAsWorkbook(protocolRotorBlade)
@@ -1174,6 +1202,8 @@ class Test1Controller : TController() {
                                     ProtocolRotorBlade.new {
                                         date = protocol.date
                                         time = protocol.time
+                                        dateEnd = protocol.dateEnd
+                                        timeEnd = protocol.timeEnd
                                         cipher = protocol.cipher2
                                         productName = protocol.productNumber2
                                         operator = protocol.operator
@@ -1183,6 +1213,34 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp24
                                         temp5 = protocol.temp25
                                         temp6 = protocol.temp26
+                                        NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
+                                        NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
+                                        NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
+                                        T1 = protocol.T7
+                                        T2 = protocol.T8
+                                        T3 = protocol.T9
+                                        T4 = protocol.T10
+                                        T5 = protocol.T11
+                                        T6 = protocol.T12
+
+                                        unixTimeStartProtocol1 = protocol.unixTimeStartProtocol21
+                                        unixTimeStartProtocol2 = protocol.unixTimeStartProtocol22
+                                        unixTimeStartProtocol3 = protocol.unixTimeStartProtocol23
+                                        unixTimeStartProtocol4 = protocol.unixTimeStartProtocol24
+                                        unixTimeStartProtocol5 = protocol.unixTimeStartProtocol25
+                                        unixTimeStartProtocol6 = protocol.unixTimeStartProtocol26
+                                        unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol21
+                                        unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol22
+                                        unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol23
+                                        unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol24
+                                        unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol25
+                                        unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol26
+                                        unixTimeEndProtocol1 = protocol.unixTimeEndProtocol21
+                                        unixTimeEndProtocol2 = protocol.unixTimeEndProtocol22
+                                        unixTimeEndProtocol3 = protocol.unixTimeEndProtocol23
+                                        unixTimeEndProtocol4 = protocol.unixTimeEndProtocol24
+                                        unixTimeEndProtocol5 = protocol.unixTimeEndProtocol25
+                                        unixTimeEndProtocol6 = protocol.unixTimeEndProtocol26
                                     }
                                 }
                                 saveProtocolAsWorkbook(protocolRotorBlade)
@@ -1194,6 +1252,8 @@ class Test1Controller : TController() {
                                     ProtocolRotorBlade.new {
                                         date = protocol.date
                                         time = protocol.time
+                                        dateEnd = protocol.dateEnd
+                                        timeEnd = protocol.timeEnd
                                         cipher = protocol.cipher3
                                         productName = protocol.productNumber3
                                         operator = protocol.operator
@@ -1203,6 +1263,34 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp34
                                         temp5 = protocol.temp35
                                         temp6 = protocol.temp36
+                                        NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
+                                        NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
+                                        NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
+                                        T1 = protocol.T13
+                                        T2 = protocol.T14
+                                        T3 = protocol.T15
+                                        T4 = protocol.T16
+                                        T5 = protocol.T17
+                                        T6 = protocol.T18
+
+                                        unixTimeStartProtocol1 = protocol.unixTimeStartProtocol31
+                                        unixTimeStartProtocol2 = protocol.unixTimeStartProtocol32
+                                        unixTimeStartProtocol3 = protocol.unixTimeStartProtocol33
+                                        unixTimeStartProtocol4 = protocol.unixTimeStartProtocol34
+                                        unixTimeStartProtocol5 = protocol.unixTimeStartProtocol35
+                                        unixTimeStartProtocol6 = protocol.unixTimeStartProtocol36
+                                        unixTimeWorkProtocol1 = protocol.unixTimeWorkProtocol31
+                                        unixTimeWorkProtocol2 = protocol.unixTimeWorkProtocol32
+                                        unixTimeWorkProtocol3 = protocol.unixTimeWorkProtocol33
+                                        unixTimeWorkProtocol4 = protocol.unixTimeWorkProtocol34
+                                        unixTimeWorkProtocol5 = protocol.unixTimeWorkProtocol35
+                                        unixTimeWorkProtocol6 = protocol.unixTimeWorkProtocol36
+                                        unixTimeEndProtocol1 = protocol.unixTimeEndProtocol31
+                                        unixTimeEndProtocol2 = protocol.unixTimeEndProtocol32
+                                        unixTimeEndProtocol3 = protocol.unixTimeEndProtocol33
+                                        unixTimeEndProtocol4 = protocol.unixTimeEndProtocol34
+                                        unixTimeEndProtocol5 = protocol.unixTimeEndProtocol35
+                                        unixTimeEndProtocol6 = protocol.unixTimeEndProtocol36
                                     }
                                 }
                                 saveProtocolAsWorkbook(protocolRotorBlade)
