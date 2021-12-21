@@ -296,13 +296,13 @@ class MainViewController : Controller() {
 
     fun isDevicesRespondingTest2(): Boolean {
         return CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding
-                && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding
-                && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding else true)
-                && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV239).isResponding else true)
-                && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV240).isResponding else true)
-                && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71).isResponding else true)
-                && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72).isResponding else true)
-                && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73).isResponding else true)
+//                && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding
+//                && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding else true)
+//                && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV239).isResponding else true)
+//                && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV240).isResponding else true)
+//                && (if (view.place1Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71).isResponding else true)
+//                && (if (view.place2Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72).isResponding else true)
+//                && (if (view.place3Prop.value) CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73).isResponding else true)
     }
 
     @OptIn(ExperimentalTime::class)

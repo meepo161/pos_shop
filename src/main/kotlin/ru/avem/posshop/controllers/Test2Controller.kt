@@ -48,9 +48,6 @@ class Test2Controller : TController() {
     @Volatile
     var schemeAssembled: Boolean = false
 
-    @Volatile
-    var isValuesCorrect: Boolean = true
-
     //region переменные для значений с приборов
     @Volatile
     private var measuringU1: Double = 0.0
@@ -248,7 +245,6 @@ class Test2Controller : TController() {
             controller.isExperimentRunning = true
             isExperimentEnded = false
             schemeAssembled = false
-            isValuesCorrect = true
             isClicked = false
             unixTimeStart = System.currentTimeMillis()
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
@@ -276,34 +272,34 @@ class Test2Controller : TController() {
                 sleep(1000)
             }
 
-            var timeToPrepare = 300
-            while (!controller.isDevicesRespondingTest2() && controller.isExperimentRunning && timeToPrepare-- > 0) {
-                sleep(100)
-            }
-
-            if (!controller.isDevicesRespondingTest2()) {
-                var cause = ""
-                cause += "Не отвечают приборы: "
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding) {
-                    cause += "ПР "
-                }
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding) {
-                    cause += "ЛАТР "
-                }
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71).isResponding) {
-                    cause += "АВЭМ7 (Место 1) "
-                }
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72).isResponding) {
-                    cause += "АВЭМ7 (Место 2) "
-                }
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73).isResponding) {
-                    cause += "АВЭМ7 (Место 3) "
-                }
-                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding) {
-                    cause += "АВЭМ4 "
-                }
-                controller.cause = cause
-            }
+//            var timeToPrepare = 300
+//            while (!controller.isDevicesRespondingTest2() && controller.isExperimentRunning && timeToPrepare-- > 0) {
+//                sleep(100)
+//            }
+//
+//            if (!controller.isDevicesRespondingTest2()) {
+//                var cause = ""
+//                cause += "Не отвечают приборы: "
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding) {
+//                    cause += "ПР "
+//                }
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.GV238).isResponding) {
+//                    cause += "ЛАТР "
+//                }
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A71).isResponding) {
+//                    cause += "АВЭМ7 (Место 1) "
+//                }
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A72).isResponding) {
+//                    cause += "АВЭМ7 (Место 2) "
+//                }
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A73).isResponding) {
+//                    cause += "АВЭМ7 (Место 3) "
+//                }
+//                if (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.A41).isResponding) {
+//                    cause += "АВЭМ4 "
+//                }
+//                controller.cause = cause
+//            }
 
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest2()) {
                 CommunicationModel.addWritingRegister(
@@ -356,49 +352,42 @@ class Test2Controller : TController() {
             val allTime =
                 (controller.tableValuesTest2[0].place1time.value.toString().replace(",", ".").toDouble()).toInt()
 
-            CallbackTimer(
-                tickPeriod = 1.seconds, tickTimes = allTime * 2,
-                tickJob = {
-                    if (!tickDrawJobInProcess) {
-                        tickDrawJobInProcess = true
-                        if (!controller.isExperimentRunning) it.stop()
-                        if (isValuesCorrect) {
-                            runLater {
-                                if (mainView.place1Prop.value) {
-                                    controller.tableValuesPlace1Test2[0].place1voltage.value =
-                                        formatRealNumber(measuringU1).toString()
-                                }
-
-                                if (mainView.place2Prop.value) {
-                                    controller.tableValuesPlace2Test2[0].place2voltage.value =
-                                        formatRealNumber(measuringU2).toString()
-                                }
-
-                                if (mainView.place3Prop.value) {
-                                    controller.tableValuesPlace3Test2[0].place3voltage.value =
-                                        formatRealNumber(measuringU3).toString()
-                                }
-
-                                if (mainView.place1Prop.value) {
-                                    controller.tableValuesPlace1Test2[0].place1amperage.value =
-                                        formatRealNumber(measuringI1).toString()
-                                }
-
-                                if (mainView.place2Prop.value) {
-                                    controller.tableValuesPlace2Test2[0].place2amperage.value =
-                                        formatRealNumber(measuringI2).toString()
-                                }
-
-                                if (mainView.place3Prop.value) {
-                                    controller.tableValuesPlace3Test2[0].place3amperage.value =
-                                        formatRealNumber(measuringI3).toString()
-                                }
-                            }
+            thread(isDaemon = true) {
+                while (controller.isExperimentRunning) {
+                    runLater {
+                        if (mainView.place1Prop.value) {
+                            controller.tableValuesPlace1Test2[0].place1voltage.value =
+                                formatRealNumber(measuringU1).toString()
                         }
-                        tickDrawJobInProcess = false
+
+                        if (mainView.place2Prop.value) {
+                            controller.tableValuesPlace2Test2[0].place2voltage.value =
+                                formatRealNumber(measuringU2).toString()
+                        }
+
+                        if (mainView.place3Prop.value) {
+                            controller.tableValuesPlace3Test2[0].place3voltage.value =
+                                formatRealNumber(measuringU3).toString()
+                        }
+
+                        if (mainView.place1Prop.value) {
+                            controller.tableValuesPlace1Test2[0].place1amperage.value =
+                                formatRealNumber(measuringI1).toString()
+                        }
+
+                        if (mainView.place2Prop.value) {
+                            controller.tableValuesPlace2Test2[0].place2amperage.value =
+                                formatRealNumber(measuringI2).toString()
+                        }
+
+                        if (mainView.place3Prop.value) {
+                            controller.tableValuesPlace3Test2[0].place3amperage.value =
+                                formatRealNumber(measuringI3).toString()
+                        }
                     }
+                    sleep(100)
                 }
-            )
+            }
 
             val voltage =
                 controller.tableValuesTest2[0].place1voltage.value.toString().replace(",", ".").toDouble() * 0.99
@@ -424,30 +413,31 @@ class Test2Controller : TController() {
                 appendOneMessageToLog(LogTag.MESSAGE, "Напряжение выставлено")
             }
 
-            val callbackTimer = CallbackTimer(
-                tickPeriod = 1.seconds, tickTimes = allTime,
-                tickJob = {
-                    if (!controller.isExperimentRunning) it.stop()
+            var timeLeft = 0
+            thread(isDaemon = true) {
+                while (controller.isExperimentRunning) {
                     runLater {
-                        listOfValuesVoltage.add(String.format("%.1f", measuringU1))
-                        listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
-                        listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
-                        listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
-
                         mainView.labelTimeRemaining.text =
-                            "                   Осталось всего: " + toHHmmss((allTime - it.getCurrentTicks()) * 1000L)
+                            "                   Осталось всего: " + toHHmmss((allTime - timeLeft) * 1000L)
                     }
+                    timeLeft++
+                    sleep(1000)
                 }
-            )
-
-            while (controller.isExperimentRunning && controller.isDevicesRespondingTest2() && callbackTimer.isRunning) {
-                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения...")
-                sleep(100)
             }
-            isValuesCorrect = false
-            gv238.reset()
 
-            saveProtocolToDB()
+            while (timeLeft < allTime && controller.isExperimentRunning ) {
+                listOfValuesVoltage.add(String.format("%.1f", measuringU1))
+                listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
+                listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
+                listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
+                sleep(1000)
+            }
+
+            if (controller.isExperimentRunning) {
+                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения...")
+            }
+
+            gv238.reset()
 
             while (tickDrawJobInProcess) {
                 sleep(100)
@@ -607,7 +597,7 @@ class Test2Controller : TController() {
                 date = dateFormatter.format(unixTimeStart).toString()
                 time = timeFormatter.format(unixTimeStart).toString()
                 dateEnd = dateFormatter.format(unixTime).toString()
-                dateEnd = timeFormatter.format(unixTime).toString()
+                timeEnd = timeFormatter.format(unixTime).toString()
                 operator = controller.position1
                 voltage = listOfValuesVoltage.toString()
                 amperage1 = listOfValuesAmperage1.toString()

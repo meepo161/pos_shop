@@ -859,6 +859,7 @@ private fun drawLineChart36(
 
     lineChart.axes[0].setTitle(nameOfOI)
     lineChart.axes[1].setTitle(yAxisTitle)
+    lineChart.axes[1].majorUnit = 2.0
 
     val plotArea = lineChart.ctChart.plotArea
     plotArea.lineChartArray[0].smooth

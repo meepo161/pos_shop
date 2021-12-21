@@ -749,11 +749,7 @@ class Test1Controller : TController() {
             appendMessageToLog(LogTag.DEBUG, "Начало испытания")
             unixTimeStart = System.currentTimeMillis()
             clearTable()
-            temperature = if (controller.tableValuesTest1[0].place1temp.value.toString() == "60-70") {
-                65.0
-            } else {
-                55.0
-            }
+            temperature = controller.tableValuesTest1[0].place1temp.value.replace(",", ".").toDouble()
 
             sleep(1000)
 
@@ -1366,68 +1362,286 @@ class Test1Controller : TController() {
                 T17 = protocolVars.T17
                 T18 = protocolVars.T18
 
-                unixTimeStartProtocol11 = timeFormatter.format(unixTimeStart11).toString()
-                unixTimeStartProtocol12 = timeFormatter.format(unixTimeStart12).toString()
-                unixTimeStartProtocol13 = timeFormatter.format(unixTimeStart13).toString()
-                unixTimeStartProtocol14 = timeFormatter.format(unixTimeStart14).toString()
-                unixTimeStartProtocol15 = timeFormatter.format(unixTimeStart15).toString()
-                unixTimeStartProtocol16 = timeFormatter.format(unixTimeStart16).toString()
+                unixTimeStartProtocol11 = if (unixTimeStart11 != 0L) {
+                    timeFormatter.format(unixTimeStart11).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol12 = if (unixTimeStart12 != 0L) {
+                    timeFormatter.format(unixTimeStart12).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol13 = if (unixTimeStart13 != 0L) {
+                    timeFormatter.format(unixTimeStart13).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol14 = if (unixTimeStart14 != 0L) {
+                    timeFormatter.format(unixTimeStart14).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol15 = if (unixTimeStart15 != 0L) {
+                    timeFormatter.format(unixTimeStart15).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol16 = if (unixTimeStart16 != 0L) {
+                    timeFormatter.format(unixTimeStart16).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeWorkProtocol11 = timeFormatter.format(unixTimeWork11).toString()
-                unixTimeWorkProtocol12 = timeFormatter.format(unixTimeWork12).toString()
-                unixTimeWorkProtocol13 = timeFormatter.format(unixTimeWork13).toString()
-                unixTimeWorkProtocol14 = timeFormatter.format(unixTimeWork14).toString()
-                unixTimeWorkProtocol15 = timeFormatter.format(unixTimeWork15).toString()
-                unixTimeWorkProtocol16 = timeFormatter.format(unixTimeWork16).toString()
+                unixTimeWorkProtocol11 = if (unixTimeWork11 != 0L) {
+                    timeFormatter.format(unixTimeWork11).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol12 = if (unixTimeWork12 != 0L) {
+                    timeFormatter.format(unixTimeWork12).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol13 = if (unixTimeWork13 != 0L) {
+                    timeFormatter.format(unixTimeWork13).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol14 = if (unixTimeWork14 != 0L) {
+                    timeFormatter.format(unixTimeWork14).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol15 = if (unixTimeWork15 != 0L) {
+                    timeFormatter.format(unixTimeWork15).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol16 = if (unixTimeWork16 != 0L) {
+                    timeFormatter.format(unixTimeWork16).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeEndProtocol11 = timeFormatter.format(unixTimeEnd11).toString()
-                unixTimeEndProtocol12 = timeFormatter.format(unixTimeEnd12).toString()
-                unixTimeEndProtocol13 = timeFormatter.format(unixTimeEnd13).toString()
-                unixTimeEndProtocol14 = timeFormatter.format(unixTimeEnd14).toString()
-                unixTimeEndProtocol15 = timeFormatter.format(unixTimeEnd15).toString()
-                unixTimeEndProtocol16 = timeFormatter.format(unixTimeEnd16).toString()
+                unixTimeEndProtocol11 = if (unixTimeEnd11 != 0L) {
+                    timeFormatter.format(unixTimeEnd11).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol12 = if (unixTimeEnd12 != 0L) {
+                    timeFormatter.format(unixTimeEnd12).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol13 = if (unixTimeEnd13 != 0L) {
+                    timeFormatter.format(unixTimeEnd13).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol14 = if (unixTimeEnd14 != 0L) {
+                    timeFormatter.format(unixTimeEnd14).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol15 = if (unixTimeEnd15 != 0L) {
+                    timeFormatter.format(unixTimeEnd15).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol16 = if (unixTimeEnd16 != 0L) {
+                    timeFormatter.format(unixTimeEnd16).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeStartProtocol11 = timeFormatter.format(unixTimeStart21).toString()
-                unixTimeStartProtocol12 = timeFormatter.format(unixTimeStart22).toString()
-                unixTimeStartProtocol13 = timeFormatter.format(unixTimeStart23).toString()
-                unixTimeStartProtocol14 = timeFormatter.format(unixTimeStart24).toString()
-                unixTimeStartProtocol15 = timeFormatter.format(unixTimeStart25).toString()
-                unixTimeStartProtocol16 = timeFormatter.format(unixTimeStart26).toString()
 
-                unixTimeWorkProtocol11 = timeFormatter.format(unixTimeWork21).toString()
-                unixTimeWorkProtocol12 = timeFormatter.format(unixTimeWork22).toString()
-                unixTimeWorkProtocol13 = timeFormatter.format(unixTimeWork23).toString()
-                unixTimeWorkProtocol14 = timeFormatter.format(unixTimeWork24).toString()
-                unixTimeWorkProtocol15 = timeFormatter.format(unixTimeWork25).toString()
-                unixTimeWorkProtocol16 = timeFormatter.format(unixTimeWork26).toString()
+                unixTimeStartProtocol21 = if (unixTimeStart21 != 0L) {
+                    timeFormatter.format(unixTimeStart21).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol22 = if (unixTimeStart22 != 0L) {
+                    timeFormatter.format(unixTimeStart22).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol23 = if (unixTimeStart23 != 0L) {
+                    timeFormatter.format(unixTimeStart23).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol24 = if (unixTimeStart24 != 0L) {
+                    timeFormatter.format(unixTimeStart24).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol25 = if (unixTimeStart25 != 0L) {
+                    timeFormatter.format(unixTimeStart25).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol26 = if (unixTimeStart26 != 0L) {
+                    timeFormatter.format(unixTimeStart26).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeEndProtocol11 = timeFormatter.format(unixTimeEnd21).toString()
-                unixTimeEndProtocol12 = timeFormatter.format(unixTimeEnd22).toString()
-                unixTimeEndProtocol13 = timeFormatter.format(unixTimeEnd23).toString()
-                unixTimeEndProtocol14 = timeFormatter.format(unixTimeEnd24).toString()
-                unixTimeEndProtocol15 = timeFormatter.format(unixTimeEnd25).toString()
-                unixTimeEndProtocol16 = timeFormatter.format(unixTimeEnd26).toString()
+                unixTimeWorkProtocol21 = if (unixTimeWork21 != 0L) {
+                    timeFormatter.format(unixTimeWork21).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol22 = if (unixTimeWork22 != 0L) {
+                    timeFormatter.format(unixTimeWork22).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol23 = if (unixTimeWork23 != 0L) {
+                    timeFormatter.format(unixTimeWork23).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol24 = if (unixTimeWork24 != 0L) {
+                    timeFormatter.format(unixTimeWork24).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol25 = if (unixTimeWork25 != 0L) {
+                    timeFormatter.format(unixTimeWork25).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol26 = if (unixTimeWork26 != 0L) {
+                    timeFormatter.format(unixTimeWork26).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeStartProtocol31 = timeFormatter.format(unixTimeStart31).toString()
-                unixTimeStartProtocol32 = timeFormatter.format(unixTimeStart32).toString()
-                unixTimeStartProtocol33 = timeFormatter.format(unixTimeStart33).toString()
-                unixTimeStartProtocol34 = timeFormatter.format(unixTimeStart34).toString()
-                unixTimeStartProtocol35 = timeFormatter.format(unixTimeStart35).toString()
-                unixTimeStartProtocol36 = timeFormatter.format(unixTimeStart36).toString()
+                unixTimeEndProtocol21 = if (unixTimeEnd21 != 0L) {
+                    timeFormatter.format(unixTimeEnd21).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol22 = if (unixTimeEnd22 != 0L) {
+                    timeFormatter.format(unixTimeEnd22).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol23 = if (unixTimeEnd23 != 0L) {
+                    timeFormatter.format(unixTimeEnd23).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol24 = if (unixTimeEnd24 != 0L) {
+                    timeFormatter.format(unixTimeEnd24).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol25 = if (unixTimeEnd25 != 0L) {
+                    timeFormatter.format(unixTimeEnd25).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol26 = if (unixTimeEnd26 != 0L) {
+                    timeFormatter.format(unixTimeEnd26).toString()
+                } else {
+                    "0"
+                }
 
-                unixTimeWorkProtocol31 = timeFormatter.format(unixTimeWork31).toString()
-                unixTimeWorkProtocol32 = timeFormatter.format(unixTimeWork32).toString()
-                unixTimeWorkProtocol33 = timeFormatter.format(unixTimeWork33).toString()
-                unixTimeWorkProtocol34 = timeFormatter.format(unixTimeWork34).toString()
-                unixTimeWorkProtocol35 = timeFormatter.format(unixTimeWork35).toString()
-                unixTimeWorkProtocol36 = timeFormatter.format(unixTimeWork36).toString()
 
-                unixTimeEndProtocol31 = timeFormatter.format(unixTimeEnd31).toString()
-                unixTimeEndProtocol32 = timeFormatter.format(unixTimeEnd32).toString()
-                unixTimeEndProtocol33 = timeFormatter.format(unixTimeEnd33).toString()
-                unixTimeEndProtocol34 = timeFormatter.format(unixTimeEnd34).toString()
-                unixTimeEndProtocol35 = timeFormatter.format(unixTimeEnd35).toString()
-                unixTimeEndProtocol36 = timeFormatter.format(unixTimeEnd36).toString()
+                unixTimeStartProtocol31 = if (unixTimeStart31 != 0L) {
+                    timeFormatter.format(unixTimeStart31).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol32 = if (unixTimeStart32 != 0L) {
+                    timeFormatter.format(unixTimeStart32).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol33 = if (unixTimeStart33 != 0L) {
+                    timeFormatter.format(unixTimeStart33).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol34 = if (unixTimeStart34 != 0L) {
+                    timeFormatter.format(unixTimeStart34).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol35 = if (unixTimeStart35 != 0L) {
+                    timeFormatter.format(unixTimeStart35).toString()
+                } else {
+                    "0"
+                }
+                unixTimeStartProtocol36 = if (unixTimeStart36 != 0L) {
+                    timeFormatter.format(unixTimeStart36).toString()
+                } else {
+                    "0"
+                }
+
+                unixTimeWorkProtocol31 = if (unixTimeWork31 != 0L) {
+                    timeFormatter.format(unixTimeWork31).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol32 = if (unixTimeWork32 != 0L) {
+                    timeFormatter.format(unixTimeWork32).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol33 = if (unixTimeWork33 != 0L) {
+                    timeFormatter.format(unixTimeWork33).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol34 = if (unixTimeWork34 != 0L) {
+                    timeFormatter.format(unixTimeWork34).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol35 = if (unixTimeWork35 != 0L) {
+                    timeFormatter.format(unixTimeWork35).toString()
+                } else {
+                    "0"
+                }
+                unixTimeWorkProtocol36 = if (unixTimeWork36 != 0L) {
+                    timeFormatter.format(unixTimeWork36).toString()
+                } else {
+                    "0"
+                }
+
+                unixTimeEndProtocol31 = if (unixTimeEnd31 != 0L) {
+                    timeFormatter.format(unixTimeEnd31).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol32 = if (unixTimeEnd32 != 0L) {
+                    timeFormatter.format(unixTimeEnd32).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol33 = if (unixTimeEnd33 != 0L) {
+                    timeFormatter.format(unixTimeEnd33).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol34 = if (unixTimeEnd34 != 0L) {
+                    timeFormatter.format(unixTimeEnd34).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol35 = if (unixTimeEnd35 != 0L) {
+                    timeFormatter.format(unixTimeEnd35).toString()
+                } else {
+                    "0"
+                }
+                unixTimeEndProtocol36 = if (unixTimeEnd36 != 0L) {
+                    timeFormatter.format(unixTimeEnd36).toString()
+                } else {
+                    "0"
+                }
             }
         }
     }
