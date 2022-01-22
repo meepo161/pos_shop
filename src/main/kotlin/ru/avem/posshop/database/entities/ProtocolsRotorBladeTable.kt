@@ -19,6 +19,18 @@ object ProtocolsRotorBladeTable : IntIdTable() {
     val temp4 =  varchar("temp4", 99999999)
     val temp5 =  varchar("temp5", 99999999)
     val temp6 =  varchar("temp6", 99999999)
+    val voltage1 =  varchar("voltage1", 99999999)
+    val voltage2 =  varchar("voltage2", 99999999)
+    val voltage3 =  varchar("voltage3", 99999999)
+    val voltage4 =  varchar("voltage4", 99999999)
+    val voltage5 =  varchar("voltage5", 99999999)
+    val voltage6 =  varchar("voltage6", 99999999)
+    val amperage1 =  varchar("amperage1", 99999999)
+    val amperage2 =  varchar("amperage2", 99999999)
+    val amperage3 =  varchar("amperage3", 99999999)
+    val amperage4 =  varchar("amperage4", 99999999)
+    val amperage5 =  varchar("amperage5", 99999999)
+    val amperage6 =  varchar("amperage6", 99999999)
     var NUMBER_DATE_ATTESTATION = varchar("NUMBER_DATE_ATTESTATION", 512)
     var NAME_OF_OPERATION = varchar("NAME_OF_OPERATION", 512)
     var NUMBER_CONTROLLER = varchar("NUMBER_CONTROLLER", 512)
@@ -66,6 +78,18 @@ class ProtocolRotorBlade(id: EntityID<Int>) : IntEntity(id) {
     var temp4 by ProtocolsRotorBladeTable.temp4
     var temp5 by ProtocolsRotorBladeTable.temp5
     var temp6 by ProtocolsRotorBladeTable.temp6
+    var voltage1 by ProtocolsRotorBladeTable.voltage1
+    var voltage2 by ProtocolsRotorBladeTable.voltage2
+    var voltage3 by ProtocolsRotorBladeTable.voltage3
+    var voltage4 by ProtocolsRotorBladeTable.voltage4
+    var voltage5 by ProtocolsRotorBladeTable.voltage5
+    var voltage6 by ProtocolsRotorBladeTable.voltage6
+    var amperage1 by ProtocolsRotorBladeTable.amperage1
+    var amperage2 by ProtocolsRotorBladeTable.amperage2
+    var amperage3 by ProtocolsRotorBladeTable.amperage3
+    var amperage4 by ProtocolsRotorBladeTable.amperage4
+    var amperage5 by ProtocolsRotorBladeTable.amperage5
+    var amperage6 by ProtocolsRotorBladeTable.amperage6
     var NUMBER_DATE_ATTESTATION by ProtocolsRotorBladeTable.NUMBER_DATE_ATTESTATION
     var NAME_OF_OPERATION by ProtocolsRotorBladeTable.NAME_OF_OPERATION
     var NUMBER_CONTROLLER by ProtocolsRotorBladeTable.NUMBER_CONTROLLER

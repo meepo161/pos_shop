@@ -34,7 +34,6 @@ class Pos : App(AuthorizationView::class, Styles::class) {
 
     override fun stop() {
         isAppRunning = false
-        super.stop()
         exitProcess(0)
     }
 }

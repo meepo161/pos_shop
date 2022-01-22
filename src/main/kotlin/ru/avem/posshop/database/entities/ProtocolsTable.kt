@@ -35,6 +35,42 @@ object ProtocolsTable : IntIdTable() {
     val temp34 = varchar("temp34", 99999999)
     val temp35 = varchar("temp35", 99999999)
     val temp36 = varchar("temp36", 99999999)
+    val voltage11 = varchar("voltage11", 99999999)
+    val voltage12 = varchar("voltage12", 99999999)
+    val voltage13 = varchar("voltage13", 99999999)
+    val voltage14 = varchar("voltage14", 99999999)
+    val voltage15 = varchar("voltage15", 99999999)
+    val voltage16 = varchar("voltage16", 99999999)
+    val voltage21 = varchar("voltage21", 99999999)
+    val voltage22 = varchar("voltage22", 99999999)
+    val voltage23 = varchar("voltage23", 99999999)
+    val voltage24 = varchar("voltage24", 99999999)
+    val voltage25 = varchar("voltage25", 99999999)
+    val voltage26 = varchar("voltage26", 99999999)
+    val voltage31 = varchar("voltage31", 99999999)
+    val voltage32 = varchar("voltage32", 99999999)
+    val voltage33 = varchar("voltage33", 99999999)
+    val voltage34 = varchar("voltage34", 99999999)
+    val voltage35 = varchar("voltage35", 99999999)
+    val voltage36 = varchar("voltage36", 99999999)
+    val amperage11 = varchar("amperage11", 99999999)
+    val amperage12 = varchar("amperage12", 99999999)
+    val amperage13 = varchar("amperage13", 99999999)
+    val amperage14 = varchar("amperage14", 99999999)
+    val amperage15 = varchar("amperage15", 99999999)
+    val amperage16 = varchar("amperage16", 99999999)
+    val amperage21 = varchar("amperage21", 99999999)
+    val amperage22 = varchar("amperage22", 99999999)
+    val amperage23 = varchar("amperage23", 99999999)
+    val amperage24 = varchar("amperage24", 99999999)
+    val amperage25 = varchar("amperage25", 99999999)
+    val amperage26 = varchar("amperage26", 99999999)
+    val amperage31 = varchar("amperage31", 99999999)
+    val amperage32 = varchar("amperage32", 99999999)
+    val amperage33 = varchar("amperage33", 99999999)
+    val amperage34 = varchar("amperage34", 99999999)
+    val amperage35 = varchar("amperage35", 99999999)
+    val amperage36 = varchar("amperage36", 99999999)
 
     var NUMBER_DATE_ATTESTATION = varchar("NUMBER_DATE_ATTESTATION", 512)
     var NAME_OF_OPERATION = varchar("NAME_OF_OPERATION", 512)
@@ -154,6 +190,42 @@ class Protocol(id: EntityID<Int>) : IntEntity(id) {
     var temp34 by ProtocolsTable.temp34
     var temp35 by ProtocolsTable.temp35
     var temp36 by ProtocolsTable.temp36
+    var voltage11 by ProtocolsTable.voltage11
+    var voltage12 by ProtocolsTable.voltage12
+    var voltage13 by ProtocolsTable.voltage13
+    var voltage14 by ProtocolsTable.voltage14
+    var voltage15 by ProtocolsTable.voltage15
+    var voltage16 by ProtocolsTable.voltage16
+    var voltage21 by ProtocolsTable.voltage21
+    var voltage22 by ProtocolsTable.voltage22
+    var voltage23 by ProtocolsTable.voltage23
+    var voltage24 by ProtocolsTable.voltage24
+    var voltage25 by ProtocolsTable.voltage25
+    var voltage26 by ProtocolsTable.voltage26
+    var voltage31 by ProtocolsTable.voltage31
+    var voltage32 by ProtocolsTable.voltage32
+    var voltage33 by ProtocolsTable.voltage33
+    var voltage34 by ProtocolsTable.voltage34
+    var voltage35 by ProtocolsTable.voltage35
+    var voltage36 by ProtocolsTable.voltage36
+    var amperage11 by ProtocolsTable.amperage11
+    var amperage12 by ProtocolsTable.amperage12
+    var amperage13 by ProtocolsTable.amperage13
+    var amperage14 by ProtocolsTable.amperage14
+    var amperage15 by ProtocolsTable.amperage15
+    var amperage16 by ProtocolsTable.amperage16
+    var amperage21 by ProtocolsTable.amperage21
+    var amperage22 by ProtocolsTable.amperage22
+    var amperage23 by ProtocolsTable.amperage23
+    var amperage24 by ProtocolsTable.amperage24
+    var amperage25 by ProtocolsTable.amperage25
+    var amperage26 by ProtocolsTable.amperage26
+    var amperage31 by ProtocolsTable.amperage31
+    var amperage32 by ProtocolsTable.amperage32
+    var amperage33 by ProtocolsTable.amperage33
+    var amperage34 by ProtocolsTable.amperage34
+    var amperage35 by ProtocolsTable.amperage35
+    var amperage36 by ProtocolsTable.amperage36
 
     var NUMBER_DATE_ATTESTATION by ProtocolsTable.NUMBER_DATE_ATTESTATION
     var NAME_OF_OPERATION by ProtocolsTable.NAME_OF_OPERATION

@@ -72,32 +72,32 @@ interface IDeviceController {
     fun getRegisterById(idRegister: String): DeviceRegister
 
     fun addPollingRegister(register: DeviceRegister) {
-        synchronized(pollingMutex) {
+        synchronized(protocolAdapter.connection) {
             pollingRegisters.add(register)
         }
     }
 
     fun addWritingRegister(writingPair: Pair<DeviceRegister, Number>) {
-        synchronized(writingMutex) {
+        synchronized(protocolAdapter.connection) {
             writingRegisters.add(writingPair)
         }
     }
 
     fun removePollingRegister(register: DeviceRegister) {
-        synchronized(pollingMutex) {
+        synchronized(protocolAdapter.connection) {
             pollingRegisters.remove(register)
         }
     }
 
     fun removeAllPollingRegisters() {
-        synchronized(pollingMutex) {
+        synchronized(protocolAdapter.connection) {
             pollingRegisters.forEach(DeviceRegister::deleteObservers)
             pollingRegisters.clear()
         }
     }
 
     fun removeAllWritingRegisters() {
-        synchronized(writingMutex) {
+        synchronized(protocolAdapter.connection) {
             writingRegisters.forEach {
                 it.first.deleteObservers()
             }
@@ -106,7 +106,7 @@ interface IDeviceController {
     }
 
     fun readPollingRegisters() {
-        synchronized(pollingMutex) {
+        synchronized(protocolAdapter.connection) {
             pollingRegisters.forEach {
                 readRegister(it)
             }
@@ -114,7 +114,7 @@ interface IDeviceController {
     }
 
     fun writeWritingRegisters() {
-        synchronized(writingMutex) {
+        synchronized(protocolAdapter.connection) {
             writingRegisters.forEach {
                 writeRegister(it.first, it.second)
             }

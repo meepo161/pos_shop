@@ -11,7 +11,6 @@ import javafx.stage.Modality
 import ru.avem.posshop.controllers.MainViewController
 import ru.avem.posshop.entities.*
 import ru.avem.posshop.utils.callKeyBoard
-import ru.avem.posshop.utils.soundError
 import ru.avem.posshop.view.Styles.Companion.extraHard
 import ru.avem.posshop.view.Styles.Companion.megaHard
 import tornadofx.*
@@ -49,8 +48,9 @@ class MainView : View("Комплексный стенд для испытани
 
     var vBoxLog: VBox by singleAssign()
 
-    var labelTimeRemaining: Label by singleAssign()
-    var labelTestStatus: Label by singleAssign()
+    var labelTimeRemaining1: Label by singleAssign()
+    var labelTimeRemaining2: Label by singleAssign()
+    var labelTimeRemaining3: Label by singleAssign()
     var labelTestStatusEnd1: Label by singleAssign()
 
     var tfProductNumber1: TextField by singleAssign()
@@ -374,6 +374,7 @@ class MainView : View("Комплексный стенд для испытани
                         }.disableWhen {
                             !place1Prop
                         }
+                        labelTimeRemaining1 = label("                 ")
                     }
                     vbox(spacing = 16.0) {
                         hboxConstraints {
@@ -433,6 +434,7 @@ class MainView : View("Комплексный стенд для испытани
                         }.disableWhen {
                             !place2Prop
                         }
+                        labelTimeRemaining2 = label("                 ")
                     }
                     vbox(spacing = 16.0) {
                         hboxConstraints {
@@ -494,6 +496,7 @@ class MainView : View("Комплексный стенд для испытани
                         }.disableWhen {
                             !place3Prop
                         }
+                        labelTimeRemaining3 = label("                 ")
                     }
                 }
                 vbox {
@@ -521,11 +524,9 @@ class MainView : View("Комплексный стенд для испытани
                             }
                         }
                     }
-                    hbox(spacing = 16) {
-                        alignment = Pos.CENTER
+                    hbox(spacing = 200) {
+                        alignment = Pos.CENTER_RIGHT
                         labelTestStatusEnd1 = label("")
-                        labelTestStatus = label("")
-                        labelTimeRemaining = label("")
                     }.addClass(extraHard)
                     hbox(spacing = 16) {
                         alignment = Pos.CENTER

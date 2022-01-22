@@ -251,9 +251,8 @@ class Test2Controller : TController() {
             sleep(1000)
 
             runLater {
-                mainView.labelTestStatus.text = ""
                 mainView.labelTestStatusEnd1.text = ""
-                mainView.labelTimeRemaining.text = ""
+                mainView.labelTimeRemaining1.text = ""
                 mainView.buttonStop.isDisable = false
                 mainView.buttonStart.isDisable = true
                 mainView.comboBoxTests.isDisable = true
@@ -397,40 +396,65 @@ class Test2Controller : TController() {
             }
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest2()) {
                 val ktr = 1000 / 200
+                appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
                 configLatr(gv238, voltage / ktr)
             }
 
             while (controller.isExperimentRunning && controller.isDevicesRespondingTest2() && measuringU1 <= voltage) {
-                appendOneMessageToLog(LogTag.MESSAGE, "Грубая регулировка напряжения")
-
                 if (isLatrInErrorMode(gv238)) {
                     controller.cause = "Ошибка контроллера АРН"
                 }
-                sleep(100)
+                sleep(10)
             }
-            accurateRegulate(a41, Avem4Model.RMS_VOLTAGE, gv238, voltage)
+
+            if (controller.isExperimentRunning) {
+                accurateRegulate(a41, Avem4Model.RMS_VOLTAGE, gv238, voltage)
+            }
+
             if (controller.isExperimentRunning && controller.isDevicesRespondingTest2()) {
                 appendOneMessageToLog(LogTag.MESSAGE, "Напряжение выставлено")
             }
 
             var timeLeft = 0
+            var lastTimeLeft = timeLeft
+
             thread(isDaemon = true) {
                 while (controller.isExperimentRunning) {
-                    runLater {
-                        mainView.labelTimeRemaining.text =
-                            "                   Осталось всего: " + toHHmmss((allTime - timeLeft) * 1000L)
+                    if (timeLeft > lastTimeLeft) {
+                        listOfValuesVoltage.add(String.format("%.1f", measuringU1))
+                        listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
+                        listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
+                        listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
+                        lastTimeLeft = timeLeft
                     }
-                    timeLeft++
-                    sleep(1000)
+                    sleep(1)
                 }
             }
 
-            while (timeLeft < allTime && controller.isExperimentRunning ) {
-                listOfValuesVoltage.add(String.format("%.1f", measuringU1))
-                listOfValuesAmperage1.add(String.format("%.1f", measuringI1))
-                listOfValuesAmperage2.add(String.format("%.1f", measuringI2))
-                listOfValuesAmperage3.add(String.format("%.1f", measuringI3))
-                sleep(1000)
+            val callbackTimer = CallbackTimer(
+                tickPeriod = 1000.millis, tickTimes = allTime,
+                tickJob = {
+                    if (!controller.isExperimentRunning) {
+                        it.stop()
+                    } else {
+                        runLater {
+                            mainView.labelTimeRemaining1.text =
+                                "Осталось : " + toHHmmss((allTime - it.getCurrentTicks()) * 1000L)
+                        }
+                        timeLeft++
+                    }
+                },
+                onFinishJob = {
+                })
+
+
+
+            while (timeLeft < allTime && controller.isExperimentRunning) {
+                sleep(1)
+            }
+
+            if (callbackTimer.isRunning) {
+                callbackTimer.stop()
             }
 
             if (controller.isExperimentRunning) {
@@ -495,7 +519,7 @@ class Test2Controller : TController() {
     private fun configLatr(latrDevice: AvemLatrController, voltage: Double) {
         appendMessageToLog(LogTag.MESSAGE, "Конфигурирование и запуск АРН")
         presetRoughParameters(latrDevice)
-        latrDevice.start((voltage * 1.01).toFloat())
+        latrDevice.start((voltage).toFloat())
     }
 
     private fun presetRoughParameters(latrDevice: AvemLatrController) {
@@ -632,7 +656,6 @@ class Test2Controller : TController() {
         owenPR.offAllKMs()
         CommunicationModel.clearPollingRegisters()
         runLater {
-            mainView.labelTestStatus.text = ""
             mainView.buttonStart.isDisable = false
             mainView.buttonStop.isDisable = true
             mainView.mainMenuBar.isDisable = false

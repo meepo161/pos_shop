@@ -355,6 +355,6 @@ class MainViewController : Controller() {
     }
 
     fun showAboutUs() {
-        Toast.makeText("Версия ПО: 2.0.9\nВерсия БСУ: 1.0.0\nДата: 01.06.2021").show(Toast.ToastType.INFORMATION)
+        Toast.makeText("Версия ПО: 2.1.0\nВерсия БСУ: 1.0.0\nДата: 23.12.2021").show(Toast.ToastType.INFORMATION)
     }
 }

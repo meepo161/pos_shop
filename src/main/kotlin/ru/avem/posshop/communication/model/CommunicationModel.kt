@@ -105,6 +105,7 @@ object CommunicationModel {
 
     fun clearPollingRegisters() {
         deviceControllers.values.forEach(IDeviceController::removeAllPollingRegisters)
+        deviceControllers.values.forEach(IDeviceController::removeAllWritingRegisters)
     }
 
     fun removePollingRegister(deviceID: DeviceID, registerID: String) {

@@ -251,16 +251,43 @@ class Test1Controller : TController() {
     var isLatrRegulation = false
 
     @Volatile
-    var currentStage = 0
+    var currentStage1 = 0
+
+    @Volatile
+    var currentStage2 = 0
+
+    @Volatile
+    var currentStage3 = 0
+
+    @Volatile
+    var allProcessEnded1 = false
+
+    @Volatile
+    var allProcessEnded2 = false
+
+    @Volatile
+    var allProcessEnded3 = false
 
     @Volatile
     var temperature: Double = 0.0
 
     @Volatile
-    var isNeedHeating = false
+    var isNeedHeating1 = false
 
     @Volatile
-    var isHeating = false
+    var isNeedHeating2 = false
+
+    @Volatile
+    var isNeedHeating3 = false
+
+    @Volatile
+    var isHeating1 = false
+
+    @Volatile
+    var isHeating2 = false
+
+    @Volatile
+    var isHeating3 = false
 
     private var isClicked: Boolean = false
 
@@ -283,6 +310,44 @@ class Test1Controller : TController() {
     private var listOfValues34 = mutableListOf<String>()
     private var listOfValues35 = mutableListOf<String>()
     private var listOfValues36 = mutableListOf<String>()
+
+    private var listOfValuesVoltage11 = mutableListOf<String>()
+    private var listOfValuesVoltage12 = mutableListOf<String>()
+    private var listOfValuesVoltage13 = mutableListOf<String>()
+    private var listOfValuesVoltage14 = mutableListOf<String>()
+    private var listOfValuesVoltage15 = mutableListOf<String>()
+    private var listOfValuesVoltage16 = mutableListOf<String>()
+    private var listOfValuesVoltage21 = mutableListOf<String>()
+    private var listOfValuesVoltage22 = mutableListOf<String>()
+    private var listOfValuesVoltage23 = mutableListOf<String>()
+    private var listOfValuesVoltage24 = mutableListOf<String>()
+    private var listOfValuesVoltage25 = mutableListOf<String>()
+    private var listOfValuesVoltage26 = mutableListOf<String>()
+    private var listOfValuesVoltage31 = mutableListOf<String>()
+    private var listOfValuesVoltage32 = mutableListOf<String>()
+    private var listOfValuesVoltage33 = mutableListOf<String>()
+    private var listOfValuesVoltage34 = mutableListOf<String>()
+    private var listOfValuesVoltage35 = mutableListOf<String>()
+    private var listOfValuesVoltage36 = mutableListOf<String>()
+
+    private var listOfValuesAmperage11 = mutableListOf<String>()
+    private var listOfValuesAmperage12 = mutableListOf<String>()
+    private var listOfValuesAmperage13 = mutableListOf<String>()
+    private var listOfValuesAmperage14 = mutableListOf<String>()
+    private var listOfValuesAmperage15 = mutableListOf<String>()
+    private var listOfValuesAmperage16 = mutableListOf<String>()
+    private var listOfValuesAmperage21 = mutableListOf<String>()
+    private var listOfValuesAmperage22 = mutableListOf<String>()
+    private var listOfValuesAmperage23 = mutableListOf<String>()
+    private var listOfValuesAmperage24 = mutableListOf<String>()
+    private var listOfValuesAmperage25 = mutableListOf<String>()
+    private var listOfValuesAmperage26 = mutableListOf<String>()
+    private var listOfValuesAmperage31 = mutableListOf<String>()
+    private var listOfValuesAmperage32 = mutableListOf<String>()
+    private var listOfValuesAmperage33 = mutableListOf<String>()
+    private var listOfValuesAmperage34 = mutableListOf<String>()
+    private var listOfValuesAmperage35 = mutableListOf<String>()
+    private var listOfValuesAmperage36 = mutableListOf<String>()
     //endregion
 
     var unixTimeStart = 0L
@@ -753,10 +818,67 @@ class Test1Controller : TController() {
 
             sleep(1000)
 
+            listOfValues11.clear()
+            listOfValues12.clear()
+            listOfValues13.clear()
+            listOfValues14.clear()
+            listOfValues15.clear()
+            listOfValues16.clear()
+            listOfValues21.clear()
+            listOfValues22.clear()
+            listOfValues23.clear()
+            listOfValues24.clear()
+            listOfValues25.clear()
+            listOfValues26.clear()
+            listOfValues31.clear()
+            listOfValues32.clear()
+            listOfValues33.clear()
+            listOfValues34.clear()
+            listOfValues35.clear()
+            listOfValues36.clear()
+            listOfValuesVoltage11.clear()
+            listOfValuesVoltage12.clear()
+            listOfValuesVoltage13.clear()
+            listOfValuesVoltage14.clear()
+            listOfValuesVoltage15.clear()
+            listOfValuesVoltage16.clear()
+            listOfValuesVoltage21.clear()
+            listOfValuesVoltage22.clear()
+            listOfValuesVoltage23.clear()
+            listOfValuesVoltage24.clear()
+            listOfValuesVoltage25.clear()
+            listOfValuesVoltage26.clear()
+            listOfValuesVoltage31.clear()
+            listOfValuesVoltage32.clear()
+            listOfValuesVoltage33.clear()
+            listOfValuesVoltage34.clear()
+            listOfValuesVoltage35.clear()
+            listOfValuesVoltage36.clear()
+            listOfValuesAmperage11.clear()
+            listOfValuesAmperage12.clear()
+            listOfValuesAmperage13.clear()
+            listOfValuesAmperage14.clear()
+            listOfValuesAmperage15.clear()
+            listOfValuesAmperage16.clear()
+            listOfValuesAmperage21.clear()
+            listOfValuesAmperage22.clear()
+            listOfValuesAmperage23.clear()
+            listOfValuesAmperage24.clear()
+            listOfValuesAmperage25.clear()
+            listOfValuesAmperage26.clear()
+            listOfValuesAmperage31.clear()
+            listOfValuesAmperage32.clear()
+            listOfValuesAmperage33.clear()
+            listOfValuesAmperage34.clear()
+            listOfValuesAmperage35.clear()
+            listOfValuesAmperage36.clear()
+
+
             runLater {
-                mainView.labelTestStatus.text = ""
                 mainView.labelTestStatusEnd1.text = ""
-                mainView.labelTimeRemaining.text = ""
+                mainView.labelTimeRemaining1.text = ""
+                mainView.labelTimeRemaining2.text = ""
+                mainView.labelTimeRemaining3.text = ""
                 mainView.buttonStop.isDisable = false
                 mainView.buttonStart.isDisable = true
                 mainView.comboBoxTests.isDisable = true
@@ -944,165 +1066,406 @@ class Test1Controller : TController() {
             isLatrRegulation = false
 
             collectValuesInProtocolInTimer()
+            allProcessEnded1 = false
+            allProcessEnded2 = false
+            allProcessEnded3 = false
 
-            for (currentSection in 0..5) {
-                if (mainView.listCB[currentSection].isSelected) {
-                    currentStage = currentSection
-                    runLater {
-                        mainView.tableTestPlace1Test1.selectionModel.select(currentSection)
-                        mainView.tableTestPlace2Test1.selectionModel.select(currentSection)
-                        mainView.tableTestPlace3Test1.selectionModel.select(currentSection)
-                        mainView.labelTimeRemaining.text =
-                            "               Нагрев ${currentSection + 1} секции. Пожалуйста, подождите"
-                    }
-
-                    if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                        appendOneMessageToLog(LogTag.MESSAGE, "Начался нагрев ${currentSection + 1} секции. Ожидайте")
-                        appendMessageToLog(LogTag.ERROR, "Первый нагрев секции")
-                        when (currentSection) {
-                            0 -> {
-                                unixTimeStart11 = System.currentTimeMillis()
-                                unixTimeStart21 = System.currentTimeMillis()
-                                unixTimeStart31 = System.currentTimeMillis()
-                            }
-                            1 -> {
-                                unixTimeStart12 = System.currentTimeMillis()
-                                unixTimeStart22 = System.currentTimeMillis()
-                                unixTimeStart32 = System.currentTimeMillis()
-                            }
-                            2 -> {
-                                unixTimeStart13 = System.currentTimeMillis()
-                                unixTimeStart23 = System.currentTimeMillis()
-                                unixTimeStart33 = System.currentTimeMillis()
-                            }
-                            3 -> {
-                                unixTimeStart14 = System.currentTimeMillis()
-                                unixTimeStart24 = System.currentTimeMillis()
-                                unixTimeStart34 = System.currentTimeMillis()
-                            }
-                            4 -> {
-                                unixTimeStart15 = System.currentTimeMillis()
-                                unixTimeStart25 = System.currentTimeMillis()
-                                unixTimeStart35 = System.currentTimeMillis()
-                            }
-                            5 -> {
-                                unixTimeStart16 = System.currentTimeMillis()
-                                unixTimeStart26 = System.currentTimeMillis()
-                                unixTimeStart36 = System.currentTimeMillis()
-                            }
-                        }
-                        firstHeatingSection()
-                        appendMessageToLog(LogTag.ERROR, "Нагрев секции завершен")
-                        isHeating = false
-                        appendOneMessageToLog(LogTag.MESSAGE, "Температура выставлена.")
-                        appendOneMessageToLog(
-                            LogTag.MESSAGE,
-                            "Запущен отсчет времени для ${currentSection + 1} секции."
-                        )
-                    }
-
-                    val allTime =
-                        (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".")
-                            .toDouble() * 60).toInt()
-
-                    val callbackTimer = CallbackTimer(
-                        tickPeriod = 1.seconds, tickTimes = allTime,
-                        tickJob = {
-                            if (!tickJobInProcess) {
-                                tickJobInProcess = true
-                                if (!controller.isExperimentRunning) it.stop()
-                                runLater {
-                                    mainView.labelTimeRemaining.text =
-                                        "                   Испытание ${currentSection + 1} секции. Осталось: " + toHHmmss(
-                                            (allTime - it.getCurrentTicks()) * 1000L
-                                        )
-                                    setValuesInTimer()
-                                }
-                                tickJobInProcess = false
-                            }
-                        }
-                    )
-                    when (currentSection) {
-                        0 -> {
-                            unixTimeWork11 = System.currentTimeMillis()
-                            unixTimeWork21 = System.currentTimeMillis()
-                            unixTimeWork31 = System.currentTimeMillis()
-                        }
-                        1 -> {
-                            unixTimeWork12 = System.currentTimeMillis()
-                            unixTimeWork22 = System.currentTimeMillis()
-                            unixTimeWork32 = System.currentTimeMillis()
-                        }
-                        2 -> {
-                            unixTimeWork13 = System.currentTimeMillis()
-                            unixTimeWork23 = System.currentTimeMillis()
-                            unixTimeWork33 = System.currentTimeMillis()
-                        }
-                        3 -> {
-                            unixTimeWork14 = System.currentTimeMillis()
-                            unixTimeWork24 = System.currentTimeMillis()
-                            unixTimeWork34 = System.currentTimeMillis()
-                        }
-                        4 -> {
-                            unixTimeWork15 = System.currentTimeMillis()
-                            unixTimeWork25 = System.currentTimeMillis()
-                            unixTimeWork35 = System.currentTimeMillis()
-                        }
-                        5 -> {
-                            unixTimeWork16 = System.currentTimeMillis()
-                            unixTimeWork26 = System.currentTimeMillis()
-                            unixTimeWork36 = System.currentTimeMillis()
-                        }
-                    }
-                    heatingSection()
-
-
-                    while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
-                        checkProtections()
-                        sleep(2000)
-                    }
-
-                    when (currentSection) {
-                        0 -> {
-                            unixTimeEnd11 = System.currentTimeMillis()
-                            unixTimeEnd21 = System.currentTimeMillis()
-                            unixTimeEnd31 = System.currentTimeMillis()
-                        }
-                        1 -> {
-                            unixTimeEnd12 = System.currentTimeMillis()
-                            unixTimeEnd22 = System.currentTimeMillis()
-                            unixTimeEnd32 = System.currentTimeMillis()
-                        }
-                        2 -> {
-                            unixTimeEnd13 = System.currentTimeMillis()
-                            unixTimeEnd23 = System.currentTimeMillis()
-                            unixTimeEnd33 = System.currentTimeMillis()
-                        }
-                        3 -> {
-                            unixTimeEnd14 = System.currentTimeMillis()
-                            unixTimeEnd24 = System.currentTimeMillis()
-                            unixTimeEnd34 = System.currentTimeMillis()
-                        }
-                        4 -> {
-                            unixTimeEnd15 = System.currentTimeMillis()
-                            unixTimeEnd25 = System.currentTimeMillis()
-                            unixTimeEnd35 = System.currentTimeMillis()
-                        }
-                        5 -> {
-                            unixTimeEnd16 = System.currentTimeMillis()
-                            unixTimeEnd26 = System.currentTimeMillis()
-                            unixTimeEnd36 = System.currentTimeMillis()
-                        }
-                    }
-
-                    isNeedHeating = false
-                    if (currentSection < 6) {
-                        appendOneMessageToLog(LogTag.MESSAGE, "Переход к следующей секции")
-                    } else {
-                        appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения")
-                    }
-                    sleepWhile(5)
+            thread(isDaemon = true) {
+                while (controller.isExperimentRunning) {
+                    setValuesInTimer()
+                    sleep(1000)
                 }
+            }
+
+            if (mainView.place1Prop.value) {
+                thread(isDaemon = true) {
+                    for (currentSection in 0..5) {
+                        if (mainView.listCB[currentSection].isSelected) {
+                            currentStage1 = currentSection
+                            runLater {
+                                mainView.tableTestPlace1Test1.selectionModel.select(currentSection)
+                                mainView.labelTimeRemaining1.text =
+                                    "Нагрев"
+                            }
+
+                            if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Начался нагрев 1 лопасти ${currentSection + 1} секции. Ожидайте"
+                                )
+                                when (currentSection) {
+                                    0 -> {
+                                        unixTimeStart11 = System.currentTimeMillis()
+                                    }
+                                    1 -> {
+                                        unixTimeStart12 = System.currentTimeMillis()
+                                    }
+                                    2 -> {
+                                        unixTimeStart13 = System.currentTimeMillis()
+                                    }
+                                    3 -> {
+                                        unixTimeStart14 = System.currentTimeMillis()
+                                    }
+                                    4 -> {
+                                        unixTimeStart15 = System.currentTimeMillis()
+                                    }
+                                    5 -> {
+                                        unixTimeStart16 = System.currentTimeMillis()
+                                    }
+                                }
+                                firstHeatingSection1()
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 1 лопасти завершен")
+                                isHeating1 = false
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Запущен отсчет времени для 1 лопасти ${currentSection + 1} секции."
+                                )
+                            }
+
+                            val allTime =
+                                (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".")
+                                    .toDouble() * 60).toInt()
+
+                            val callbackTimer = CallbackTimer(
+                                tickPeriod = 1.seconds, tickTimes = allTime,
+                                tickJob = {
+                                    if (!tickJobInProcess) {
+                                        tickJobInProcess = true
+                                        if (!controller.isExperimentRunning) it.stop()
+                                        runLater {
+                                            mainView.labelTimeRemaining1.text =
+                                                "Осталось: " + toHHmmss(
+                                                    (allTime - it.getCurrentTicks()) * 1000L
+                                                )
+                                        }
+                                        tickJobInProcess = false
+                                    }
+                                }
+                            )
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeWork11 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeWork12 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeWork13 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeWork14 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeWork15 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeWork16 = System.currentTimeMillis()
+                                }
+                            }
+                            heatingSection1()
+
+
+                            while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
+                                checkProtections()
+                                sleep(2000)
+                            }
+
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeEnd11 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeEnd12 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeEnd13 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeEnd14 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeEnd15 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeEnd16 = System.currentTimeMillis()
+                                }
+                            }
+
+                            isNeedHeating1 = false
+                            if (currentSection < 5) {
+                                appendOneMessageToLog(LogTag.MESSAGE, "Переход к следующей секции")
+                            } else {
+                                allProcessEnded1 = true
+                                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения")
+                            }
+                            sleepWhile(5)
+                        }
+                    }
+                }
+            } else {
+                allProcessEnded1 = true
+            }
+
+            if (mainView.place2Prop.value) {
+                thread(isDaemon = true) {
+                    for (currentSection in 0..5) {
+                        if (mainView.listCB[currentSection].isSelected) {
+                            currentStage2 = currentSection
+                            runLater {
+                                mainView.tableTestPlace2Test1.selectionModel.select(currentSection)
+                                mainView.labelTimeRemaining2.text =
+                                    "Нагрев"
+                            }
+
+                            if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Начался нагрев 2 лопасти ${currentSection + 1} секции. Ожидайте"
+                                )
+                                when (currentSection) {
+                                    0 -> {
+                                        unixTimeStart21 = System.currentTimeMillis()
+                                    }
+                                    1 -> {
+                                        unixTimeStart22 = System.currentTimeMillis()
+                                    }
+                                    2 -> {
+                                        unixTimeStart23 = System.currentTimeMillis()
+                                    }
+                                    3 -> {
+                                        unixTimeStart24 = System.currentTimeMillis()
+                                    }
+                                    4 -> {
+                                        unixTimeStart25 = System.currentTimeMillis()
+                                    }
+                                    5 -> {
+                                        unixTimeStart26 = System.currentTimeMillis()
+                                    }
+                                }
+                                firstHeatingSection2()
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 2 лопасти завершен")
+                                isHeating2 = false
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Запущен отсчет времени для 2 лопасти ${currentSection + 1} секции."
+                                )
+                            }
+
+                            val allTime =
+                                (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".")
+                                    .toDouble() * 60).toInt()
+
+                            val callbackTimer = CallbackTimer(
+                                tickPeriod = 1.seconds, tickTimes = allTime,
+                                tickJob = {
+                                    if (!tickJobInProcess) {
+                                        tickJobInProcess = true
+                                        if (!controller.isExperimentRunning) it.stop()
+                                        runLater {
+                                            mainView.labelTimeRemaining2.text =
+                                                "Осталось: " + toHHmmss(
+                                                    (allTime - it.getCurrentTicks()) * 1000L
+                                                )
+                                        }
+                                        tickJobInProcess = false
+                                    }
+                                }
+                            )
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeWork21 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeWork22 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeWork23 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeWork24 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeWork25 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeWork26 = System.currentTimeMillis()
+                                }
+                            }
+                            heatingSection2()
+
+
+                            while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
+                                checkProtections()
+                                sleep(2000)
+                            }
+
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeEnd21 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeEnd22 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeEnd23 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeEnd24 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeEnd25 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeEnd26 = System.currentTimeMillis()
+                                }
+                            }
+
+                            isNeedHeating2 = false
+                            if (currentSection < 5) {
+                                appendOneMessageToLog(LogTag.MESSAGE, "Переход к следующей секции")
+                            } else {
+                                allProcessEnded2 = true
+                                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения")
+                            }
+                            sleepWhile(5)
+                        }
+                    }
+                }
+            } else {
+                allProcessEnded2 = true
+            }
+
+            if (mainView.place3Prop.value) {
+                thread(isDaemon = true) {
+                    for (currentSection in 0..5) {
+                        if (mainView.listCB[currentSection].isSelected) {
+                            currentStage3 = currentSection
+                            runLater {
+                                mainView.tableTestPlace3Test1.selectionModel.select(currentSection)
+                                mainView.labelTimeRemaining3.text =
+                                    "Нагрев"
+                            }
+
+                            if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Начался нагрев 3 лопасти ${currentSection + 1} секции. Ожидайте"
+                                )
+                                when (currentSection) {
+                                    0 -> {
+                                        unixTimeStart31 = System.currentTimeMillis()
+                                    }
+                                    1 -> {
+                                        unixTimeStart32 = System.currentTimeMillis()
+                                    }
+                                    2 -> {
+                                        unixTimeStart33 = System.currentTimeMillis()
+                                    }
+                                    3 -> {
+                                        unixTimeStart34 = System.currentTimeMillis()
+                                    }
+                                    4 -> {
+                                        unixTimeStart35 = System.currentTimeMillis()
+                                    }
+                                    5 -> {
+                                        unixTimeStart36 = System.currentTimeMillis()
+                                    }
+                                }
+                                firstHeatingSection3()
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 3 лопасти завершен")
+                                isHeating3 = false
+                                appendOneMessageToLog(
+                                    LogTag.MESSAGE,
+                                    "Запущен отсчет времени для 3 лопасти ${currentSection + 1} секции."
+                                )
+                            }
+
+                            val allTime =
+                                (controller.tableValuesTest1[0].place1time.value.toString().replace(",", ".")
+                                    .toDouble() * 60).toInt()
+
+                            val callbackTimer = CallbackTimer(
+                                tickPeriod = 1.seconds, tickTimes = allTime,
+                                tickJob = {
+                                    if (!tickJobInProcess) {
+                                        tickJobInProcess = true
+                                        if (!controller.isExperimentRunning) it.stop()
+                                        runLater {
+                                            mainView.labelTimeRemaining3.text =
+                                                "Осталось: " + toHHmmss(
+                                                    (allTime - it.getCurrentTicks()) * 1000L
+                                                )
+                                        }
+                                        tickJobInProcess = false
+                                    }
+                                }
+                            )
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeWork31 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeWork32 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeWork33 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeWork34 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeWork35 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeWork36 = System.currentTimeMillis()
+                                }
+                            }
+                            heatingSection3()
+
+
+                            while (controller.isExperimentRunning && controller.isDevicesRespondingTest1() && callbackTimer.isRunning) {
+                                checkProtections()
+                                sleep(2000)
+                            }
+
+                            when (currentSection) {
+                                0 -> {
+                                    unixTimeEnd31 = System.currentTimeMillis()
+                                }
+                                1 -> {
+                                    unixTimeEnd32 = System.currentTimeMillis()
+                                }
+                                2 -> {
+                                    unixTimeEnd33 = System.currentTimeMillis()
+                                }
+                                3 -> {
+                                    unixTimeEnd34 = System.currentTimeMillis()
+                                }
+                                4 -> {
+                                    unixTimeEnd35 = System.currentTimeMillis()
+                                }
+                                5 -> {
+                                    unixTimeEnd36 = System.currentTimeMillis()
+                                }
+                            }
+
+                            isNeedHeating3 = false
+                            if (currentSection < 5) {
+                                appendOneMessageToLog(LogTag.MESSAGE, "Переход к следующей секции")
+                            } else {
+                                allProcessEnded3 = true
+                                appendOneMessageToLog(LogTag.MESSAGE, "Ожидание завершения")
+                            }
+                            sleepWhile(5)
+                        }
+                    }
+                }
+            } else {
+                allProcessEnded3 = true
+            }
+
+            while (controller.isExperimentRunning && (!allProcessEnded1 || !allProcessEnded2 || !allProcessEnded3)) {
+                sleep(100)
             }
 
             if (mainView.place1Prop.value) {
@@ -1150,6 +1513,8 @@ class Test1Controller : TController() {
                                     ProtocolRotorBlade.new {
                                         date = protocol.date
                                         time = protocol.time
+                                        dateEnd = protocol.dateEnd
+                                        timeEnd = protocol.timeEnd
                                         cipher = protocol.cipher1
                                         productName = protocol.productNumber1
                                         operator = protocol.operator
@@ -1159,6 +1524,18 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp14
                                         temp5 = protocol.temp15
                                         temp6 = protocol.temp16
+                                        voltage1 = protocol.voltage11
+                                        voltage2 = protocol.voltage12
+                                        voltage3 = protocol.voltage13
+                                        voltage4 = protocol.voltage14
+                                        voltage5 = protocol.voltage15
+                                        voltage6 = protocol.voltage16
+                                        amperage1 = protocol.amperage11
+                                        amperage2 = protocol.amperage12
+                                        amperage3 = protocol.amperage13
+                                        amperage4 = protocol.amperage14
+                                        amperage5 = protocol.amperage15
+                                        amperage6 = protocol.amperage16
                                         NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
                                         NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
                                         NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
@@ -1209,6 +1586,18 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp24
                                         temp5 = protocol.temp25
                                         temp6 = protocol.temp26
+                                        voltage1 = protocol.voltage21
+                                        voltage2 = protocol.voltage22
+                                        voltage3 = protocol.voltage23
+                                        voltage4 = protocol.voltage24
+                                        voltage5 = protocol.voltage25
+                                        voltage6 = protocol.voltage26
+                                        amperage1 = protocol.amperage21
+                                        amperage2 = protocol.amperage22
+                                        amperage3 = protocol.amperage23
+                                        amperage4 = protocol.amperage24
+                                        amperage5 = protocol.amperage25
+                                        amperage6 = protocol.amperage26
                                         NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
                                         NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
                                         NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
@@ -1259,6 +1648,18 @@ class Test1Controller : TController() {
                                         temp4 = protocol.temp34
                                         temp5 = protocol.temp35
                                         temp6 = protocol.temp36
+                                        voltage1 = protocol.voltage31
+                                        voltage2 = protocol.voltage32
+                                        voltage3 = protocol.voltage33
+                                        voltage4 = protocol.voltage34
+                                        voltage5 = protocol.voltage35
+                                        voltage6 = protocol.voltage36
+                                        amperage1 = protocol.amperage31
+                                        amperage2 = protocol.amperage32
+                                        amperage3 = protocol.amperage33
+                                        amperage4 = protocol.amperage34
+                                        amperage5 = protocol.amperage35
+                                        amperage6 = protocol.amperage36
                                         NUMBER_DATE_ATTESTATION = protocol.NUMBER_DATE_ATTESTATION
                                         NAME_OF_OPERATION = protocol.NAME_OF_OPERATION
                                         NUMBER_CONTROLLER = protocol.NUMBER_CONTROLLER
@@ -1318,8 +1719,8 @@ class Test1Controller : TController() {
                 operator = controller.position1
                 cipher1 = mainView.tfCipher1.text.toString()
                 productNumber1 = mainView.tfProductNumber1.text.toString()
-                cipher2 = mainView.tfCipher3.text.toString()
-                productNumber2 = mainView.tfProductNumber3.text.toString()
+                cipher2 = mainView.tfCipher2.text.toString()
+                productNumber2 = mainView.tfProductNumber2.text.toString()
                 cipher3 = mainView.tfCipher3.text.toString()
                 productNumber3 = mainView.tfProductNumber3.text.toString()
                 temp11 = listOfValues11.toString()
@@ -1340,6 +1741,42 @@ class Test1Controller : TController() {
                 temp34 = listOfValues34.toString()
                 temp35 = listOfValues35.toString()
                 temp36 = listOfValues36.toString()
+                voltage11 = listOfValuesVoltage11.toString()
+                voltage12 = listOfValuesVoltage12.toString()
+                voltage13 = listOfValuesVoltage13.toString()
+                voltage14 = listOfValuesVoltage14.toString()
+                voltage15 = listOfValuesVoltage15.toString()
+                voltage16 = listOfValuesVoltage16.toString()
+                voltage21 = listOfValuesVoltage21.toString()
+                voltage22 = listOfValuesVoltage22.toString()
+                voltage23 = listOfValuesVoltage23.toString()
+                voltage24 = listOfValuesVoltage24.toString()
+                voltage25 = listOfValuesVoltage25.toString()
+                voltage26 = listOfValuesVoltage26.toString()
+                voltage31 = listOfValuesVoltage31.toString()
+                voltage32 = listOfValuesVoltage32.toString()
+                voltage33 = listOfValuesVoltage33.toString()
+                voltage34 = listOfValuesVoltage34.toString()
+                voltage35 = listOfValuesVoltage35.toString()
+                voltage36 = listOfValuesVoltage36.toString()
+                amperage11 = listOfValuesAmperage11.toString()
+                amperage12 = listOfValuesAmperage12.toString()
+                amperage13 = listOfValuesAmperage13.toString()
+                amperage14 = listOfValuesAmperage14.toString()
+                amperage15 = listOfValuesAmperage15.toString()
+                amperage16 = listOfValuesAmperage16.toString()
+                amperage21 = listOfValuesAmperage21.toString()
+                amperage22 = listOfValuesAmperage22.toString()
+                amperage23 = listOfValuesAmperage23.toString()
+                amperage24 = listOfValuesAmperage24.toString()
+                amperage25 = listOfValuesAmperage25.toString()
+                amperage26 = listOfValuesAmperage26.toString()
+                amperage31 = listOfValuesAmperage31.toString()
+                amperage32 = listOfValuesAmperage32.toString()
+                amperage33 = listOfValuesAmperage33.toString()
+                amperage34 = listOfValuesAmperage34.toString()
+                amperage35 = listOfValuesAmperage35.toString()
+                amperage36 = listOfValuesAmperage36.toString()
                 NUMBER_DATE_ATTESTATION = protocolVars.NUMBER_DATE_ATTESTATION
                 NAME_OF_OPERATION = protocolVars.NAME_OF_OPERATION
                 NUMBER_CONTROLLER = protocolVars.NUMBER_CONTROLLER
@@ -1721,93 +2158,129 @@ class Test1Controller : TController() {
                     listOfValues11.add("-99.9")
                 } else {
                     listOfValues11.add(String.format("%.1f", measuringt11))
+                    listOfValuesVoltage11.add(String.format("%.1f", measuringU11))
+                    listOfValuesAmperage11.add(String.format("%.1f", measuringI11))
                 }
                 if (measuringt12 < -50 || measuringt12 > 100) {
                     listOfValues12.add("-99.9")
                 } else {
                     listOfValues12.add(String.format("%.1f", measuringt12))
+                    listOfValuesVoltage12.add(String.format("%.1f", measuringU12))
+                    listOfValuesAmperage12.add(String.format("%.1f", measuringI12))
                 }
                 if (measuringt13 < -50 || measuringt13 > 100) {
                     listOfValues13.add("-99.9")
                 } else {
                     listOfValues13.add(String.format("%.1f", measuringt13))
+                    listOfValuesVoltage13.add(String.format("%.1f", measuringU13))
+                    listOfValuesAmperage13.add(String.format("%.1f", measuringI13))
                 }
                 if (measuringt14 < -50 || measuringt14 > 100) {
                     listOfValues14.add("-99.9")
                 } else {
                     listOfValues14.add(String.format("%.1f", measuringt14))
+                    listOfValuesVoltage14.add(String.format("%.1f", measuringU14))
+                    listOfValuesAmperage14.add(String.format("%.1f", measuringI14))
                 }
                 if (measuringt15 < -50 || measuringt15 > 100) {
                     listOfValues15.add("-99.9")
                 } else {
                     listOfValues15.add(String.format("%.1f", measuringt15))
+                    listOfValuesVoltage15.add(String.format("%.1f", measuringU15))
+                    listOfValuesAmperage15.add(String.format("%.1f", measuringI15))
                 }
                 if (measuringt16 < -50 || measuringt16 > 100) {
                     listOfValues16.add("-99.9")
                 } else {
                     listOfValues16.add(String.format("%.1f", measuringt16))
+                    listOfValuesVoltage16.add(String.format("%.1f", measuringU16))
+                    listOfValuesAmperage16.add(String.format("%.1f", measuringI16))
                 }
 
                 if (measuringt21 < -50 || measuringt21 > 100) {
                     listOfValues21.add("-99.9")
                 } else {
                     listOfValues21.add(String.format("%.1f", measuringt21))
+                    listOfValuesVoltage21.add(String.format("%.1f", measuringU21))
+                    listOfValuesAmperage21.add(String.format("%.1f", measuringI21))
                 }
                 if (measuringt22 < -50 || measuringt22 > 100) {
                     listOfValues22.add("-99.9")
                 } else {
                     listOfValues22.add(String.format("%.1f", measuringt22))
+                    listOfValuesVoltage22.add(String.format("%.1f", measuringU22))
+                    listOfValuesAmperage22.add(String.format("%.1f", measuringI22))
                 }
                 if (measuringt23 < -50 || measuringt23 > 100) {
                     listOfValues23.add("-99.9")
                 } else {
                     listOfValues23.add(String.format("%.1f", measuringt23))
+                    listOfValuesVoltage23.add(String.format("%.1f", measuringU23))
+                    listOfValuesAmperage23.add(String.format("%.1f", measuringI23))
                 }
                 if (measuringt24 < -50 || measuringt24 > 100) {
                     listOfValues24.add("-99.9")
                 } else {
                     listOfValues24.add(String.format("%.1f", measuringt24))
+                    listOfValuesVoltage24.add(String.format("%.1f", measuringU24))
+                    listOfValuesAmperage24.add(String.format("%.1f", measuringI24))
                 }
                 if (measuringt25 < -50 || measuringt25 > 100) {
                     listOfValues25.add("-99.9")
                 } else {
                     listOfValues25.add(String.format("%.1f", measuringt25))
+                    listOfValuesVoltage25.add(String.format("%.1f", measuringU25))
+                    listOfValuesAmperage25.add(String.format("%.1f", measuringI25))
                 }
                 if (measuringt26 < -50 || measuringt26 > 100) {
                     listOfValues26.add("-99.9")
                 } else {
                     listOfValues26.add(String.format("%.1f", measuringt26))
+                    listOfValuesVoltage26.add(String.format("%.1f", measuringU26))
+                    listOfValuesAmperage26.add(String.format("%.1f", measuringI26))
                 }
 
                 if (measuringt31 < -50 || measuringt31 > 100) {
                     listOfValues31.add("-99.9")
                 } else {
                     listOfValues31.add(String.format("%.1f", measuringt31))
+                    listOfValuesVoltage31.add(String.format("%.1f", measuringU31))
+                    listOfValuesAmperage31.add(String.format("%.1f", measuringI31))
                 }
                 if (measuringt32 < -50 || measuringt32 > 100) {
                     listOfValues32.add("-99.9")
                 } else {
                     listOfValues32.add(String.format("%.1f", measuringt32))
+                    listOfValuesVoltage32.add(String.format("%.1f", measuringU32))
+                    listOfValuesAmperage32.add(String.format("%.1f", measuringI32))
                 }
                 if (measuringt33 < -50 || measuringt33 > 100) {
                     listOfValues33.add("-99.9")
                 } else {
                     listOfValues33.add(String.format("%.1f", measuringt33))
+                    listOfValuesVoltage33.add(String.format("%.1f", measuringU33))
+                    listOfValuesAmperage33.add(String.format("%.1f", measuringI33))
                 }
                 if (measuringt34 < -50 || measuringt34 > 100) {
                     listOfValues34.add("-99.9")
                 } else {
                     listOfValues34.add(String.format("%.1f", measuringt34))
+                    listOfValuesVoltage34.add(String.format("%.1f", measuringU34))
+                    listOfValuesAmperage34.add(String.format("%.1f", measuringI34))
                 }
                 if (measuringt35 < -50 || measuringt35 > 100) {
                     listOfValues35.add("-99.9")
                 } else {
                     listOfValues35.add(String.format("%.1f", measuringt35))
+                    listOfValuesVoltage35.add(String.format("%.1f", measuringU35))
+                    listOfValuesAmperage35.add(String.format("%.1f", measuringI35))
                 }
                 if (measuringt36 < -50 || measuringt36 > 100) {
                     listOfValues36.add("-99.9")
                 } else {
                     listOfValues36.add(String.format("%.1f", measuringt36))
+                    listOfValuesVoltage36.add(String.format("%.1f", measuringU36))
+                    listOfValuesAmperage36.add(String.format("%.1f", measuringI36))
                 }
                 sleep(1000)
             }
@@ -2028,11 +2501,10 @@ class Test1Controller : TController() {
         }
     }
 
-    private fun firstHeatingSection() {
-        isHeating = true
-        owenPR.offAllKMs()
+    private fun firstHeatingSection1() {
+        isHeating1 = true
         thread(isDaemon = true) {
-            while (controller.isExperimentRunning && isHeating) {
+            while (controller.isExperimentRunning && isHeating1) {
                 runLater {
                     setValuesInTable()
                 }
@@ -2041,21 +2513,13 @@ class Test1Controller : TController() {
         }
 
         var isNeedHeatingFirst1 = mainView.place1Prop.value
-        var isNeedHeatingFirst2 = mainView.place2Prop.value
-        var isNeedHeatingFirst3 = mainView.place3Prop.value
-
         var isNeedHeatingSecond1 = mainView.place1Prop.value
-        var isNeedHeatingSecond2 = mainView.place2Prop.value
-        var isNeedHeatingSecond3 = mainView.place3Prop.value
-
         var isNeedHeatingThird1 = mainView.place1Prop.value
-        var isNeedHeatingThird2 = mainView.place2Prop.value
-        var isNeedHeatingThird3 = mainView.place3Prop.value
 
 
-        while (controller.isExperimentRunning && (isNeedHeatingFirst1 || isNeedHeatingFirst2 || isNeedHeatingFirst3)) {
+        while (controller.isExperimentRunning && isNeedHeatingFirst1) {
             val percent = 0.4
-            when (currentStage) {
+            when (currentStage1) {
                 0 -> {
                     if (mainView.place1Prop.value) {
                         if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
@@ -2064,24 +2528,6 @@ class Test1Controller : TController() {
                         } else {
                             owenPR.off11()
                             isNeedHeatingFirst1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on21()
-                            isNeedHeatingFirst2 = true
-                        } else {
-                            owenPR.off21()
-                            isNeedHeatingFirst2 = false
-                        }
-                    }
-                    if (mainView.place3Prop.value) {
-                        if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on31()
-                            isNeedHeatingFirst3 = true
-                        } else {
-                            owenPR.off31()
-                            isNeedHeatingFirst3 = false
                         }
                     }
                 }
@@ -2095,24 +2541,6 @@ class Test1Controller : TController() {
                             isNeedHeatingFirst1 = false
                         }
                     }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on22()
-                            isNeedHeatingFirst2 = true
-                        } else {
-                            owenPR.off22()
-                            isNeedHeatingFirst2 = false
-                        }
-                    }
-                    if (mainView.place3Prop.value) {
-                        if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on32()
-                            isNeedHeatingFirst3 = true
-                        } else {
-                            owenPR.off32()
-                            isNeedHeatingFirst3 = false
-                        }
-                    }
                 }
                 2 -> {
                     if (mainView.place1Prop.value) {
@@ -2122,24 +2550,6 @@ class Test1Controller : TController() {
                         } else {
                             owenPR.off13()
                             isNeedHeatingFirst1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on23()
-                            isNeedHeatingFirst2 = true
-                        } else {
-                            owenPR.off23()
-                            isNeedHeatingFirst2 = false
-                        }
-                    }
-                    if (mainView.place3Prop.value) {
-                        if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on33()
-                            isNeedHeatingFirst3 = true
-                        } else {
-                            owenPR.off33()
-                            isNeedHeatingFirst3 = false
                         }
                     }
                 }
@@ -2153,24 +2563,6 @@ class Test1Controller : TController() {
                             isNeedHeatingFirst1 = false
                         }
                     }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on24()
-                            isNeedHeatingFirst2 = true
-                        } else {
-                            owenPR.off24()
-                            isNeedHeatingFirst2 = false
-                        }
-                    }
-                    if (mainView.place3Prop.value) {
-                        if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on34()
-                            isNeedHeatingFirst3 = true
-                        } else {
-                            owenPR.off34()
-                            isNeedHeatingFirst3 = false
-                        }
-                    }
                 }
                 4 -> {
                     if (mainView.place1Prop.value) {
@@ -2180,24 +2572,6 @@ class Test1Controller : TController() {
                         } else {
                             owenPR.off15()
                             isNeedHeatingFirst1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on25()
-                            isNeedHeatingFirst2 = true
-                        } else {
-                            owenPR.off25()
-                            isNeedHeatingFirst2 = false
-                        }
-                    }
-                    if (mainView.place3Prop.value) {
-                        if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on35()
-                            isNeedHeatingFirst3 = true
-                        } else {
-                            owenPR.off35()
-                            isNeedHeatingFirst3 = false
                         }
                     }
                 }
@@ -2211,6 +2585,299 @@ class Test1Controller : TController() {
                             isNeedHeatingFirst1 = false
                         }
                     }
+                }
+            }
+            var time = 15 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && isNeedHeatingSecond1) {
+            val percent = 0.2
+            when (currentStage1) {
+                0 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on11()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off11()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on12()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off12()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on13()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off13()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on14()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off14()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on15()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off15()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on16()
+                            isNeedHeatingSecond1 = true
+                        } else {
+                            owenPR.off16()
+                            isNeedHeatingSecond1 = false
+                        }
+                    }
+                }
+            }
+            var time = 10 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && isNeedHeatingThird1) {
+            val const = 2
+            when (currentStage1) {
+                0 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt11 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on11()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off11()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt12 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on12()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off12()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt13 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on13()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off13()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt14 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on14()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off14()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt15 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on15()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off15()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place1Prop.value) {
+                        if (measuringt16 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on16()
+                            isNeedHeatingThird1 = true
+                        } else {
+                            owenPR.off16()
+                            isNeedHeatingThird1 = false
+                        }
+                    }
+                }
+            }
+            var time = 5 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 60 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+                var isNeedBreak = false
+                when (currentStage1) {
+                    0 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt11 > temperature - const
+                        }
+                    }
+                    1 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt12 > temperature - const
+                        }
+                    }
+                    2 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt13 > temperature - const
+                        }
+                    }
+                    3 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt14 > temperature - const
+                        }
+                    }
+                    4 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt15 > temperature - const
+                        }
+                    }
+                    5 -> {
+                        if (mainView.place1Prop.value) {
+                            isNeedBreak = measuringt16 > temperature - const
+                        }
+                    }
+                }
+                if (isNeedBreak) break
+            }
+        }
+    }
+
+    private fun firstHeatingSection2() {
+        isHeating2 = true
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isHeating2) {
+                runLater {
+                    setValuesInTable()
+                }
+                sleep(300)
+            }
+        }
+
+        var isNeedHeatingFirst2 = mainView.place2Prop.value
+
+        var isNeedHeatingSecond2 = mainView.place2Prop.value
+
+        var isNeedHeatingThird2 = mainView.place2Prop.value
+
+
+        while (controller.isExperimentRunning && isNeedHeatingFirst2) {
+            val percent = 0.4
+            when (currentStage2) {
+                0 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingFirst2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingFirst2 = false
+                        }
+                    }
+                }
+                5 -> {
                     if (mainView.place2Prop.value) {
                         if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on26()
@@ -2220,6 +2887,299 @@ class Test1Controller : TController() {
                             isNeedHeatingFirst2 = false
                         }
                     }
+                }
+            }
+            var time = 15 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && isNeedHeatingSecond2) {
+            val percent = 0.2
+            when (currentStage2) {
+                0 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on26()
+                            isNeedHeatingSecond2 = true
+                        } else {
+                            owenPR.off26()
+                            isNeedHeatingSecond2 = false
+                        }
+                    }
+                }
+            }
+            var time = 10 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 40 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+        }
+
+        while (controller.isExperimentRunning && isNeedHeatingThird2) {
+            val const = 2
+            when (currentStage2) {
+                0 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt21 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on21()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off21()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt22 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on22()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off22()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt23 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on23()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off23()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt24 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on24()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off24()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt25 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on25()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off25()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+                5 -> {
+                    if (mainView.place2Prop.value) {
+                        if (measuringt26 < temperature - const && controller.isExperimentRunning) {
+                            owenPR.on26()
+                            isNeedHeatingThird2 = true
+                        } else {
+                            owenPR.off26()
+                            isNeedHeatingThird2 = false
+                        }
+                    }
+                }
+            }
+            var time = 5 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+            }
+            if (controller.isExperimentRunning) {
+                owenPR.offAllKMs()
+            }
+            time = 60 * 100
+            while (controller.isExperimentRunning && time-- > 0) {
+                sleep(10)
+                var isNeedBreak = false
+                when (currentStage2) {
+                    0 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt21 > temperature - const
+                        }
+                    }
+                    1 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt22 > temperature - const
+                        }
+                    }
+                    2 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt23 > temperature - const
+                        }
+                    }
+                    3 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt24 > temperature - const
+                        }
+                    }
+                    4 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt25 > temperature - const
+                        }
+                    }
+                    5 -> {
+                        if (mainView.place2Prop.value) {
+                            isNeedBreak = measuringt26 > temperature - const
+                        }
+                    }
+                }
+                if (isNeedBreak) break
+            }
+        }
+    }
+
+    private fun firstHeatingSection3() {
+        isHeating3 = true
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isHeating3) {
+                runLater {
+                    setValuesInTable()
+                }
+                sleep(300)
+            }
+        }
+
+        var isNeedHeatingFirst3 = mainView.place3Prop.value
+
+        var isNeedHeatingSecond3 = mainView.place3Prop.value
+
+        var isNeedHeatingThird3 = mainView.place3Prop.value
+
+
+        while (controller.isExperimentRunning && isNeedHeatingFirst3) {
+            val percent = 0.4
+            when (currentStage3) {
+                0 -> {
+                    if (mainView.place3Prop.value) {
+                        if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on31()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off31()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                1 -> {
+                    if (mainView.place3Prop.value) {
+                        if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on32()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off32()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                2 -> {
+                    if (mainView.place3Prop.value) {
+                        if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on33()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off33()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                3 -> {
+                    if (mainView.place3Prop.value) {
+                        if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on34()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off34()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                4 -> {
+                    if (mainView.place3Prop.value) {
+                        if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
+                            owenPR.on35()
+                            isNeedHeatingFirst3 = true
+                        } else {
+                            owenPR.off35()
+                            isNeedHeatingFirst3 = false
+                        }
+                    }
+                }
+                5 -> {
                     if (mainView.place3Prop.value) {
                         if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on36()
@@ -2244,28 +3204,10 @@ class Test1Controller : TController() {
             }
         }
 
-        while (controller.isExperimentRunning && (isNeedHeatingSecond1 || isNeedHeatingSecond2 || isNeedHeatingSecond3)) {
+        while (controller.isExperimentRunning && isNeedHeatingSecond3) {
             val percent = 0.2
-            when (currentStage) {
+            when (currentStage3) {
                 0 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt11 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on11()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off11()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt21 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on21()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off21()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt31 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on31()
@@ -2277,24 +3219,6 @@ class Test1Controller : TController() {
                     }
                 }
                 1 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt12 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on12()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off12()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt22 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on22()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off22()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt32 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on32()
@@ -2306,24 +3230,6 @@ class Test1Controller : TController() {
                     }
                 }
                 2 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt13 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on13()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off13()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt23 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on23()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off23()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt33 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on33()
@@ -2335,24 +3241,6 @@ class Test1Controller : TController() {
                     }
                 }
                 3 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt14 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on14()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off14()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt24 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on24()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off24()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt34 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on34()
@@ -2364,24 +3252,6 @@ class Test1Controller : TController() {
                     }
                 }
                 4 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt15 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on15()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off15()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt25 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on25()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off25()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt35 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on35()
@@ -2393,24 +3263,6 @@ class Test1Controller : TController() {
                     }
                 }
                 5 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt16 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on16()
-                            isNeedHeatingSecond1 = true
-                        } else {
-                            owenPR.off16()
-                            isNeedHeatingSecond1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt26 < temperature * (1 - percent) && controller.isExperimentRunning) {
-                            owenPR.on26()
-                            isNeedHeatingSecond2 = true
-                        } else {
-                            owenPR.off26()
-                            isNeedHeatingSecond2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt36 < temperature * (1 - percent) && controller.isExperimentRunning) {
                             owenPR.on36()
@@ -2435,28 +3287,10 @@ class Test1Controller : TController() {
             }
         }
 
-        while (controller.isExperimentRunning && (isNeedHeatingThird1 || isNeedHeatingThird2 || isNeedHeatingThird3)) {
+        while (controller.isExperimentRunning && isNeedHeatingThird3) {
             val const = 2
-            when (currentStage) {
+            when (currentStage3) {
                 0 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt11 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on11()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off11()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt21 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on21()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off21()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt31 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on31()
@@ -2468,24 +3302,6 @@ class Test1Controller : TController() {
                     }
                 }
                 1 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt12 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on12()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off12()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt22 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on22()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off22()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt32 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on32()
@@ -2497,24 +3313,6 @@ class Test1Controller : TController() {
                     }
                 }
                 2 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt13 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on13()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off13()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt23 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on23()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off23()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt33 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on33()
@@ -2526,24 +3324,6 @@ class Test1Controller : TController() {
                     }
                 }
                 3 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt14 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on14()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off14()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt24 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on24()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off24()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt34 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on34()
@@ -2555,24 +3335,6 @@ class Test1Controller : TController() {
                     }
                 }
                 4 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt15 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on15()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off15()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt25 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on25()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off25()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt35 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on35()
@@ -2584,24 +3346,6 @@ class Test1Controller : TController() {
                     }
                 }
                 5 -> {
-                    if (mainView.place1Prop.value) {
-                        if (measuringt16 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on16()
-                            isNeedHeatingThird1 = true
-                        } else {
-                            owenPR.off16()
-                            isNeedHeatingThird1 = false
-                        }
-                    }
-                    if (mainView.place2Prop.value) {
-                        if (measuringt26 < temperature - const && controller.isExperimentRunning) {
-                            owenPR.on26()
-                            isNeedHeatingThird2 = true
-                        } else {
-                            owenPR.off26()
-                            isNeedHeatingThird2 = false
-                        }
-                    }
                     if (mainView.place3Prop.value) {
                         if (measuringt36 < temperature - const && controller.isExperimentRunning) {
                             owenPR.on36()
@@ -2624,69 +3368,33 @@ class Test1Controller : TController() {
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
                 var isNeedBreak = false
-                when (currentStage) {
+                when (currentStage3) {
                     0 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt11 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt21 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt31 > temperature - const
                         }
                     }
                     1 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt12 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt22 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt32 > temperature - const
                         }
                     }
                     2 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt13 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt23 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt33 > temperature - const
                         }
                     }
                     3 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt14 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt24 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt34 > temperature - const
                         }
                     }
                     4 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt15 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt25 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt35 > temperature - const
                         }
                     }
                     5 -> {
-                        if (mainView.place1Prop.value) {
-                            isNeedBreak = measuringt16 > temperature - const
-                        }
-                        if (mainView.place2Prop.value) {
-                            isNeedBreak = measuringt26 > temperature - const
-                        }
                         if (mainView.place3Prop.value) {
                             isNeedBreak = measuringt36 > temperature - const
                         }
@@ -2697,129 +3405,199 @@ class Test1Controller : TController() {
         }
     }
 
-    private fun heatingSection() {
-        isNeedHeating = true
+
+    private fun heatingSection1() {
+        isNeedHeating1 = true
         val const = 2
         thread(isDaemon = true) {
-            while (controller.isExperimentRunning && isNeedHeating) {
-                when (currentStage) {
+            while (controller.isExperimentRunning && isNeedHeating1) {
+                when (currentStage1) {
                     0 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt11 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt11 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on11()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt21 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on21()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt31 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on31()
                             }
                         }
                     }
                     1 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt12 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt12 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on12()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt22 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on22()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt32 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on32()
                             }
                         }
                     }
                     2 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt13 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt13 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on13()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt23 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on23()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt33 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on33()
                             }
                         }
                     }
                     3 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt14 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt14 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on14()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt24 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on24()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt34 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on34()
                             }
                         }
                     }
                     4 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt15 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt15 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on15()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt25 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on25()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt35 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on35()
                             }
                         }
                     }
                     5 -> {
                         if (mainView.place1Prop.value) {
-                            if (measuringt16 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
+                            if (measuringt16 < temperature - const && controller.isExperimentRunning && isNeedHeating1) {
                                 owenPR.on16()
-                            }
-                        }
-                        if (mainView.place2Prop.value) {
-                            if (measuringt26 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on26()
-                            }
-                        }
-                        if (mainView.place3Prop.value) {
-                            if (measuringt36 < temperature - const && controller.isExperimentRunning && isNeedHeating) {
-                                owenPR.on36()
                             }
                         }
                     }
                 }
                 var time = 5 * 100
-                while (controller.isExperimentRunning && isNeedHeating && time-- > 0) {
+                while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
                 }
                 if (controller.isExperimentRunning) {
                     owenPR.offAllKMs()
                 }
                 time = 40 * 100
-                while (controller.isExperimentRunning && isNeedHeating && time-- > 0) {
+                while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
                 }
             }
         }
     }
+
+    private fun heatingSection2() {
+        isNeedHeating2 = true
+        val const = 2
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isNeedHeating2) {
+                when (currentStage2) {
+                    0 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt21 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on21()
+                            }
+                        }
+                    }
+                    1 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt22 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on22()
+                            }
+                        }
+                    }
+                    2 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt23 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on23()
+                            }
+                        }
+                    }
+                    3 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt24 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on24()
+                            }
+                        }
+                    }
+                    4 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt25 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on25()
+                            }
+                        }
+                    }
+                    5 -> {
+                        if (mainView.place2Prop.value) {
+                            if (measuringt26 < temperature - const && controller.isExperimentRunning && isNeedHeating2) {
+                                owenPR.on26()
+                            }
+                        }
+                    }
+                }
+                var time = 5 * 100
+                while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
+                    sleep(10)
+                }
+                if (controller.isExperimentRunning) {
+                    owenPR.offAllKMs()
+                }
+                time = 40 * 100
+                while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
+                    sleep(10)
+                }
+            }
+        }
+    }
+
+    private fun heatingSection3() {
+        isNeedHeating3 = true
+        val const = 2
+        thread(isDaemon = true) {
+            while (controller.isExperimentRunning && isNeedHeating3) {
+                when (currentStage3) {
+                    0 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt31 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on31()
+                            }
+                        }
+                    }
+                    1 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt32 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on32()
+                            }
+                        }
+                    }
+                    2 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt33 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on33()
+                            }
+                        }
+                    }
+                    3 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt34 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on34()
+                            }
+                        }
+                    }
+                    4 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt35 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on35()
+                            }
+                        }
+                    }
+                    5 -> {
+                        if (mainView.place3Prop.value) {
+                            if (measuringt36 < temperature - const && controller.isExperimentRunning && isNeedHeating3) {
+                                owenPR.on36()
+                            }
+                        }
+                    }
+                }
+                var time = 5 * 100
+                while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
+                    sleep(10)
+                }
+                if (controller.isExperimentRunning) {
+                    owenPR.offAllKMs()
+                }
+                time = 40 * 100
+                while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
+                    sleep(10)
+                }
+            }
+        }
+    }
+
 
     private fun setValuesInTable() {
         if (mainView.place1Prop.value) {
@@ -2934,8 +3712,7 @@ class Test1Controller : TController() {
         owenPR.offAllKMs()
         CommunicationModel.clearPollingRegisters()
         runLater {
-            mainView.labelTimeRemaining.text = ""
-            mainView.labelTestStatus.text = ""
+            mainView.labelTimeRemaining1.text = ""
             mainView.buttonStart.isDisable = false
             mainView.buttonStop.isDisable = true
             mainView.mainMenuBar.isDisable = false
