@@ -230,52 +230,52 @@ class MainViewController : Controller() {
     )
 
     init {
-        createScreenShot()
-        thread(isDaemon = true) {
-            runLater {
-                view.buttonStop.isDisable = true
-            }
-            while (isAppRunning) {
-                var register = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2)
-                    .getRegisterById(OwenPrModel.INSTANT_STATES_REGISTER_1)
-                CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).readRegister(register)
-                var doorZone1 = register.value.toShort() and 2 > 0
-
-                if (CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding) {
-                    runLater {
-                        view.comIndicate.fill = State.OK.c
-                    }
-                    if (doorZone1) {
-                        runLater {
-                            view.labelTestStatusEnd1.text = "Дверь открыта"
-                        }
-                    } else {
-                        runLater {
-                            view.labelTestStatusEnd1.text = ""
-                        }
-                    }
-                    if (!isExperimentRunning && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding && !doorZone1) {
-                        runLater {
-                            view.buttonStart.isDisable = false
-                        }
-                    } else if (!isExperimentRunning && (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding || doorZone1)) {
-                        runLater {
-                            view.buttonStart.isDisable = true
-                        }
-
-                    }
-                } else {
-                    runLater {
-                        cause = "Нет связи"
-                        view.comIndicate.fill = State.BAD.c
-                        view.labelTestStatusEnd1.text = "Нет связи со стендом. Проверьте подключение."
-                        view.buttonStart.isDisable = true
-                        view.buttonStop.isDisable = true
-                    }
-                }
-            }
-        }
-        sleep(1000)
+//        createScreenShot()
+//        thread(isDaemon = true) {
+//            runLater {
+//                view.buttonStop.isDisable = true
+//            }
+//            while (isAppRunning) {
+//                var register = CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2)
+//                    .getRegisterById(OwenPrModel.INSTANT_STATES_REGISTER_1)
+//                CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).readRegister(register)
+//                var doorZone1 = register.value.toShort() and 2 > 0
+//
+//                if (CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding) {
+//                    runLater {
+//                        view.comIndicate.fill = State.OK.c
+//                    }
+//                    if (doorZone1) {
+//                        runLater {
+//                            view.labelTestStatusEnd1.text = "Дверь открыта"
+//                        }
+//                    } else {
+//                        runLater {
+//                            view.labelTestStatusEnd1.text = ""
+//                        }
+//                    }
+//                    if (!isExperimentRunning && CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding && !doorZone1) {
+//                        runLater {
+//                            view.buttonStart.isDisable = false
+//                        }
+//                    } else if (!isExperimentRunning && (!CommunicationModel.getDeviceById(CommunicationModel.DeviceID.DD2).isResponding || doorZone1)) {
+//                        runLater {
+//                            view.buttonStart.isDisable = true
+//                        }
+//
+//                    }
+//                } else {
+//                    runLater {
+//                        cause = "Нет связи"
+//                        view.comIndicate.fill = State.BAD.c
+//                        view.labelTestStatusEnd1.text = "Нет связи со стендом. Проверьте подключение."
+//                        view.buttonStart.isDisable = true
+//                        view.buttonStop.isDisable = true
+//                    }
+//                }
+//            }
+//        }
+//        sleep(1000)
     }
 
     fun isDevicesRespondingTest1(): Boolean {

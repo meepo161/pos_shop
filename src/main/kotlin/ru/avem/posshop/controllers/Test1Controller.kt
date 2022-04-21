@@ -679,111 +679,111 @@ class Test1Controller : TController() {
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_1) { value ->
             measuringt11 = value.toDouble()
             if (measuringt11 > 75) {
-                controller.cause = "Перегрев 1 лопасти 1 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 1 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_2) { value ->
             measuringt12 = value.toDouble()
             if (measuringt12 > 75) {
-                controller.cause = "Перегрев 1 лопасти 2 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 2 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_3) { value ->
             measuringt13 = value.toDouble()
             if (measuringt13 > 75) {
-                controller.cause = "Перегрев 1 лопасти 3 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 3 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_4) { value ->
             measuringt14 = value.toDouble()
             if (measuringt14 > 75) {
-                controller.cause = "Перегрев 1 лопасти 4 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 4 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_5) { value ->
             measuringt15 = value.toDouble()
             if (measuringt15 > 75) {
-                controller.cause = "Перегрев 1 лопасти 5 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 5 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM1, Trm136Model.TEMPERATURE_6) { value ->
             measuringt16 = value.toDouble()
             if (measuringt16 > 75) {
-                controller.cause = "Перегрев 1 лопасти 6 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 1 ОИ 6 секции. Температура превысила 75°C"
             }
         }
 
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_1) { value ->
             measuringt21 = value.toDouble()
             if (measuringt21 > 75) {
-                controller.cause = "Перегрев 2 лопасти 1 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 1 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_2) { value ->
             measuringt22 = value.toDouble()
             if (measuringt22 > 75) {
-                controller.cause = "Перегрев 2 лопасти 2 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 2 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_3) { value ->
             measuringt23 = value.toDouble()
             if (measuringt23 > 75) {
-                controller.cause = "Перегрев 2 лопасти 3 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 3 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_4) { value ->
             measuringt24 = value.toDouble()
             if (measuringt24 > 75) {
-                controller.cause = "Перегрев 2 лопасти 4 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 4 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_5) { value ->
             measuringt25 = value.toDouble()
             if (measuringt25 > 75) {
-                controller.cause = "Перегрев 2 лопасти 5 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 5 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM2, Trm136Model.TEMPERATURE_6) { value ->
             measuringt26 = value.toDouble()
             if (measuringt26 > 75) {
-                controller.cause = "Перегрев 2 лопасти 6 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 2 ОИ 6 секции. Температура превысила 75°C"
             }
         }
 
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_1) { value ->
             measuringt31 = value.toDouble()
             if (measuringt31 > 75) {
-                controller.cause = "Перегрев 3 лопасти 1 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 1 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_2) { value ->
             measuringt32 = value.toDouble()
             if (measuringt32 > 75) {
-                controller.cause = "Перегрев 3 лопасти 2 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 2 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_3) { value ->
             measuringt33 = value.toDouble()
             if (measuringt33 > 75) {
-                controller.cause = "Перегрев 3 лопасти 3 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 3 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_4) { value ->
             measuringt34 = value.toDouble()
             if (measuringt34 > 75) {
-                controller.cause = "Перегрев 3 лопасти 4 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 4 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_5) { value ->
             measuringt35 = value.toDouble()
             if (measuringt35 > 75) {
-                controller.cause = "Перегрев 3 лопасти 5 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 5 секции. Температура превысила 75°C"
             }
         }
         CommunicationModel.startPoll(CommunicationModel.DeviceID.TRM3, Trm136Model.TEMPERATURE_6) { value ->
             measuringt36 = value.toDouble()
             if (measuringt36 > 75) {
-                controller.cause = "Перегрев 3 лопасти 6 секции. Температура превысила 75°C"
+                controller.cause = "Перегрев 3 ОИ 6 секции. Температура превысила 75°C"
             }
         }
         //endregion
@@ -1089,10 +1089,10 @@ class Test1Controller : TController() {
                             }
 
                             if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
-                                appendOneMessageToLog(
-                                    LogTag.MESSAGE,
-                                    "Начался нагрев 1 лопасти ${currentSection + 1} секции. Ожидайте"
-                                )
+                                    appendOneMessageToLog(
+                                        LogTag.MESSAGE,
+                                        "Начался нагрев 1 ОИ ${currentSection + 1} секции. Ожидайте"
+                                    )
                                 when (currentSection) {
                                     0 -> {
                                         unixTimeStart11 = System.currentTimeMillis()
@@ -1114,11 +1114,11 @@ class Test1Controller : TController() {
                                     }
                                 }
                                 firstHeatingSection1()
-                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 1 лопасти завершен")
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 1 ОИ завершен")
                                 isHeating1 = false
                                 appendOneMessageToLog(
                                     LogTag.MESSAGE,
-                                    "Запущен отсчет времени для 1 лопасти ${currentSection + 1} секции."
+                                    "Запущен отсчет времени для 1 ОИ ${currentSection + 1} секции."
                                 )
                             }
 
@@ -1220,7 +1220,7 @@ class Test1Controller : TController() {
                             if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
                                 appendOneMessageToLog(
                                     LogTag.MESSAGE,
-                                    "Начался нагрев 2 лопасти ${currentSection + 1} секции. Ожидайте"
+                                    "Начался нагрев 2 ОИ ${currentSection + 1} секции. Ожидайте"
                                 )
                                 when (currentSection) {
                                     0 -> {
@@ -1243,11 +1243,11 @@ class Test1Controller : TController() {
                                     }
                                 }
                                 firstHeatingSection2()
-                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 2 лопасти завершен")
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 2 ОИ завершен")
                                 isHeating2 = false
                                 appendOneMessageToLog(
                                     LogTag.MESSAGE,
-                                    "Запущен отсчет времени для 2 лопасти ${currentSection + 1} секции."
+                                    "Запущен отсчет времени для 2 ОИ ${currentSection + 1} секции."
                                 )
                             }
 
@@ -1349,7 +1349,7 @@ class Test1Controller : TController() {
                             if (controller.isExperimentRunning && controller.isDevicesRespondingTest1()) {
                                 appendOneMessageToLog(
                                     LogTag.MESSAGE,
-                                    "Начался нагрев 3 лопасти ${currentSection + 1} секции. Ожидайте"
+                                    "Начался нагрев 3 ОИ ${currentSection + 1} секции. Ожидайте"
                                 )
                                 when (currentSection) {
                                     0 -> {
@@ -1372,11 +1372,11 @@ class Test1Controller : TController() {
                                     }
                                 }
                                 firstHeatingSection3()
-                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 3 лопасти завершен")
+                                appendMessageToLog(LogTag.ERROR, "Нагрев секции 3 ОИ завершен")
                                 isHeating3 = false
                                 appendOneMessageToLog(
                                     LogTag.MESSAGE,
-                                    "Запущен отсчет времени для 3 лопасти ${currentSection + 1} секции."
+                                    "Запущен отсчет времени для 3 ОИ ${currentSection + 1} секции."
                                 )
                             }
 
@@ -2588,6 +2588,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 15 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 25 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2595,6 +2598,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2671,6 +2677,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 10 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2678,6 +2687,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2754,6 +2766,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 5 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 10 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2761,6 +2776,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 60 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
                 var isNeedBreak = false
@@ -2890,6 +2908,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 15 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 25 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2897,6 +2918,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2973,6 +2997,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 10 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -2980,6 +3007,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3056,6 +3086,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 5 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 10 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3063,6 +3096,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 60 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
                 var isNeedBreak = false
@@ -3192,6 +3228,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 15 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 25 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3199,6 +3238,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3275,6 +3317,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 10 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3282,6 +3327,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 40 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3358,6 +3406,9 @@ class Test1Controller : TController() {
                 }
             }
             var time = 5 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 10 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
             }
@@ -3365,6 +3416,9 @@ class Test1Controller : TController() {
                 owenPR.offAllKMs()
             }
             time = 60 * 100
+            if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                time = 20 * 100
+            }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
                 var isNeedBreak = false
@@ -3456,6 +3510,9 @@ class Test1Controller : TController() {
                     }
                 }
                 var time = 5 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 15 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
                 }
@@ -3463,6 +3520,9 @@ class Test1Controller : TController() {
                     owenPR.offAllKMs()
                 }
                 time = 40 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 20 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
                 }
@@ -3520,6 +3580,9 @@ class Test1Controller : TController() {
                     }
                 }
                 var time = 5 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 15 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
                     sleep(10)
                 }
@@ -3527,6 +3590,9 @@ class Test1Controller : TController() {
                     owenPR.offAllKMs()
                 }
                 time = 40 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 20 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
                     sleep(10)
                 }
@@ -3584,6 +3650,9 @@ class Test1Controller : TController() {
                     }
                 }
                 var time = 5 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 15 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
                     sleep(10)
                 }
@@ -3591,6 +3660,9 @@ class Test1Controller : TController() {
                     owenPR.offAllKMs()
                 }
                 time = 40 * 100
+                if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
+                    time = 20 * 100
+                }
                 while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
                     sleep(10)
                 }
