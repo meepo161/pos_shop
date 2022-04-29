@@ -799,7 +799,6 @@ class Test1Controller : TController() {
         }
     }
 
-
     @ExperimentalTime
     override fun startTest() {
         thread(isDaemon = true) {
@@ -2607,7 +2606,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingSecond1) {
-            val percent = 0.2
+            val percent = 0.3
             when (currentStage1) {
                 0 -> {
                     if (mainView.place1Prop.value) {
@@ -2696,7 +2695,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingThird1) {
-            val const = 2
+            val const = 5
             when (currentStage1) {
                 0 -> {
                     if (mainView.place1Prop.value) {
@@ -2767,7 +2766,7 @@ class Test1Controller : TController() {
             }
             var time = 5 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 10 * 100
+                time = 5 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -2777,7 +2776,7 @@ class Test1Controller : TController() {
             }
             time = 60 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 20 * 100
+                time = 10 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -2927,7 +2926,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingSecond2) {
-            val percent = 0.2
+            val percent = 0.3
             when (currentStage2) {
                 0 -> {
                     if (mainView.place2Prop.value) {
@@ -3016,7 +3015,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingThird2) {
-            val const = 2
+            val const = 5
             when (currentStage2) {
                 0 -> {
                     if (mainView.place2Prop.value) {
@@ -3087,7 +3086,7 @@ class Test1Controller : TController() {
             }
             var time = 5 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 10 * 100
+                time = 5 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -3097,7 +3096,7 @@ class Test1Controller : TController() {
             }
             time = 60 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 20 * 100
+                time = 10 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -3247,7 +3246,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingSecond3) {
-            val percent = 0.2
+            val percent = 0.3
             when (currentStage3) {
                 0 -> {
                     if (mainView.place3Prop.value) {
@@ -3336,7 +3335,7 @@ class Test1Controller : TController() {
         }
 
         while (controller.isExperimentRunning && isNeedHeatingThird3) {
-            val const = 2
+            val const = 5
             when (currentStage3) {
                 0 -> {
                     if (mainView.place3Prop.value) {
@@ -3407,7 +3406,7 @@ class Test1Controller : TController() {
             }
             var time = 5 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 10 * 100
+                time = 5 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -3417,7 +3416,7 @@ class Test1Controller : TController() {
             }
             time = 60 * 100
             if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                time = 20 * 100
+                time = 10 * 100
             }
             while (controller.isExperimentRunning && time-- > 0) {
                 sleep(10)
@@ -3459,10 +3458,9 @@ class Test1Controller : TController() {
         }
     }
 
-
     private fun heatingSection1() {
         isNeedHeating1 = true
-        val const = 2
+        val const = 0
         thread(isDaemon = true) {
             while (controller.isExperimentRunning && isNeedHeating1) {
                 when (currentStage1) {
@@ -3511,7 +3509,7 @@ class Test1Controller : TController() {
                 }
                 var time = 5 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 15 * 100
+                    time = 4 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
@@ -3521,7 +3519,7 @@ class Test1Controller : TController() {
                 }
                 time = 40 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 20 * 100
+                    time = 6 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating1 && time-- > 0) {
                     sleep(10)
@@ -3532,7 +3530,7 @@ class Test1Controller : TController() {
 
     private fun heatingSection2() {
         isNeedHeating2 = true
-        val const = 2
+        val const = 0
         thread(isDaemon = true) {
             while (controller.isExperimentRunning && isNeedHeating2) {
                 when (currentStage2) {
@@ -3581,7 +3579,7 @@ class Test1Controller : TController() {
                 }
                 var time = 5 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 15 * 100
+                    time = 4 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
                     sleep(10)
@@ -3591,7 +3589,7 @@ class Test1Controller : TController() {
                 }
                 time = 40 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 20 * 100
+                    time = 6 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating2 && time-- > 0) {
                     sleep(10)
@@ -3602,7 +3600,7 @@ class Test1Controller : TController() {
 
     private fun heatingSection3() {
         isNeedHeating3 = true
-        val const = 2
+        val const = 0
         thread(isDaemon = true) {
             while (controller.isExperimentRunning && isNeedHeating3) {
                 when (currentStage3) {
@@ -3651,7 +3649,7 @@ class Test1Controller : TController() {
                 }
                 var time = 5 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 15 * 100
+                    time = 4 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
                     sleep(10)
@@ -3661,7 +3659,7 @@ class Test1Controller : TController() {
                 }
                 time = 40 * 100
                 if (mainView.comboBoxTestItem.selectedItem?.name.toString() == "Накладка") {
-                    time = 20 * 100
+                    time = 6 * 100
                 }
                 while (controller.isExperimentRunning && isNeedHeating3 && time-- > 0) {
                     sleep(10)
@@ -3669,7 +3667,6 @@ class Test1Controller : TController() {
             }
         }
     }
-
 
     private fun setValuesInTable() {
         if (mainView.place1Prop.value) {
